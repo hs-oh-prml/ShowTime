@@ -4,8 +4,9 @@
     android:layout_height="wrap_content"
     android:orientation="vertical"
     android:id="@+id/frame"
-    android:paddingHorizontal="10dp"
-    android:paddingVertical="20dp"
+    android:padding="10dp"
+    android:background="@drawable/list_border_layout"
+    android:layout_margin="5dp"
     >
 
     <RadioButton
@@ -21,7 +22,7 @@
         android:id="@+id/name"
         android:text="강의 이름"
         android:textStyle="bold"
-        android:textSize="16dp"
+        android:textSize="13dp"
         android:textColor="@color/black"
         />
     <TextView
@@ -29,7 +30,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/professor"
         android:text="교수명"
-        android:textSize="16dp"
+        android:textSize="13dp"
         android:textColor="@color/black"
         />
     <TextView
@@ -37,17 +38,20 @@
         android:layout_height="wrap_content"
         android:id="@+id/timeNroom"
         android:text="강의시간/강의실"
+        android:textSize="11dp"
         />
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
+        android:layout_marginBottom="5dp"
         >
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/grade"
             android:text="학년"
+            android:textSize="11dp"
             />
         <TextView
             android:layout_width="wrap_content"
@@ -55,6 +59,7 @@
             android:id="@+id/pobtDiv"
             android:text="구분"
             android:layout_marginHorizontal="10dp"
+            android:textSize="11dp"
             />
         <TextView
             android:layout_width="wrap_content"
@@ -62,6 +67,7 @@
             android:layout_marginHorizontal="10dp"
             android:id="@+id/credit"
             android:text="학점"
+            android:textSize="11dp"
             />
         <TextView
             android:layout_width="wrap_content"
@@ -69,19 +75,23 @@
             android:layout_marginHorizontal="10dp"
             android:id="@+id/lectNum"
             android:text="과목번호"
+            android:textSize="11dp"
             />
 
     </LinearLayout>
     <TextView
-        android:background="@drawable/ripple_effect"
-        android:layout_width="wrap_content"
+        android:background="@drawable/ripple_effect_btn"
+        android:layout_width="100dp"
         android:layout_height="wrap_content"
         android:padding="5dp"
-        android:layout_margin="15dp"
         android:text="시간표에 추가"
         android:textColor="@color/white"
-        android:textSize="14dp"
+        android:textSize="13dp"
         android:id="@+id/add_btn"
+        android:gravity="center"
         android:visibility="gone"
         />
 </LinearLayout>
+
+
+

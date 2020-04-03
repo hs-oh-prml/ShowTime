@@ -8,15 +8,48 @@
     tools:context=".ui.dashboard.ComputeScoreActivity"
     android:orientation="vertical"
     >
-    <TextView
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:paddingTop="5dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/score_view"
-        android:layout_margin="10dp"
-        android:textSize="18dp"
-        android:text="평점"
-        android:textColor="@color/black"
-        />
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:layout_margin="10dp">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="15dp"
+            android:text="전체 평점 : "
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            />
+        <TextView
+            android:textStyle="bold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/score_view"
+            android:textSize="15dp"
+            android:text="평점"
+            android:textColor="@color/black"
+            android:layout_marginEnd="15dp"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="15dp"
+            android:text="전공 평점 : "
+            android:textColor="@color/black"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/score_major_view"
+            android:textSize="15dp"
+            android:text="평점"
+            android:textColor="@color/black"
+            />
+    </LinearLayout>
+
     <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="match_parent"

@@ -74,7 +74,7 @@ class LectRecyclerViewAdapter (
 
         if(position == lastSelectedPosition){
             holder.radio.isChecked = true
-            holder.frame.setBackgroundResource(R.color.selected_item)
+            holder.frame.setBackgroundResource(R.color.background_gray)
             holder.addBtn.visibility = VISIBLE
 
 //            Log.d("last", lastData.toString())

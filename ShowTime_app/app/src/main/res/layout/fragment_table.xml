@@ -12,6 +12,6 @@
         android:layout_height="match_parent"
         android:id="@+id/timeTable"
         android:orientation="horizontal"
-        android:background="@color/border"
+        android:background="@color/table_border"
         />
 </androidx.cardview.widget.CardView>

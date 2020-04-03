@@ -5,7 +5,9 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
+import android.content.res.ColorStateList
 import android.graphics.Color
+import android.graphics.drawable.GradientDrawable
 import android.os.Bundle
 import android.util.DisplayMetrics
 import android.util.Log
@@ -16,7 +18,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.GridLayout
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import androidx.core.view.setMargins
+import androidx.core.view.setPadding
 import com.google.gson.Gson
 import com.showtime.R
 import com.showtime.data.LectureItem
@@ -48,7 +52,7 @@ class TableFragment(var c: Context) : Fragment() {
         super.onActivityCreated(savedInstanceState)
 
         weekList = listOf("월", "화", "수", "목", "금")
-        color = this.resources.getStringArray(R.array.colorList)
+        color = this.resources.getStringArray(R.array.colorList6)
 
         pref = context!!.getSharedPreferences("myData", Activity.MODE_PRIVATE)
         edit = pref.edit()
@@ -148,7 +152,6 @@ class TableFragment(var c: Context) : Fragment() {
 //                var row = timeTable.getChildAt(j.row) as ViewGroup
                 var cell = getChild(j.row, j.col)
 
-                cell.setBackgroundColor(Color.parseColor(color[index]))
                 if(flag == 0){
                     val name = lect.lectName.split("(")[0]
 
@@ -161,6 +164,13 @@ class TableFragment(var c: Context) : Fragment() {
                     cell.textSize = 10f
                     cell.text = str
                     cell.gravity = Gravity.LEFT
+                    cell.setTextColor(ContextCompat.getColor(context!!, R.color.white))
+                    cell.setPadding(5)
+                    val shape:GradientDrawable = GradientDrawable()
+                    shape.setColor(Color.parseColor(color[index]))
+                    shape.shape = GradientDrawable.RECTANGLE
+                    shape.cornerRadius = 15.0f
+                    cell.background = shape
 
                     var param = GridLayout.LayoutParams()
                     var rowSpan = GridLayout.spec(j.row, timeCellList.size, GridLayout.FILL)
@@ -252,7 +262,7 @@ class TableFragment(var c: Context) : Fragment() {
                     textView.height = (dheight * (1/24) * 0.8).toInt()
                 }
                 textView.layoutParams = param
-
+                textView.setTextColor(ContextCompat.getColor(context!!, R.color.table_text_color))
                 timeTable.addView(textView)
             }
         }

@@ -8,7 +8,7 @@
     tools:context=".search.SearchActivity"
     android:orientation="vertical"
     android:padding="5dp"
-    android:background="@color/white"
+    android:background="@color/background_gray"
     >
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
@@ -24,7 +24,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="horizontal"
-                android:background="@color/border"
+                android:background="@color/table_border"
                 />
         </ScrollView>
     </androidx.cardview.widget.CardView>
@@ -32,22 +32,33 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
+
         >
         <EditText
+            android:background="@drawable/table_border"
+            android:paddingStart="10dp"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="30dp"
             android:id="@+id/search"
-            android:hint="검색"
+            android:hint="검색할 내용을 입력하세요"
             android:layout_weight="1"
+            android:backgroundTint="@color/white"
+            android:textSize="13sp"
+            android:layout_margin="5dp"
+
             />
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="60dp"
+            android:layout_height="30dp"
             android:padding="5dp"
             android:text="Search"
-            android:background="@drawable/ripple_effect"
+            android:background="@drawable/ripple_effect_btn"
             android:textColor="#FFFFFF"
             android:id="@+id/searchBtn"
+            android:gravity="center"
+            android:textSize="12sp"
+            android:layout_gravity="center"
+            android:layout_marginEnd="5dp"
             />
     </LinearLayout>
     <RadioGroup
@@ -56,23 +67,35 @@
         android:orientation="horizontal"
         android:id="@+id/radioGroup"
         android:checkedButton="@id/mode_name"
+        android:gravity="center"
         >
         <RadioButton
             android:text="과목명"
+            android:textSize="12sp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
             android:id="@+id/mode_name"
+            android:layout_marginEnd="30dp"
             />
         <RadioButton
             android:text="과목코드"
+            android:textSize="12sp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
             android:id="@+id/mode_num"
+            android:layout_marginEnd="30dp"
             />
         <RadioButton
             android:text="교수명"
+            android:textSize="12sp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
             android:id="@+id/mode_professor"
             />
 
@@ -85,15 +108,24 @@
         >
         <TextView
             android:layout_width="200dp"
-            android:layout_height="wrap_content"
+            android:layout_height="30dp"
             android:padding="5dp"
-            android:background="@drawable/ripple_effect"
+            android:background="@drawable/ripple_effect_btn"
             android:textColor="#FFFFFF"
             android:gravity="center"
             android:text="전공 선택하기"
+            android:textSize="12sp"
+            android:layout_marginEnd="10dp"
             android:id="@+id/major"
-            android:layout_marginRight="20dp"
             />
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:layout_weight="1"
+            android:background="@drawable/table_border"
+            android:layout_marginEnd="5dp"
+            android:gravity="center">
+
         <Spinner
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -101,6 +133,7 @@
             android:id="@+id/spinner"
             android:prompt="@string/prompt"
             />
+        </LinearLayout>
     </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView
@@ -108,5 +141,6 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:id="@+id/recyclerView"
+        android:backgroundTint="@color/black"
         />
 </LinearLayout>

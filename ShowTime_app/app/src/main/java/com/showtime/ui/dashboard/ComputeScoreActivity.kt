@@ -6,9 +6,11 @@ import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.MotionEvent
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView.OnItemTouchListener
 import com.google.gson.Gson
 import com.showtime.R
 import com.showtime.data.LectureItem
@@ -17,6 +19,7 @@ import com.showtime.search.SearchActivity
 import kotlinx.android.synthetic.main.activity_compute_score.*
 import kotlinx.android.synthetic.main.fragment_dashboard.*
 import kotlinx.android.synthetic.main.fragment_dashboard.recyclerView
+import kotlinx.android.synthetic.main.item_compute_score.*
 
 class ComputeScoreActivity : AppCompatActivity() {
     lateinit var adapter:ComputeScoreAdapter
@@ -72,7 +75,7 @@ class ComputeScoreActivity : AppCompatActivity() {
         var listener = object : ComputeScoreAdapter.scoreListener{
             override fun chcekScore() {
                 var score = computeScore()
-                score_view.text = "평점: %.2f".format(score)
+                score_view.text = "%.2f".format(score)
             }
         }
         adapter = ComputeScoreAdapter(this, myData.fixList, scoreList, listener)

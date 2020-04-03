@@ -7,6 +7,7 @@ import android.content.SharedPreferences
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.Drawable
+import android.graphics.drawable.GradientDrawable
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.DisplayMetrics
@@ -20,6 +21,7 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.*
 import androidx.core.content.ContextCompat
 import androidx.core.view.setMargins
+import androidx.core.view.setPadding
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -66,7 +68,7 @@ class SearchActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_search)
-        color = this.resources.getStringArray(R.array.colorList)
+        color = this.resources.getStringArray(R.array.colorList2)
         pobtDivArray = this.resources.getStringArray(R.array.pobtDiv)
 
         pref = this.getSharedPreferences("myData", Activity.MODE_PRIVATE)
@@ -114,6 +116,7 @@ class SearchActivity : AppCompatActivity() {
         // Spinner Init
         var s_adapter = ArrayAdapter(this, R.layout.support_simple_spinner_dropdown_item, pobtDivArray)
         spinner.adapter = s_adapter
+
         spinner.onItemSelectedListener = object: AdapterView.OnItemSelectedListener{
             override fun onNothingSelected(p0: AdapterView<*>?) {
 //                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
@@ -328,6 +331,13 @@ class SearchActivity : AppCompatActivity() {
                         cell.textSize = 10f
                         cell.text = str
                         cell.gravity = Gravity.LEFT
+                        cell.setTextColor(ContextCompat.getColor(this, R.color.white))
+                        cell.setPadding(5)
+                        val shape: GradientDrawable = GradientDrawable()
+                        shape.setColor(Color.parseColor(color[index]))
+                        shape.shape = GradientDrawable.RECTANGLE
+                        shape.cornerRadius = 15.0f
+                        cell.background = shape
 
                         var param = GridLayout.LayoutParams()
                         var rowSpan = GridLayout.spec(j.row, timeCellList.size, GridLayout.FILL)
@@ -389,6 +399,7 @@ class SearchActivity : AppCompatActivity() {
                     param.columnSpec = colSpan
                     textView.textSize = 10f
                     textView.text = weekList[j - 1]
+                    textView.setTextColor(ContextCompat.getColor(this, R.color.table_text_color))
                 }
                 if(i != 0 && j == 0){
                     if(i % 2 == 1){
@@ -420,6 +431,7 @@ class SearchActivity : AppCompatActivity() {
                     textView.height = (dheight * (1/24) * 0.8).toInt()
                 }
                 textView.layoutParams = param
+                textView.setTextColor(ContextCompat.getColor(this, R.color.table_text_color))
 
                 timeTable.addView(textView)
             }

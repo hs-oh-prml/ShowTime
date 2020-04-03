@@ -22,6 +22,81 @@
         <item>#FDF2F0</item>
     </string-array>
 
+    <string-array name="colorList2">
+        <item>#F4E0E9</item>
+        <item>#D4CDF6</item>
+        <item>#A5A6E6</item>
+        <item>#927F9B</item>
+        <item>#FE9B86</item>
+        <item>#FEDBA3</item>
+        <item>#D5CB8E</item>
+        <item>#EEB8B8</item>
+        <item>#BFC8D7</item>
+        <item>#E8E7D2</item>
+        <item>#E2D2D2</item>
+        <item>#EFEFF1</item>
+        <item>#D2D5B8</item>
+        <item>#BDC2BB</item>
+        <item>#C9BA9B</item>
+        <item>#F0E4D4</item>
+        <item>#F9D9CA</item>
+        <item>#D18063</item>
+        <item>#CCDBE2</item>
+        <item>#FDF2F0</item>
+    </string-array>
+
+    <string-array name="colorList3">
+<!--        <item>#023858</item>-->
+<!--        <item>#045A8D</item>-->
+<!--        <item>#0570B0</item>-->
+        <item>#3690C0</item>
+        <item>#74A9CF</item>
+        <item>#A6BDDB</item>
+        <item>#D0D1E6</item>
+        <item>#ECE7F2</item>
+        <item>#FFF7FB</item>
+        <item>#E8E7D2</item>
+        <item>#E2D2D2</item>
+        <item>#EFEFF1</item>
+        <item>#D2D5B8</item>
+        <item>#BDC2BB</item>
+        <item>#C9BA9B</item>
+        <item>#F0E4D4</item>
+        <item>#F9D9CA</item>
+        <item>#D18063</item>
+        <item>#CCDBE2</item>
+        <item>#FDF2F0</item>
+    </string-array>
+
+    <string-array name="colorList4">
+        <item>#F6CECE</item>
+        <item>#F6E3CE</item>
+        <item>#F5ECCE</item>
+        <item>#E3F6CE</item>
+        <item>#CEF6E3</item>
+        <item>#CEF6F5</item>
+    </string-array>
+
+    <string-array name="colorList5">
+        <item>#8799bd</item>
+        <item>#7cbac3</item>
+        <item>#c5b0a8</item>
+        <item>#7ea6c0</item>
+        <item>#819396</item>
+        <item>#a0cacb</item>
+        <item>#a5c3d3</item>
+    </string-array>
+
+    <string-array name="colorList6">
+        <item>#f5c4bf</item>
+        <item>#faeeb7</item>
+        <item>#cce6c4</item>
+        <item>#f9ddb2</item>
+        <item>#f3d0bb</item>
+        <item>#b0ded8</item>
+        <item>#bae5d0</item>
+    </string-array>
+
     <string name="prompt">이수구분</string>
     <string-array name="pobtDiv">
         <item>전체</item>

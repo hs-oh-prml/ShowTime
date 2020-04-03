@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@color/white"
+    android:background="@color/background_gray"
     >
     <TextView
         android:layout_width="wrap_content"
@@ -13,7 +13,7 @@
         android:text="시간표 추가하기"
         android:padding="10dp"
         android:textColor="@color/white"
-        android:background="@drawable/ripple_effect"
+        android:background="@drawable/ripple_effect_btn"
         android:layout_margin="10dp"
         />
     <LinearLayout
@@ -61,7 +61,7 @@
             android:text="학점계산기"
             android:padding="10dp"
             android:textColor="@color/white"
-            android:background="@drawable/ripple_effect"
+            android:background="@drawable/ripple_effect_btn"
             />
     </LinearLayout>
     <androidx.recyclerview.widget.RecyclerView
