@@ -1,10 +1,10 @@
 package com.showtime.data
 
-data class timeCell(
-    var row:Int,
-    var col:Int,
-    var room:String,
-    var name:String,
-    var professor:String
-) {
+data class TimeCell(
+    var start:Int,
+    var end:Int,
+    var week:Int,
+    var location:String
+
+    ) {
 }

@@ -4,7 +4,7 @@ android:color="#FEFEFE"> <!-- Ripple Effect 색상 -->
 <!-- 배경색 -->
 <item android:id="@android:id/background">
     <shape android:shape="rectangle">
-        <solid android:color="@color/colorPrimary"/>
+        <solid android:color="@color/white"/>
     </shape>
 </item>
 </ripple>

@@ -12,6 +12,7 @@ import com.showtime.R
 import com.showtime.timetable.TableFragment
 
 class HomeFragment : Fragment() {
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -26,6 +27,12 @@ class HomeFragment : Fragment() {
     }
 
     fun init(){
-        var fragmentmanger = this.fragmentManager!!.beginTransaction().replace(R.id.table, TableFragment(context!!)).commit()
+        childFragmentManager.beginTransaction().replace(R.id.table, TableFragment(context!!, 0)).commit()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        childFragmentManager.beginTransaction().replace(R.id.table, TableFragment(context!!, 0)).commit()
+
     }
 }

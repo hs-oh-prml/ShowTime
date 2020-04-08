@@ -1,73 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@color/background_gray"
     >
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="right"
-        android:id="@+id/addLect"
-        android:text="시간표 추가하기"
-        android:padding="10dp"
-        android:textColor="@color/white"
-        android:background="@drawable/ripple_effect_btn"
-        android:layout_margin="10dp"
-        />
-    <LinearLayout
+    <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:padding="10dp"
-        android:gravity="center_vertical"
-        >
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/credit_count"
-            android:textColor="@color/black"
-            android:text="학점"
-            android:textSize="18dp"
-            android:layout_marginHorizontal="10dp"
-            />
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/lect_count"
-            android:textSize="18dp"
-            android:textColor="@color/black"
-            android:text="과목"
-            android:layout_marginHorizontal="10dp"
-            />
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="18dp"
-            android:textColor="@color/black"
-            android:id="@+id/my_score"
-            />
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            />
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="right"
-            android:id="@+id/computeScore"
-            android:text="학점계산기"
-            android:padding="10dp"
-            android:textColor="@color/white"
-            android:background="@drawable/ripple_effect_btn"
-            />
-    </LinearLayout>
+        android:id="@+id/add_semester"
+        android:text="시간표 추가"
+        />
     <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:id="@+id/recycler_view"
         android:layout_weight="1"
-        android:id="@+id/recyclerView"
         />
+
 </LinearLayout>

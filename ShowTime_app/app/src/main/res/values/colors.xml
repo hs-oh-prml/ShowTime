@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#556688</color>
-    <color name="colorPrimaryDark">#556688</color>
-    <color name="colorAccent">#556688</color>
+    <color name="colorPrimary">#334499</color>
+    <color name="colorPrimaryDark">#334499</color>
+    <color name="colorAccent">#334499</color>
     <color name="border">#EEEDED</color>
     <color name="white">#FFFFFF</color>
     <color name="black">#000000</color>
     <color name="selected_item">#ebebeb</color>
-    <color name="duplicate">#445555</color>
     <color name="red">#FF0000</color>
     <color name="table_border">#EEEDED</color>
     <color name="table_text_color">#989898</color>
