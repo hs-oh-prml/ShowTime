@@ -43,7 +43,7 @@ class AddScheduleActivity : AppCompatActivity(){
     lateinit var weekList:List<String>
 
     var statusMap = Array(23){Array(6) { -1 } }
-    var semesterNum = 0
+    var tableNum = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -54,14 +54,14 @@ class AddScheduleActivity : AppCompatActivity(){
     fun init(){
         pref = PreferenceManager(this)
         var intent = getIntent()
-        semesterNum = intent.getIntExtra("semester", 0)
+        tableNum = intent.getIntExtra("tableNum", 0)
 
-        semester = pref.myData.semester[pref.table]
+        semester = pref.myData.semester[tableNum]
         when(semester.dayMode){
-            5->weekList = listOf("월", "화", "수", "목", "금")
-            6->weekList = listOf("월", "화", "수", "목", "금","토")
-            7->weekList = listOf("월", "화", "수", "목", "금","토","일")
-            else->weekList = listOf("월", "화", "수", "목", "금")
+            5-> weekList = listOf("월", "화", "수", "목", "금")
+            6-> weekList = listOf("월", "화", "수", "목", "금", "토")
+            7-> weekList = listOf("월", "화", "수", "목", "금", "토", "일")
+            else-> weekList = listOf("월", "화", "수", "목", "금")
         }
         color = this.resources.getStringArray(R.array.colorList6)
         weekList = listOf("월", "화", "수", "목", "금")
@@ -131,7 +131,7 @@ class AddScheduleActivity : AppCompatActivity(){
                     timeList.add(timeCell)
                 }
             }
-            pref.myData.semester[pref.table].schedules.add(Schedule(isLecture, name, timeList, Ncredit, "null"))
+            pref.myData.semester[tableNum].schedules.add(Schedule(isLecture, name, timeList, Ncredit, "null"))
             pref.savePref()
             finish()
         }

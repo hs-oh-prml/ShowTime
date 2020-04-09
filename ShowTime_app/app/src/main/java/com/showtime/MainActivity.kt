@@ -24,8 +24,10 @@ class MainActivity : AppCompatActivity() {
         init()
     }
     fun init(){
+        pref = PreferenceManager(this)
         addSchedule.setOnClickListener {
             var intent = Intent(this, AddScheduleActivity::class.java)
+            intent.putExtra("tableNum", pref.table)
             startActivity(intent)
         }
     }
