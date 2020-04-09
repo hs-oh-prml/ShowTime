@@ -7,50 +7,39 @@
     android:layout_height="match_parent"
     tools:context=".addschedule.AddScheduleActivity"
     android:orientation="vertical"
+    android:padding="10dp"
+    android:background="@color/white"
     >
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/name"
-        android:hint="이름"
+        android:hint="과목 이름을 입력하세요"
+        android:background="@drawable/table_border"
+        android:backgroundTint="@color/background_gray"
+        android:layout_marginBottom="10dp"
+        android:padding="10dp"
+        android:textSize="13sp"
+
         />
     <LinearLayout
-        android:layout_width="match_parent"
+        android:layout_gravity="center"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
+        android:background="@drawable/table_border"
+        android:backgroundTint="@color/background_gray"
+        android:gravity="center_vertical"
         >
-        <RadioGroup
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:checkedButton="@id/fiveDay"
-            android:id="@+id/radioGroup"
-            >
-            <RadioButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="5일"
-                android:id="@+id/fiveDay"
-                />
-            <RadioButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="6일"
-                android:id="@+id/sixDay"
-                />
-            <RadioButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="7일"
-                android:id="@+id/sevenDay"
-                />
-        </RadioGroup>
         <CheckBox
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="강의"
+            android:padding="10dp"
             android:id="@+id/isLecture"
             android:checked="true"
+            android:layout_marginEnd="10dp"
+            android:layout_marginStart="10dp"
             />
         <EditText
             android:layout_width="wrap_content"
@@ -58,6 +47,10 @@
             android:id="@+id/credit"
             android:hint="학점"
             android:inputType="numberDecimal"
+            android:background="@drawable/table_border"
+            android:padding="10dp"
+            android:gravity="center"
+            android:textSize="15sp"
             />
 
     </LinearLayout>

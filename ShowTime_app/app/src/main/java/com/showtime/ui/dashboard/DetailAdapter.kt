@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.showtime.R
@@ -46,7 +47,7 @@ class DetailAdapter(
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         var name: TextView
         var credit:TextView
-        var delete: Button
+        var delete: ImageView
         init {
             name = itemView.findViewById(R.id.name)
             credit = itemView.findViewById(R.id.credit)
