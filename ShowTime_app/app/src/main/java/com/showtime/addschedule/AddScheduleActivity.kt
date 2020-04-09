@@ -68,27 +68,27 @@ class AddScheduleActivity : AppCompatActivity(){
         initView(weekList)
         refreshTable()
 
-        radioGroup.setOnCheckedChangeListener(object: RadioGroup.OnCheckedChangeListener{
-            override fun onCheckedChanged(p0: RadioGroup?, p1: Int) {
-//                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-//                Log.v("Radio Check", p1.toString())
-                timeTable.removeAllViews()
-                when(p1){
-                    R.id.fiveDay->{
-                        weekList = listOf("월", "화", "수", "목", "금")
-                        initView(weekList)
-                    }
-                    R.id.sixDay->{
-                        weekList = listOf("월", "화", "수", "목", "금", "토")
-                        initView(weekList)
-                    }
-                    R.id.sevenDay-> {
-                        weekList = listOf("월", "화", "수", "목", "금", "토", "일")
-                        initView(weekList)
-                    }
-                }
-            }
-        })
+//        radioGroup.setOnCheckedChangeListener(object: RadioGroup.OnCheckedChangeListener{
+//            override fun onCheckedChanged(p0: RadioGroup?, p1: Int) {
+////                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+////                Log.v("Radio Check", p1.toString())
+//                timeTable.removeAllViews()
+//                when(p1){
+//                    R.id.fiveDay->{
+//                        weekList = listOf("월", "화", "수", "목", "금")
+//                        initView(weekList)
+//                    }
+//                    R.id.sixDay->{
+//                        weekList = listOf("월", "화", "수", "목", "금", "토")
+//                        initView(weekList)
+//                    }
+//                    R.id.sevenDay-> {
+//                        weekList = listOf("월", "화", "수", "목", "금", "토", "일")
+//                        initView(weekList)
+//                    }
+//                }
+//            }
+//        })
         isLecture.setOnCheckedChangeListener { compoundButton, b ->
             if(isLecture.isChecked){
                 credit.visibility = VISIBLE
