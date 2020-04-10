@@ -8,18 +8,30 @@
     tools:context=".ui.dashboard.DetailDialog"
     android:orientation="vertical"
     android:background="@color/white"
-    android:padding="10dp"
-    >
-    <TextView
+   >
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/title"
-        android:padding="10dp"
-        android:textSize="20sp"
-        android:textColor="@color/black"
-        android:textStyle="bold"
-        android:text="test"
-        />
+        android:orientation="horizontal"
+        >
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/title"
+            android:padding="10dp"
+            android:textSize="20sp"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            android:text="Title"
+            android:layout_weight="1"
+            />
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/add"
+            android:src="@android:drawable/ic_input_add"
+            />
+    </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -49,16 +61,7 @@
         android:id="@+id/recycler_view"
         android:layout_weight="1"
         />
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/add"
-        android:text="추가"
-        android:background="@drawable/table_border"
-        android:backgroundTint="@color/colorPrimary"
-        android:textColor="@color/white"
-        android:layout_margin="5dp"
-        />
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -88,7 +91,7 @@
             android:backgroundTint="@color/background_gray"
             android:background="@drawable/table_border"
             android:layout_margin="5dp"
-            android:textColor="@color/black"
+            android:textColor="@color/colorPrimary"
             />
     </LinearLayout>
 </LinearLayout>
