@@ -2,15 +2,27 @@ package com.showtime
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.Gravity
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.Toast
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContentProviderCompat.requireContext
+import androidx.core.view.GravityCompat
+import androidx.navigation.Navigation
 import androidx.navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.navigation.NavigationView
 import com.showtime.addschedule.AddScheduleActivity
 import com.showtime.sharedpreference.PreferenceManager
+import com.showtime.ui.dashboard.DashboardFragment
+import com.showtime.ui.dashboard.SemesterListAdapter
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.activity_main.recycler_view
+import kotlinx.android.synthetic.main.fragment_dashboard.*
 
 class MainActivity : AppCompatActivity() {
 
@@ -23,6 +35,8 @@ class MainActivity : AppCompatActivity() {
 
         val navController = findNavController(R.id.nav_host_fragment)
         navView.setupWithNavController(navController)
+
+
         init()
     }
     fun init(){
@@ -32,6 +46,7 @@ class MainActivity : AppCompatActivity() {
     fun initToolbar() {
         //toolbar 커스텀 코드
         setSupportActionBar(toolbar)
+        supportActionBar?.setDisplayShowTitleEnabled(false)
 
         // Get the ActionBar here to configure the way it behaves.
 //        val actionBar = supportActionBar
@@ -54,8 +69,14 @@ class MainActivity : AppCompatActivity() {
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         return when (item.itemId) {
-            R.id.action_settings -> {
 
+            R.id.action_settings -> {
+                drawer_layout.openDrawer(Gravity.RIGHT)
+                var pref :PreferenceManager= PreferenceManager(this)
+                var layoutManager = LinearLayoutManager(this, RecyclerView.VERTICAL, false)
+                var adapter = SemesterListAdapter(this, pref.myData.semester)
+                recycler_view.layoutManager = layoutManager
+                recycler_view.adapter = adapter
                 true
             }
             R.id.action_add ->{
@@ -68,4 +89,13 @@ class MainActivity : AppCompatActivity() {
             else -> super.onOptionsItemSelected(item)
         }
     }
+
+    override fun onBackPressed() { //뒤로가기 처리
+        if(drawer_layout.isDrawerOpen(Gravity.RIGHT)){
+            drawer_layout.closeDrawers()
+        } else{
+            super.onBackPressed()
+        }
+    }
 }
+

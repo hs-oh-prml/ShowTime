@@ -29,12 +29,13 @@ class DashboardFragment : Fragment() {
         super.onActivityCreated(savedInstanceState)
         init()
     }
+
     fun init(){
-        pref = PreferenceManager(requireContext())
-        var layoutManager = LinearLayoutManager(context!!, RecyclerView.VERTICAL, false)
-        var adapter = SemesterListAdapter(requireContext(), pref.myData.semester)
-        recycler_view.layoutManager = layoutManager
-        recycler_view.adapter = adapter
+//        pref = PreferenceManager(requireContext())
+//        var layoutManager = LinearLayoutManager(context!!, RecyclerView.VERTICAL, false)
+//        var adapter = SemesterListAdapter(requireContext(), pref.myData.semester)
+//        recycler_view.layoutManager = layoutManager
+//        recycler_view.adapter = adapter
 
 
     }

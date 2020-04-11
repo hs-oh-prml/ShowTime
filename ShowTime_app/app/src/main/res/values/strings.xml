@@ -1,8 +1,8 @@
 <resources>
     <string name="app_name">ShowTime</string>
-    <string name="title_home">Home</string>
-    <string name="title_dashboard">Dashboard</string>
-    <string name="title_notifications">Notifications</string>
+    <string name="title_home">시간표</string>
+    <string name="title_dashboard">목록</string>
+    <string name="title_notifications">성적 계산</string>
     <string name="appwidget_text">EXAMPLE</string>
     <string name="add_widget">Add widget</string>
 </resources>

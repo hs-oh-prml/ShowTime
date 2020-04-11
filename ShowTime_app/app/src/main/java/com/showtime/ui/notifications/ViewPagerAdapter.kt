@@ -20,6 +20,7 @@ class ViewPagerAdapter (
 //        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
         val v = LayoutInflater.from(parent.context)
             .inflate(R.layout.semester_page, parent, false)
+
         return ViewHolder(v)
     }
     override fun getItemCount(): Int {

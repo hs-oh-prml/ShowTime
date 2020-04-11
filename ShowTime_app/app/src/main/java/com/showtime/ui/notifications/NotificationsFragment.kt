@@ -11,7 +11,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import androidx.core.content.ContextCompat
+import androidx.core.view.marginBottom
 import androidx.core.view.setMargins
+import androidx.core.view.setPadding
 import androidx.navigation.fragment.findNavController
 import com.github.mikephil.charting.charts.LineChart
 import com.github.mikephil.charting.components.Legend
@@ -170,7 +172,7 @@ class NotificationsFragment : Fragment() {
         val lineDataSet = LineDataSet(values,"학점")
         lineDataSet.setColor(ContextCompat.getColor(this.context!!, R.color.colorPrimary))
         lineDataSet.setCircleColor(ContextCompat.getColor(this.context!!, R.color.colorPrimary))
-        lineDataSet.circleHoleColor = ContextCompat.getColor(this.context!!, R.color.colorPrimary)
+//        lineDataSet.circleHoleColor = ContextCompat.getColor(this.context!!, R.color.colorPrimary)
 
         val lineData = LineData()
         lineData.addDataSet(lineDataSet)
@@ -199,19 +201,25 @@ class NotificationsFragment : Fragment() {
         }
         xAxis.setDrawGridLines(false)
         xAxis.setDrawAxisLine(false)
+        xAxis.textColor = ContextCompat.getColor(this.context!!, R.color.table_text_color)
 
 
-        val yAxisRight = lineChart.axisRight
+        val yAxisRight = lineChart.axisLeft
         yAxisRight.isEnabled = true
         yAxisRight.gridColor = ContextCompat.getColor(this.context!!, R.color.table_text_color)
         yAxisRight.textColor = ContextCompat.getColor(this.context!!, R.color.table_text_color)
+        //yAxisRight.setCenterAxisLabels(true)
+        yAxisRight.labelCount = 4
+        yAxisRight.axisMinimum = 1.0f
+        yAxisRight.axisMaximum = 4.0f
+        //yAxisRight.gridLineWidth =
         yAxisRight.setDrawLabels(true)
         yAxisRight.setDrawAxisLine(false)
         yAxisRight.setDrawGridLines(true)
 
         yAxisRight.mAxisMaximum = 4.5f
         yAxisRight.mAxisMinimum = 0f
-        val yAxisLeft = lineChart.axisLeft
+        val yAxisLeft = lineChart.axisRight
         yAxisLeft.isEnabled = false
 
         val legend = lineChart.legend
@@ -224,5 +232,6 @@ class NotificationsFragment : Fragment() {
         lineChart.setDrawGridBackground(false)
         lineChart.setHighlightPerDragEnabled(false)
         lineChart.setTouchEnabled(false)
+        lineChart.setPadding(20)
     }
 }

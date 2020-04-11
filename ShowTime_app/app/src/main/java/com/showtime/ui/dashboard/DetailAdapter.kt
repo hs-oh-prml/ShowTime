@@ -40,6 +40,7 @@ class DetailAdapter(
             pref.myData.semester[tableNum].schedules.removeAt(position)
             pref.savePref()
 
+
         }
 
     }
