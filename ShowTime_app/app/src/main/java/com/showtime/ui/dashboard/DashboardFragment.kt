@@ -36,11 +36,6 @@ class DashboardFragment : Fragment() {
         recycler_view.layoutManager = layoutManager
         recycler_view.adapter = adapter
 
-        add_semester.setOnClickListener {
-//            var schedule = ArrayList<Schedule>()
-//            var semester = MyData.Semester(pref.myData.semester.size + 1, 5, schedule)
-//            pref.myData.semester.add(semester)
-        }
 
     }
 
