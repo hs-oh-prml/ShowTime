@@ -5,6 +5,12 @@ import android.content.Intent
 import android.graphics.Color
 import android.util.Log
 import android.util.Log.v
+import android.view.Gravity
+import android.view.Gravity.CENTER
+import android.view.Gravity.RIGHT
+import android.view.View.GONE
+import android.view.ViewGroup.LayoutParams.MATCH_PARENT
+import android.view.ViewGroup.LayoutParams.WRAP_CONTENT
 import android.widget.RemoteViews
 import android.widget.RemoteViewsService
 import androidx.core.content.ContextCompat
@@ -55,9 +61,10 @@ class TableRemoteViewFactory(
 
     }
 
-    override fun getLoadingView(): RemoteViews? {
+    override fun getLoadingView(): RemoteViews {
 //        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-        return null
+        var rv = RemoteViews(c.packageName, R.layout.widget_loading)
+        return rv
     }
 
     override fun getItemId(p0: Int): Long {
@@ -79,17 +86,33 @@ class TableRemoteViewFactory(
 //        Log.d("Widget_remote_view", p0.toString())
         var col = p0 % 6
         var row = p0 / 6
-        var rv = RemoteViews(c.packageName, R.layout.widget_item).apply{
-//            setTextViewText(R.id.widget_text, "testtestest")
+        var rv: RemoteViews
+        rv = RemoteViews(c.packageName, R.layout.widget_item).apply{
+            //            setTextViewText(R.id.widget_text, "testtestest")
 
             if(col != 0 && row == 0){
+                setFloat(R.id.widget_text, "setTextSize", 11f)
+                setInt(R.id.item_wrapper, "setGravity", CENTER)
                 setTextViewText(R.id.widget_text, weekList[col - 1])
+            }
+            if(row != 0 ){
+                if(row % 2 == 1){
+//                    setInt(R.id.item_wrapper, "setMargins", 0)
+                }
+//                else {
+//                    setInt(R.id.item_wrapper, "setMarginTop", 0)
+//
+//                }
             }
             if(col == 0 && row != 0){
                 if(row % 2 == 1){
+//                    setFloat(R.id.widget_text, "setTextSize", 10f)
+//                    setInt(R.id.item_wrapper, "setWidth", WRAP_CONTENT)
+//                    setInt(R.id.timeTable, "setColspan")
+                    setInt(R.id.item_wrapper, "setGravity", CENTER)
                     if((9 + row / 2) > 12){
                         Log.d("WIDGET_TIME",((9 + row / 2) % 12).toString())
-                        setTextViewText(R.id.widget_text, ((9 + row / 2) % 12).toString())
+                        setTextViewText(R.id.widget_text,((9 + row / 2) % 12).toString())
                     } else {
                         Log.d("WIDGET_TIME",(9 + row / 2).toString())
                         setTextViewText(R.id.widget_text, (9 + row / 2).toString())
@@ -102,19 +125,20 @@ class TableRemoteViewFactory(
                 if(info.size > 1){
                     setTextViewText(R.id.widget_text, info[0])
                     setTextColor(R.id.widget_text, ContextCompat.getColor(c, R.color.white))
-                    setInt(R.id.widget_text, "setBackgroundColor", Color.parseColor(color[info[1].toInt()]) )
+                    setInt(R.id.item_wrapper, "setBackgroundColor", Color.parseColor(color[info[1].toInt()]) )
                 } else {
                     if(info[0] == "-1"){
-                        setInt(R.id.widget_text, "setBackgroundColor", ContextCompat.getColor(c, R.color.white))
+                        setInt(R.id.item_wrapper, "setBackgroundColor", ContextCompat.getColor(c, R.color.white))
                     } else {
                         setTextColor(R.id.widget_text, ContextCompat.getColor(c, R.color.white))
-                        setInt(R.id.widget_text, "setBackgroundColor", Color.parseColor(color[info[0].toInt()]) )
+//                        setInt(R.id.item_wrapper, "setVisibility", GONE )
+                        setInt(R.id.item_wrapper, "setBackgroundColor", Color.parseColor(color[info[0].toInt()]) )
                     }
                 }
-
             }
-
         }
+
+
         return rv
     }
 
