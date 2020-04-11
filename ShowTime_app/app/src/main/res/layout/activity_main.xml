@@ -7,7 +7,7 @@
     <androidx.appcompat.widget.Toolbar
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/colorPrimary"
+        android:background="@color/white"
         android:theme="?attr/actionBarTheme"
         android:minHeight="?attr/actionBarSize"
         android:id="@+id/toolbar"
@@ -18,7 +18,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="top|center_horizontal"
             android:text="ShowTime"
-            android:textColor="@color/white"
+            android:textColor="@color/colorPrimary"
             android:fontFamily="@font/permanentmarker"
             android:textSize="20sp"/>
     </androidx.appcompat.widget.Toolbar>
