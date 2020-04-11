@@ -40,7 +40,8 @@ class SemesterAdapter  (
         val data = items[position]
         Log.d("RECYCLER VIEW", data.name)
         holder.name.text = data.name
-        var adapter = ArrayAdapter(context, R.layout.support_simple_spinner_dropdown_item, context.resources.getStringArray(R.array.score))
+        var adapter = ArrayAdapter(context, R.layout.spinner_layout, context.resources.getStringArray(R.array.score))
+
         if(data.isLecture){
             holder.score.visibility = VISIBLE
         } else {

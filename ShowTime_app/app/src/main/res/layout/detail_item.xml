@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
-    android:padding="5dp"
+    android:padding="7dp"
     android:gravity="center_vertical"
     >
     <TextView
@@ -15,6 +15,7 @@
         android:text="Schedule"
         android:textColor="@color/black"
         android:layout_marginStart="10dp"
+        android:textSize="13sp"
         />
     <TextView
         android:layout_marginHorizontal="20dp"
@@ -22,11 +23,13 @@
         android:layout_height="wrap_content"
         android:id="@+id/credit"
         android:textColor="@color/black"
+        android:textSize="13sp"
         />
     <ImageView
-        android:layout_width="25dp"
-        android:layout_height="25dp"
+        android:layout_width="15dp"
+        android:layout_height="15dp"
         android:id="@+id/delete"
-        android:src="@drawable/trash"
+        android:background="@drawable/ic_remove_circle_outline_black_24dp"
+        android:backgroundTint="#B40404"
         />
 </LinearLayout>

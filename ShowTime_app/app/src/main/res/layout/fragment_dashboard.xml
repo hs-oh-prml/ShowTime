@@ -5,25 +5,23 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="@color/white"
+    android:gravity="center"
     >
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/add_semester"
-        android:text="시간표 추가"
-        android:background="@drawable/table_border"
-        android:layout_margin="10dp"
-        android:backgroundTint="@color/white"
-        />
+<!--    <View-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="1dp"-->
+<!--        android:background="@color/background_gray"-->
+<!--        android:layout_margin="5dp"/>-->
     <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/recycler_view"
         android:layout_weight="1"
         android:background="@drawable/table_border"
-        android:layout_margin="10dp"
         android:backgroundTint="@color/white"
         android:padding="10dp"
+
         />
 
 </LinearLayout>
