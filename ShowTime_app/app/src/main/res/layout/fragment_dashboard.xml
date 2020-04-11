@@ -8,20 +8,11 @@
     android:background="@color/white"
     android:gravity="center"
     >
-<!--    <View-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="1dp"-->
-<!--        android:background="@color/background_gray"-->
-<!--        android:layout_margin="5dp"/>-->
-    <androidx.recyclerview.widget.RecyclerView
+
+
+    <CalendarView
+        android:id="@+id/calendarView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/recycler_view"
-        android:layout_weight="1"
-        android:background="@drawable/table_border"
-        android:backgroundTint="@color/white"
-        android:padding="10dp"
-
         />
-
 </LinearLayout>
