@@ -7,9 +7,8 @@
     android:orientation="vertical"
     android:background="@color/white"
     android:gravity="center"
+    android:layout_marginBottom="?attr/actionBarSize"
     >
-
-
     <CalendarView
         android:id="@+id/calendarView"
         android:layout_width="match_parent"
