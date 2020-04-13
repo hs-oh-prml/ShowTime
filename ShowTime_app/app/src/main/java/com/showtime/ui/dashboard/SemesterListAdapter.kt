@@ -1,7 +1,9 @@
 package com.showtime.ui.dashboard
 
 import android.content.Context
+import android.content.DialogInterface
 import android.content.Intent
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.View.INVISIBLE
@@ -9,6 +11,8 @@ import android.view.View.VISIBLE
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.fragment.app.FragmentManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.showtime.R
 import com.showtime.data.MyData
@@ -16,8 +20,16 @@ import com.showtime.sharedpreference.PreferenceManager
 
 class SemesterListAdapter (
     val context: Context,
-    var items:ArrayList<MyData.Semester>
-): RecyclerView.Adapter<SemesterListAdapter.ViewHolder>() {
+    var items:ArrayList<MyData.Semester>,
+    var fm: FragmentManager,
+    var listener:SemesterListener
+): RecyclerView.Adapter<SemesterListAdapter.ViewHolder>()
+{
+
+    interface SemesterListener{
+        fun refresh()
+    }
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val v = LayoutInflater.from(context)
             .inflate(R.layout.semester_item, parent, false)
@@ -54,8 +66,21 @@ class SemesterListAdapter (
 //            var intent = Intent(context, DetailDialog::class.java)
 //            intent.putExtra("tableNum", position)
 //            context.startActivity(intent)
-            var dialog = DetailDialog(context, position)
-            dialog.show()
+            var dListener = object: DetailDialog.detailDialogDismissListener{
+                override fun onDismiss() {
+//                    TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+                    Log.d("Dialog Status", "Dismiss")
+                    listener.refresh()
+                }
+            }
+            var dialog = DetailDialog(context, position, dListener)
+            fm.executePendingTransactions()
+            dialog.show(fm, "")
+
+//            {
+//                Log.d("Dialog", "Dismiss")
+//            }
+            fm.executePendingTransactions()
         }
     }
 

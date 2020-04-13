@@ -15,9 +15,13 @@ import com.showtime.sharedpreference.PreferenceManager
 class DetailAdapter(
     val context: Context,
     var items:ArrayList<Schedule>,
-    var tableNum:Int
+    var tableNum:Int,
+    var listener:DetailListener
 ): RecyclerView.Adapter<DetailAdapter.ViewHolder>() {
 
+    interface DetailListener{
+        fun refresh()
+    }
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val v = LayoutInflater.from(context)
             .inflate(R.layout.detail_item, parent, false)
@@ -34,15 +38,12 @@ class DetailAdapter(
         if(data.isLecture){
             holder.credit.text = "${data.credit}학점"
         }
-
         holder.delete.setOnClickListener {
             var pref = PreferenceManager(context)
             pref.myData.semester[tableNum].schedules.removeAt(position)
             pref.savePref()
-
-
+            listener.refresh()
         }
-
     }
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
