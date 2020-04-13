@@ -10,19 +10,25 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.core.view.GravityCompat
+import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.replace
 import androidx.navigation.Navigation
 import androidx.navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.navigation.NavigationView
 import com.showtime.addschedule.AddScheduleActivity
 import com.showtime.sharedpreference.PreferenceManager
 import com.showtime.ui.dashboard.DashboardFragment
 import com.showtime.ui.dashboard.SemesterListAdapter
+import com.showtime.ui.home.HomeFragment
+import com.showtime.ui.notifications.NotificationsFragment
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_main.recycler_view
 import kotlinx.android.synthetic.main.fragment_dashboard.*
+import kotlinx.android.synthetic.main.main_content.*
 
 class MainActivity : AppCompatActivity() {
 
@@ -31,12 +37,43 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        val navView: BottomNavigationView = findViewById(R.id.nav_view)
-        //navView.inflateMenu(R.menu.bottom_nav_menu)
+//        val navView: CustomBottomNavigationView = findViewById(R.id.nav_view)
+        //bottom_navigation.inflateMenu(R.menu.bottom_nav_menu)
+        bottom_navigation.inflateMenu(R.menu.bottom_nav_menu)
+        val tran = supportFragmentManager.beginTransaction()
+        tran.replace(R.id.nav_host_fragment, HomeFragment()).commitAllowingStateLoss()
+        bottom_navigation.setOnNavigationItemSelectedListener {
+            val tran = supportFragmentManager.beginTransaction()
+            when(it.itemId){
+                R.id.navigation_home->{
+                    tran.replace(R.id.nav_host_fragment, DashboardFragment()).commitAllowingStateLoss()
+                    true
+                }
+                R.id.navigation_notifications->{
+                    tran.replace(R.id.nav_host_fragment, NotificationsFragment()).commitAllowingStateLoss()
+                    true
+                }
+                else->{
+                    true
+                }
+            }
+        }
+        val floatingBtn = findViewById<FloatingActionButton>(R.id.floatingActionButton)
+        floatingBtn.setOnClickListener {
+            val tran = supportFragmentManager.beginTransaction()
+            tran.replace(R.id.nav_host_fragment, HomeFragment()).commitAllowingStateLoss()
+        }
+
+//
+//            .setOnClickListener {
+//            Toast.makeText(this,"??",Toast.LENGTH_SHORT).show()
+//            val tran = supportFragmentManager.beginTransaction()
+//            tran.replace(R.id.nav_host_fragment, HomeFragment()).commitAllowingStateLoss()
 
 
-        val navController = findNavController(R.id.nav_host_fragment)
-        navView.setupWithNavController(navController)
+
+//        val navController = findNavController(R.id.nav_host_fragment)
+//        bottom_navigation.setupWithNavController(navController)
 
 
         init()
@@ -99,5 +136,6 @@ class MainActivity : AppCompatActivity() {
             super.onBackPressed()
         }
     }
+
 }
 

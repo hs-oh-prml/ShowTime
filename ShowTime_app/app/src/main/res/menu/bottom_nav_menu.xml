@@ -1,21 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!--<menu xmlns:android="http://schemas.android.com/apk/res/android">-->
-<!--    <item-->
-<!--        android:id="@+id/action_home"-->
-<!--        android:icon="@drawable/ic_home_black_24dp"-->
-<!--        android:title="menu1"/>-->
-
-<!--    <item-->
-<!--        android:id="@+id/action_empty"-->
-<!--        android:title=""-->
-<!--        android:enabled="false"-->
-<!--        android:checkable="false"/>-->
-
-<!--    <item-->
-<!--        android:id="@+id/action_menu"-->
-<!--        android:icon="@drawable/ic_dashboard_black_24dp"-->
-<!--        android:title="menu2"/>-->
-<!--</menu>-->
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
@@ -24,10 +7,15 @@
         android:title="@string/title_home"
         />
 
+<!--    <item-->
+<!--        android:id="@+id/navigation_dashboard"-->
+<!--        android:icon="@drawable/time_list"-->
+<!--        android:title="@string/title_dashboard" />-->
     <item
-        android:id="@+id/navigation_dashboard"
-        android:icon="@drawable/list"
-        android:title="@string/title_dashboard" />
+        android:id="@+id/action_empty"
+        android:title=""
+        android:enabled="false"
+        android:checkable="false"/>
 
     <item
         android:id="@+id/navigation_notifications"
@@ -35,3 +23,21 @@
         android:title="@string/title_notifications" />
 
 </menu>
+
+    <!--<menu xmlns:android="http://schemas.android.com/apk/res/android">-->
+    <!--    <item-->
+    <!--        android:id="@+id/action_home"-->
+    <!--        android:icon="@drawable/ic_home_black_24dp"-->
+    <!--        android:title="menu1"/>-->
+
+    <!--    <item-->
+    <!--        android:id="@+id/action_empty"-->
+    <!--        android:title=""-->
+    <!--        android:enabled="false"-->
+    <!--        android:checkable="false"/>-->
+
+    <!--    <item-->
+    <!--        android:id="@+id/action_menu"-->
+    <!--        android:icon="@drawable/ic_dashboard_black_24dp"-->
+    <!--        android:title="menu2"/>-->
+    <!--</menu>-->

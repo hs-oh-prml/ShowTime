@@ -11,6 +11,9 @@
         android:layout_height="wrap_content"
         android:id="@+id/tabLayout"
         app:tabMode="scrollable"
+        app:tabTextAppearance="@style/tab_text"
+        app:tabTextColor="@color/table_text_color"
+        app:tabSelectedTextColor="@color/dark_grey"
         />
 
     <LinearLayout
@@ -19,7 +22,10 @@
         android:orientation="vertical"
         android:background="@drawable/list_border"
         android:layout_margin="10dp"
-        android:padding="15dp"
+        android:paddingStart="15dp"
+        android:paddingEnd="15dp"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
         >
         <GridLayout
             android:layout_width="match_parent"
@@ -32,25 +38,29 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_columnWeight="1"
-                android:textColor="@color/black"
+                android:textColor="@color/dark_grey"
                 android:textSize="11sp"
                 android:text="전체 평점"
                 android:padding="5dp"
-                android:layout_gravity="center" />
+                android:layout_gravity="center"
+                android:background="@drawable/table_border"
+                android:backgroundTint="@color/background_gray"/>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_columnWeight="1"
-                android:textColor="@color/black"
+                android:textColor="@color/dark_grey"
                 android:textSize="11sp"
                 android:text="취득 학점"
                 android:padding="5dp"
-                android:layout_gravity="center"/>
+                android:layout_gravity="center"
+                android:background="@drawable/table_border"
+                android:backgroundTint="@color/background_gray"/>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_columnWeight="1"
-                android:textColor="@color/black"
+                android:textColor="@color/colorPrimary"
                 android:textSize="13sp"
                 android:text="3.5 / 4.5"
                 android:padding="5dp"
@@ -61,7 +71,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_columnWeight="1"
-                android:textColor="@color/black"
+                android:textColor="@color/colorPrimary"
                 android:textSize="13sp"
                 android:text="학점"
                 android:padding="5dp"
