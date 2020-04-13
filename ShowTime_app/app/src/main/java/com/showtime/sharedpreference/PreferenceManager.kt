@@ -2,11 +2,14 @@ package com.showtime.sharedpreference
 
 import android.content.Context
 import android.content.SharedPreferences
+import android.graphics.Bitmap
+import android.util.Base64
 import android.util.Log
 import com.google.gson.Gson
 import com.showtime.data.MyData
 import com.showtime.data.Schedule
 import com.showtime.data.TimeCell
+import java.io.ByteArrayOutputStream
 
 class PreferenceManager(c: Context) {
     val PREFERENCES_NAME = "My_Data"
@@ -46,6 +49,23 @@ class PreferenceManager(c: Context) {
         table = t
     }
 
+    fun Bitmap2Str(bitmap: Bitmap): String {
+        var baos = ByteArrayOutputStream()
+        bitmap.compress(Bitmap.CompressFormat.PNG, 100, baos)
+        var byteArr = baos.toByteArray()
+        var str = Base64.encodeToString(byteArr, Base64.DEFAULT)
+        return str
+    }
+
+    fun saveImage(bitmap:Bitmap){
+        var img = Bitmap2Str(bitmap)
+        edit.putString("image",img)
+        edit.commit()
+    }
+    fun getImg():String? {
+        var img = pref.getString("image", "")
+        return img
+    }
 
     fun savePref(){
         var gson = Gson()

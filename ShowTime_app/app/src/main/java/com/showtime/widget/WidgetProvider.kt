@@ -3,10 +3,14 @@ package com.showtime.widget
 import android.app.PendingIntent
 import android.appwidget.AppWidgetManager
 import android.appwidget.AppWidgetProvider
+import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.graphics.Color
 import android.net.Uri
+import android.util.Base64
 import android.util.DisplayMetrics
 import android.util.Log
 import android.view.Gravity
@@ -17,11 +21,13 @@ import android.widget.RemoteViews
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.core.view.setMargins
+import com.showtime.MainActivity
 import com.showtime.R
 import com.showtime.data.MyData
 import com.showtime.sharedpreference.PreferenceManager
 import com.showtime.timetable.TableFragment
 import kotlinx.android.synthetic.main.fragment_table.*
+import java.lang.Exception
 
 /**
  * Implementation of App Widget functionality.
@@ -37,12 +43,21 @@ class WidgetProvider : AppWidgetProvider() {
         Log.d("Widget Array", appWidgetIds.toString())
         for(i in appWidgetIds){
 
-            var intent = Intent(context, WidgetService::class.java)
-            intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, i)
-            intent.data = Uri.parse(intent.toUri(Intent.URI_INTENT_SCHEME))
+//            var intent = Intent(context, WidgetService::class.java)
+//            intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, i)
+//            intent.data = Uri.parse(intent.toUri(Intent.URI_INTENT_SCHEME))
+//            val views = RemoteViews(context.packageName, R.layout.table_widget)
+//            views.setRemoteAdapter(R.id.timeTable, intent)
+//            views.setEmptyView(R.id.timeTable, R.id.empty_view)
+
             val views = RemoteViews(context.packageName, R.layout.table_widget)
-            views.setRemoteAdapter(R.id.timeTable, intent)
-            views.setEmptyView(R.id.timeTable, R.id.empty_view)
+            var encodedStr = PreferenceManager(context).getImg()
+            var img = str2Bitmap(encodedStr!!)
+            views.setImageViewBitmap(R.id.timeTable, img)
+
+            var intent = Intent(context, MainActivity::class.java)
+            var pi = PendingIntent.getActivity(context, 0, intent, 0)
+            views.setOnClickPendingIntent(R.id.timeTable, pi)
 
             appWidgetManager.updateAppWidget(i, views)
             Log.d("Widget ID", i.toString())
@@ -51,6 +66,12 @@ class WidgetProvider : AppWidgetProvider() {
 
         super.onUpdate(context, appWidgetManager, appWidgetIds)
 
+    }
+
+    fun str2Bitmap(encodedStr:String): Bitmap {
+        var encodeByte = Base64.decode(encodedStr, Base64.DEFAULT)
+        var bitmap = BitmapFactory.decodeByteArray(encodeByte, 0, encodeByte.size)
+        return bitmap
     }
 
     override fun onEnabled(context: Context) {
