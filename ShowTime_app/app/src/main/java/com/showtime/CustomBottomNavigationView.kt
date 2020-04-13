@@ -11,8 +11,8 @@ class CustomBottomNavigationView : BottomNavigationView {
     private var mPath: Path = Path()
     private var mPaint: Paint = Paint()
 
-    private val CURVE_CIRCLE_RADIUS = 190 / 2
-
+//    private val CURVE_CIRCLE_RADIUS = 190 / 2 - 190/2
+    private val CURVE_CIRCLE_RADIUS = 0
     private val mFirstCurveStartPoint = Point()
     private val mFirstCurveEndPoint = Point()
     private val mFirstCurveControlPoint1 = Point()
@@ -39,7 +39,7 @@ class CustomBottomNavigationView : BottomNavigationView {
 
     private fun init() {
         mPaint.style = Paint.Style.FILL_AND_STROKE
-        mPaint.color = ContextCompat.getColor(context, R.color.light_blue)
+        mPaint.color = ContextCompat.getColor(context, R.color.colorPrimary)
         setBackgroundColor(Color.TRANSPARENT)
     }
 

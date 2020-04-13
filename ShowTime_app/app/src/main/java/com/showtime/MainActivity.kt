@@ -35,6 +35,7 @@ class MainActivity : AppCompatActivity() {
 //        val navView: CustomBottomNavigationView = findViewById(R.id.nav_view)
         //bottom_navigation.inflateMenu(R.menu.bottom_nav_menu)
         bottom_navigation.inflateMenu(R.menu.bottom_nav_menu)
+        bottom_navigation.selectedItemId = R.id.navigation_dashboard
         val tran = supportFragmentManager.beginTransaction()
         tran.replace(R.id.nav_host_fragment, HomeFragment()).commitAllowingStateLoss()
         bottom_navigation.setOnNavigationItemSelectedListener {
@@ -42,6 +43,10 @@ class MainActivity : AppCompatActivity() {
             when(it.itemId){
                 R.id.navigation_home->{
                     tran.replace(R.id.nav_host_fragment, DashboardFragment()).commitAllowingStateLoss()
+                    true
+                }
+                R.id.navigation_dashboard->{
+                    tran.replace(R.id.nav_host_fragment, HomeFragment()).commitAllowingStateLoss()
                     true
                 }
                 R.id.navigation_notifications->{
@@ -53,11 +58,11 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         }
-        val floatingBtn = findViewById<FloatingActionButton>(R.id.floatingActionButton)
-        floatingBtn.setOnClickListener {
-            val tran = supportFragmentManager.beginTransaction()
-            tran.replace(R.id.nav_host_fragment, HomeFragment()).commitAllowingStateLoss()
-        }
+//        val floatingBtn = findViewById<FloatingActionButton>(R.id.floatingActionButton)
+//        floatingBtn.setOnClickListener {
+//            val tran = supportFragmentManager.beginTransaction()
+//            tran.replace(R.id.nav_host_fragment, HomeFragment()).commitAllowingStateLoss()
+//        }
 
 //
 //            .setOnClickListener {

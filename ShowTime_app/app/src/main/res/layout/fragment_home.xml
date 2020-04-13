@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="@color/white"
+    android:layout_marginBottom="?attr/actionBarSize"
     >
     <FrameLayout
         android:layout_width="match_parent"

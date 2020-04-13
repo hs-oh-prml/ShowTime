@@ -163,7 +163,6 @@ class NotificationsFragment : Fragment() {
         val lineChart =lineChart
         lineChart.invalidate()
         lineChart.clear()
-
         val values = ArrayList<Entry>()
         for(i in 0 until scoreList.size){
             values.add(Entry(i.toFloat(),scoreList[i]))
@@ -201,13 +200,13 @@ class NotificationsFragment : Fragment() {
         }
         xAxis.setDrawGridLines(false)
         xAxis.setDrawAxisLine(false)
-        xAxis.textColor = ContextCompat.getColor(this.context!!, R.color.table_text_color)
+        xAxis.textColor = ContextCompat.getColor(this.context!!, R.color.table_border)
 
 
         val yAxisRight = lineChart.axisLeft
         yAxisRight.isEnabled = true
-        yAxisRight.gridColor = ContextCompat.getColor(this.context!!, R.color.table_text_color)
-        yAxisRight.textColor = ContextCompat.getColor(this.context!!, R.color.table_text_color)
+        yAxisRight.gridColor = ContextCompat.getColor(this.context!!, R.color.table_border)
+        yAxisRight.textColor = ContextCompat.getColor(this.context!!, R.color.table_border)
         //yAxisRight.setCenterAxisLabels(true)
         yAxisRight.labelCount = 4
         yAxisRight.axisMinimum = 1.0f

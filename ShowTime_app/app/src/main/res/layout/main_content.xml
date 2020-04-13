@@ -21,41 +21,42 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent">
 
-        <com.showtime.CustomBottomNavigationView
+        <com.google.android.material.bottomnavigation.BottomNavigationView
             android:id="@+id/bottom_navigation"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/bottom_nav_custom"
+            android:background="@color/colorPrimary"
             app:itemTextColor="@color/nav_text_color"
             app:itemIconTint="@color/nav_text_color"
             android:layout_gravity="bottom"
-            android:translationZ="1dp"
-            app:labelVisibilityMode="selected" />
+            android:translationZ="0dp"
+            style="@style/BottomNavigationView"
+            app:itemIconSize="20dp"
+            >
+        </com.google.android.material.bottomnavigation.BottomNavigationView>
     </FrameLayout>
 
-    <LinearLayout
-        android:id="@+id/layout_bottom_2"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent">
+<!--    <LinearLayout-->
+<!--        android:id="@+id/layout_bottom_2"-->
+<!--        android:layout_width="0dp"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:gravity="center"-->
+<!--        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--        app:layout_constraintLeft_toLeftOf="parent"-->
+<!--        app:layout_constraintRight_toRightOf="parent">-->
+<!--        <com.google.android.material.floatingactionbutton.FloatingActionButton-->
+<!--            android:id="@+id/floatingActionButton"-->
+<!--            android:layout_width="55dp"-->
+<!--            android:layout_height="55dp"-->
+<!--            android:layout_gravity="center"-->
+<!--            android:backgroundTint="@color/light_blue"-->
+<!--            android:clickable="true"-->
+<!--            app:borderWidth="0dp"-->
+<!--            android:layout_marginBottom="20dp"-->
+<!--            android:src="@drawable/clock"-->
 
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/floatingActionButton"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            android:layout_gravity="center"
-            android:backgroundTint="@color/colorPrimary"
-            android:clickable="true"
-            app:borderWidth="0dp"
-            app:layout_anchor="@+id/bottom_navigation"
-            android:background="@drawable/ripple_effect_btn"
-            app:layout_anchorGravity="center"
-            />
-
-    </LinearLayout>
+<!--            />-->
+<!--    </LinearLayout>-->
 
 
 

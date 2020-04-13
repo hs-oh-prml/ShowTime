@@ -3,8 +3,8 @@
 
     <item
         android:id="@+id/navigation_home"
-        android:icon="@drawable/clock"
-        android:title="@string/title_home"
+        android:icon="@drawable/menu_calendar"
+        android:title="일정"
         />
 
 <!--    <item-->
@@ -12,15 +12,14 @@
 <!--        android:icon="@drawable/time_list"-->
 <!--        android:title="@string/title_dashboard" />-->
     <item
-        android:id="@+id/action_empty"
-        android:title=""
-        android:enabled="false"
-        android:checkable="false"/>
+        android:id="@+id/navigation_dashboard"
+        android:title="시간표"
+        android:icon="@drawable/menu_table"/>
 
     <item
         android:id="@+id/navigation_notifications"
-        android:icon="@drawable/grade"
-        android:title="@string/title_notifications" />
+        android:icon="@drawable/menu_score"
+        android:title="성적" />
 
 </menu>
 
