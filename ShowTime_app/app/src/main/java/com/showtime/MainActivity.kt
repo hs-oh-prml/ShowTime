@@ -10,17 +10,6 @@ import android.view.MenuItem
 import android.widget.Toast
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
-import androidx.navigation.findNavController
-import androidx.navigation.ui.setupWithNavController
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import com.gun0912.tedpermission.PermissionListener
-import com.gun0912.tedpermission.TedPermission
-import com.showtime.addschedule.AddScheduleActivity
-import com.showtime.sharedpreference.PreferenceManager
-import com.showtime.ui.dashboard.SemesterListAdapter
-import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.activity_main.recycler_view
 
 class MainActivity : AppCompatActivity() {
 
@@ -29,12 +18,43 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        val navView: BottomNavigationView = findViewById(R.id.nav_view)
-        //navView.inflateMenu(R.menu.bottom_nav_menu)
+//        val navView: CustomBottomNavigationView = findViewById(R.id.nav_view)
+        //bottom_navigation.inflateMenu(R.menu.bottom_nav_menu)
+        bottom_navigation.inflateMenu(R.menu.bottom_nav_menu)
+        val tran = supportFragmentManager.beginTransaction()
+        tran.replace(R.id.nav_host_fragment, HomeFragment()).commitAllowingStateLoss()
+        bottom_navigation.setOnNavigationItemSelectedListener {
+            val tran = supportFragmentManager.beginTransaction()
+            when(it.itemId){
+                R.id.navigation_home->{
+                    tran.replace(R.id.nav_host_fragment, DashboardFragment()).commitAllowingStateLoss()
+                    true
+                }
+                R.id.navigation_notifications->{
+                    tran.replace(R.id.nav_host_fragment, NotificationsFragment()).commitAllowingStateLoss()
+                    true
+                }
+                else->{
+                    true
+                }
+            }
+        }
+        val floatingBtn = findViewById<FloatingActionButton>(R.id.floatingActionButton)
+        floatingBtn.setOnClickListener {
+            val tran = supportFragmentManager.beginTransaction()
+            tran.replace(R.id.nav_host_fragment, HomeFragment()).commitAllowingStateLoss()
+        }
+
+//
+//            .setOnClickListener {
+//            Toast.makeText(this,"??",Toast.LENGTH_SHORT).show()
+//            val tran = supportFragmentManager.beginTransaction()
+//            tran.replace(R.id.nav_host_fragment, HomeFragment()).commitAllowingStateLoss()
 
 
-        val navController = findNavController(R.id.nav_host_fragment)
-        navView.setupWithNavController(navController)
+
+//        val navController = findNavController(R.id.nav_host_fragment)
+//        bottom_navigation.setupWithNavController(navController)
 
         init()
     }
@@ -120,5 +140,6 @@ class MainActivity : AppCompatActivity() {
             super.onBackPressed()
         }
     }
+
 }
 

@@ -100,12 +100,21 @@ class AddScheduleActivity : AppCompatActivity(){
             }
         }
         submit.setOnClickListener {
+            //과목 이름 안썼을때
+            if(name.text.isEmpty()){
+                Toast.makeText(this,"과목 이름을 입력하세요",Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+
 
             var isLecture = isLecture.isChecked
             var name = name.text.toString()
             var Ncredit:Int
             if(isLecture){
-                Ncredit = credit.text.toString().toInt()
+                if(credit.text.isEmpty())
+                    Ncredit = 3
+                else
+                    Ncredit = credit.text.toString().toInt()
             } else{
                 Ncredit = 0
             }
