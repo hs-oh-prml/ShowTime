@@ -10,10 +10,24 @@ import android.view.MenuItem
 import android.widget.Toast
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.gun0912.tedpermission.PermissionListener
+import com.gun0912.tedpermission.TedPermission
+import com.showtime.addschedule.AddScheduleActivity
+import com.showtime.sharedpreference.PreferenceManager
+import com.showtime.ui.dashboard.DashboardFragment
+import com.showtime.ui.dashboard.SemesterListAdapter
+import com.showtime.ui.home.HomeFragment
+import com.showtime.ui.notifications.NotificationsFragment
+import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.main_content.*
 
 class MainActivity : AppCompatActivity() {
 
     lateinit var pref: PreferenceManager
+    lateinit var listener: SemesterListAdapter.SemesterListener
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -59,15 +73,31 @@ class MainActivity : AppCompatActivity() {
         init()
     }
 
-    fun init(){
+    fun initRecyclerView(){
         pref = PreferenceManager(this)
         var layoutManager = LinearLayoutManager(this, RecyclerView.VERTICAL, false)
-        var adapter = SemesterListAdapter(this, pref.myData.semester)
+
+        var adapter = SemesterListAdapter(this, pref.myData.semester, supportFragmentManager, listener)
         recycler_view.layoutManager = layoutManager
         recycler_view.adapter = adapter
+    }
+
+    override fun onResume() {
+        super.onResume()
+        initRecyclerView()
+    }
+
+    fun init(){
+        listener = object: SemesterListAdapter.SemesterListener{
+            override fun refresh() {
+//                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+                initRecyclerView()
+            }
+        }
+        initRecyclerView()
 
         // Permission Check
-        var permissionLitener = object: PermissionListener{
+        var permissionLitener = object: PermissionListener {
             override fun onPermissionGranted() {
 //                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
                 Toast.makeText(applicationContext, "권한 허가", Toast.LENGTH_SHORT).show()
@@ -116,10 +146,6 @@ class MainActivity : AppCompatActivity() {
 
             R.id.action_settings -> {
                 drawer_layout.openDrawer(Gravity.RIGHT)
-                var layoutManager = LinearLayoutManager(this, RecyclerView.VERTICAL, false)
-                var adapter = SemesterListAdapter(this, pref.myData.semester)
-                recycler_view.layoutManager = layoutManager
-                recycler_view.adapter = adapter
                 true
             }
             R.id.action_add ->{
