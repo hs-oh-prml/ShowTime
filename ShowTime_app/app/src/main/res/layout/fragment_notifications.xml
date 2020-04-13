@@ -56,7 +56,7 @@
                 android:padding="5dp"
                 android:layout_gravity="center"
                 android:background="@drawable/table_border"
-                android:backgroundTint="@color/background_gray"/>
+                android:backgroundTint="@color/table_border"/>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -72,7 +72,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_columnWeight="1"
-                android:textColor="@color/colorPrimary"
+                android:textColor="@color/table_border"
                 android:textSize="13sp"
                 android:text="학점"
                 android:padding="5dp"
