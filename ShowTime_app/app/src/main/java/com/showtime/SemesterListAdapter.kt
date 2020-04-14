@@ -54,7 +54,6 @@ class SemesterListAdapter (
             pref.setTableNum(position)
             listener.refresh()
         }
-
         var total_credit = 0
         var lect_num = 0
         for(i in data.schedules){

@@ -24,9 +24,7 @@ class PreferenceManager(c: Context) {
         edit = pref.edit()
         var gson = Gson()
         var json = pref.getString("myData", "")
-//        Log.d("json", json)
         table = pref.getString("table", "0")!!.toInt()
-        Log.d("Table",pref.getString("table", "0"))
         if(json != ""){
             myData = gson.fromJson(json, MyData::class.java)
         } else {
@@ -41,7 +39,6 @@ class PreferenceManager(c: Context) {
             myData = MyData(semester)
             edit.putString("table", "0")
         }
-        Log.d("myData", myData.toString())
     }
 
     fun setTableNum(t:Int){

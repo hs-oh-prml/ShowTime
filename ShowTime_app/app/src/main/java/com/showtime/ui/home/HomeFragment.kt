@@ -44,7 +44,8 @@ class HomeFragment : Fragment()    {
     }
     fun init(){
         
-        childFragmentManager.beginTransaction().replace(R.id.table, TableFragment(context!!, 0)).commit()
+        childFragmentManager.beginTransaction().replace(R.id.table, TableFragment(context!!, pref.table)).commit()
+
 //
 //        var thread = object: Thread(){
 //            override fun run() {
@@ -67,7 +68,7 @@ class HomeFragment : Fragment()    {
     }
 
     override fun onResume() {
-        childFragmentManager.beginTransaction().replace(R.id.table, TableFragment(context!!, 0)).commit()
+        childFragmentManager.beginTransaction().replace(R.id.table, TableFragment(context!!, pref.table)).commit()
         super.onResume()
 
     }

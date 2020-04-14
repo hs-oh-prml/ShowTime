@@ -8,6 +8,7 @@ import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.FragmentTransaction
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.gun0912.tedpermission.PermissionListener
@@ -22,6 +23,7 @@ class MainActivity : AppCompatActivity() {
 
     lateinit var pref: PreferenceManager
     lateinit var listener: SemesterListAdapter.SemesterListener
+    lateinit var tran:FragmentTransaction
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,21 +32,22 @@ class MainActivity : AppCompatActivity() {
         //bottom_navigation.inflateMenu(R.menu.bottom_nav_menu)
         bottom_navigation.inflateMenu(R.menu.bottom_nav_menu)
         bottom_navigation.selectedItemId = R.id.navigation_dashboard
-        val tran = supportFragmentManager.beginTransaction()
+        tran = supportFragmentManager.beginTransaction()
         tran.replace(R.id.nav_host_fragment, HomeFragment()).commitAllowingStateLoss()
+
         bottom_navigation.setOnNavigationItemSelectedListener {
             val tran = supportFragmentManager.beginTransaction()
             when(it.itemId){
                 R.id.navigation_home->{
-                    tran.replace(R.id.nav_host_fragment, DashboardFragment()).commitAllowingStateLoss()
+                    tran.replace(R.id.nav_host_fragment, DashboardFragment()).commit()
                     true
                 }
                 R.id.navigation_dashboard->{
-                    tran.replace(R.id.nav_host_fragment, HomeFragment()).commitAllowingStateLoss()
+                    tran.replace(R.id.nav_host_fragment, HomeFragment()).commit()
                     true
                 }
                 R.id.navigation_notifications->{
-                    tran.replace(R.id.nav_host_fragment, NotificationsFragment()).commitAllowingStateLoss()
+                    tran.replace(R.id.nav_host_fragment, NotificationsFragment()).commit()
                     true
                 }
                 else->{
@@ -86,16 +89,18 @@ class MainActivity : AppCompatActivity() {
         recycler_view.adapter = adapter
     }
 
-    override fun onResume() {
-        super.onResume()
-        initRecyclerView()
-    }
-
     fun init(){
         listener = object: SemesterListAdapter.SemesterListener{
             override fun refresh() {
 //                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
                 initRecyclerView()
+                var f = supportFragmentManager.findFragmentById(R.id.nav_host_fragment)
+                tran = supportFragmentManager.beginTransaction()
+                tran.detach(f!!).attach(f).commit()
+//                if(f is HomeFragment){
+//                    tran.detach(f).attach(HomeFragment()).commit()
+//                detach(f!!).attach(f).commit()
+//                }
             }
         }
         initRecyclerView()

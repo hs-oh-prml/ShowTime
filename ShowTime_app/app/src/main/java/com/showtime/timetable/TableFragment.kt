@@ -9,7 +9,6 @@ import android.graphics.drawable.Drawable
 import android.graphics.drawable.GradientDrawable
 import android.os.Bundle
 import android.util.DisplayMetrics
-import android.util.Log
 import android.view.Gravity
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -69,12 +68,10 @@ class TableFragment(var c: Context, var semesterNum:Int) : Fragment() {
         }
 
         for((index, i) in  semester.schedules.withIndex()){
-            Log.d("myList", i.name)
             addTable(i, index)
         }
     }
     fun getChild(row:Int, col:Int): TextView {
-        Log.d("index", row.toString() + ", " + col.toString())
         var index = (timeTable.columnCount * row) + col
         return timeTable.getChildAt(index) as TextView
     }
