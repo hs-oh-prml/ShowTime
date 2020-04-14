@@ -15,7 +15,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.showtime.R
 import com.showtime.data.Schedule
 import com.showtime.sharedpreference.PreferenceManager
-import com.showtime.ui.dashboard.DetailDialog
 
 class SemesterAdapter  (
     val context: Context,

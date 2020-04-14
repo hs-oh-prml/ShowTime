@@ -23,7 +23,7 @@ import java.io.FileOutputStream
 import java.io.IOException
 
 class HomeFragment : Fragment()    {
-
+    lateinit var pref:PreferenceManager
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -33,13 +33,19 @@ class HomeFragment : Fragment()    {
         return inflater.inflate(R.layout.fragment_home, container, false)
     }
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        pref = PreferenceManager(context!!)
+    }
+
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         init()
     }
     fun init(){
+        
         childFragmentManager.beginTransaction().replace(R.id.table, TableFragment(context!!, 0)).commit()
-
+//
 //        var thread = object: Thread(){
 //            override fun run() {
 //                super.run()
@@ -56,14 +62,13 @@ class HomeFragment : Fragment()    {
         Log.v("IMAGE SIZE", "${table.width}, ${table.height}")
         var canvas = Canvas(bitmap)
         table.draw(canvas)
-        var pref = PreferenceManager(context!!)
         pref.saveImage(bitmap)
 
     }
 
     override fun onResume() {
-        super.onResume()
         childFragmentManager.beginTransaction().replace(R.id.table, TableFragment(context!!, 0)).commit()
+        super.onResume()
 
     }
 }

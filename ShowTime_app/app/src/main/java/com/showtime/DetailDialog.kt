@@ -1,6 +1,5 @@
-package com.showtime.ui.dashboard
+package com.showtime
 
-import android.app.Dialog
 import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
@@ -13,9 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.showtime.data.MyData
 import com.showtime.sharedpreference.PreferenceManager
-import android.view.WindowManager
 import androidx.fragment.app.DialogFragment
-import com.showtime.R
 import com.showtime.addschedule.AddScheduleActivity
 import com.showtime.data.Schedule
 import kotlinx.android.synthetic.main.dialog_detail.*
@@ -25,14 +22,14 @@ import kotlinx.android.synthetic.main.dialog_detail.*
 class DetailDialog(
     var c: Context,
     var tableNum:Int,
-    var dListener:detailDialogDismissListener
+    var dListener: detailDialogDismissListener
 ) : DialogFragment() {
 
     lateinit var pref: PreferenceManager
     lateinit var info: MyData.Semester
     lateinit var data:ArrayList<Schedule>
-    lateinit var adapter:DetailAdapter
-    lateinit var listener:DetailAdapter.DetailListener
+    lateinit var adapter: DetailAdapter
+    lateinit var listener: DetailAdapter.DetailListener
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -69,7 +66,7 @@ class DetailDialog(
         data = info.schedules
         Log.d("Detail Data", data.toString())
         var layoutManager = LinearLayoutManager(c, RecyclerView.VERTICAL, false)
-        listener = object: DetailAdapter.DetailListener{
+        listener = object: DetailAdapter.DetailListener {
             override fun refresh() {
 //                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
                 init()

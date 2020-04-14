@@ -3,26 +3,20 @@ package com.showtime
 import android.Manifest
 import android.content.Intent
 import android.os.Bundle
-import android.os.Environment
 import android.view.Gravity
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
-import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.gun0912.tedpermission.PermissionListener
 import com.gun0912.tedpermission.TedPermission
 import com.showtime.addschedule.AddScheduleActivity
 import com.showtime.sharedpreference.PreferenceManager
 import com.showtime.ui.dashboard.DashboardFragment
-import com.showtime.ui.dashboard.SemesterListAdapter
 import com.showtime.ui.home.HomeFragment
 import com.showtime.ui.notifications.NotificationsFragment
-import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.main_content.*
 
 class MainActivity : AppCompatActivity() {
 
@@ -82,7 +76,12 @@ class MainActivity : AppCompatActivity() {
         pref = PreferenceManager(this)
         var layoutManager = LinearLayoutManager(this, RecyclerView.VERTICAL, false)
 
-        var adapter = SemesterListAdapter(this, pref.myData.semester, supportFragmentManager, listener)
+        var adapter = SemesterListAdapter(
+            this,
+            pref.myData.semester,
+            supportFragmentManager,
+            listener
+        )
         recycler_view.layoutManager = layoutManager
         recycler_view.adapter = adapter
     }
