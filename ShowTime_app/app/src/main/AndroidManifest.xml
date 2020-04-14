@@ -22,7 +22,7 @@
                 android:resource="@xml/table_widget_info" />
         </receiver>
 
-        <activity android:name=".ui.dashboard.DetailDialog" />
+        <activity android:name=".DetailDialog" />
         <activity android:name=".addschedule.AddScheduleActivity" />
         <activity
             android:name=".MainActivity"

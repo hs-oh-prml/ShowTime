@@ -1,14 +1,12 @@
-package com.showtime.ui.dashboard
+package com.showtime
 
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.showtime.R
 import com.showtime.data.Schedule
 import com.showtime.sharedpreference.PreferenceManager
 
@@ -16,7 +14,7 @@ class DetailAdapter(
     val context: Context,
     var items:ArrayList<Schedule>,
     var tableNum:Int,
-    var listener:DetailListener
+    var listener: DetailListener
 ): RecyclerView.Adapter<DetailAdapter.ViewHolder>() {
 
     interface DetailListener{
