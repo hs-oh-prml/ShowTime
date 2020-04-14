@@ -25,7 +25,6 @@ import java.io.IOException
 class HomeFragment : Fragment()    {
     lateinit var pref:PreferenceManager
 
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -44,8 +43,8 @@ class HomeFragment : Fragment()    {
         init()
     }
     fun init(){
-
-        childFragmentManager.beginTransaction().replace(R.id.table, TableFragment(context!!, 0)).commit()
+        
+        childFragmentManager.beginTransaction().replace(R.id.table, TableFragment(context!!, pref.table)).commit()
 
 //
 //        var thread = object: Thread(){

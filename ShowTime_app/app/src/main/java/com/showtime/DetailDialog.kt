@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -63,6 +64,7 @@ class DetailDialog(
         pref = PreferenceManager(c)
         info = pref.myData.semester[tableNum]
         data = info.schedules
+        Log.d("Detail Data", data.toString())
         var layoutManager = LinearLayoutManager(c, RecyclerView.VERTICAL, false)
         listener = object: DetailAdapter.DetailListener {
             override fun refresh() {

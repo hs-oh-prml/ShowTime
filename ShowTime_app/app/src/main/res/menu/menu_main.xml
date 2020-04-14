@@ -6,13 +6,14 @@
         android:id="@+id/action_add"
         android:title="추가"
         android:icon="@drawable/more2"
+        android:iconTint="@color/colorPrimary"
         app:showAsAction="always"
-
         />
     <item
         android:id="@+id/action_settings"
         android:title="설정"
         android:icon="@drawable/list2"
+        android:iconTint="@color/colorPrimary"
         app:showAsAction="always"/>
 
 </menu>

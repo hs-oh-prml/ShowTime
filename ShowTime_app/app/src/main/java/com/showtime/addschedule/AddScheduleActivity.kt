@@ -95,15 +95,36 @@ class AddScheduleActivity : AppCompatActivity(){
         isLecture.setOnCheckedChangeListener { compoundButton, b ->
             if(isLecture.isChecked){
                 credit.visibility = VISIBLE
+                credit_text.visibility = VISIBLE
             } else {
                 credit.visibility = GONE
+                credit_text.visibility = GONE
             }
         }
+        // 닫기 버튼 inae
+        close_schedule.setOnClickListener {
+            this.finish()
+        }
         submit.setOnClickListener {
+
             //과목 이름 안썼을때
             if(name.text.isEmpty()){
                 Toast.makeText(this,"과목 이름을 입력하세요",Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
+            }
+
+            //장소 체크
+            var placeStr = place.text.toString() // 장소 text
+            if(isPlace.isChecked){ // 장소 없음
+
+            }else{ // 장소 있음
+                if(place.text.isEmpty()){
+                    Toast.makeText(this,"장소를 입력하세요",Toast.LENGTH_SHORT).show()
+                    return@setOnClickListener
+                }else{
+                    // 장소 저장
+                }
+
             }
 
 

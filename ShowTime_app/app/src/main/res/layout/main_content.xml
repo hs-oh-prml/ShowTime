@@ -33,6 +33,7 @@
             style="@style/BottomNavigationView"
             app:itemIconSize="18dp"
             app:elevation="0dp"
+            app:labelVisibilityMode="labeled"
             >
         </com.google.android.material.bottomnavigation.BottomNavigationView>
     </FrameLayout>
