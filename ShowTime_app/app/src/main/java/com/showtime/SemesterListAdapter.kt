@@ -1,8 +1,6 @@
-package com.showtime.ui.dashboard
+package com.showtime
 
 import android.content.Context
-import android.content.DialogInterface
-import android.content.Intent
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -12,9 +10,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.fragment.app.FragmentManager
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.showtime.R
 import com.showtime.data.MyData
 import com.showtime.sharedpreference.PreferenceManager
 
@@ -22,7 +18,7 @@ class SemesterListAdapter (
     val context: Context,
     var items:ArrayList<MyData.Semester>,
     var fm: FragmentManager,
-    var listener:SemesterListener
+    var listener: SemesterListener
 ): RecyclerView.Adapter<SemesterListAdapter.ViewHolder>()
 {
 
@@ -66,7 +62,7 @@ class SemesterListAdapter (
 //            var intent = Intent(context, DetailDialog::class.java)
 //            intent.putExtra("tableNum", position)
 //            context.startActivity(intent)
-            var dListener = object: DetailDialog.detailDialogDismissListener{
+            var dListener = object: DetailDialog.detailDialogDismissListener {
                 override fun onDismiss() {
 //                    TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
                     Log.d("Dialog Status", "Dismiss")

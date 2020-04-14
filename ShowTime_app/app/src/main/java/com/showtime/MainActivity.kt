@@ -3,22 +3,19 @@ package com.showtime
 import android.Manifest
 import android.content.Intent
 import android.os.Bundle
-import android.os.Environment
 import android.view.Gravity
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
-import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.FragmentTransaction
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.gun0912.tedpermission.PermissionListener
 import com.gun0912.tedpermission.TedPermission
 import com.showtime.addschedule.AddScheduleActivity
 import com.showtime.sharedpreference.PreferenceManager
 import com.showtime.ui.dashboard.DashboardFragment
-import com.showtime.ui.dashboard.SemesterListAdapter
 import com.showtime.ui.home.HomeFragment
 import com.showtime.ui.notifications.NotificationsFragment
 import kotlinx.android.synthetic.main.activity_main.*
@@ -28,6 +25,7 @@ class MainActivity : AppCompatActivity() {
 
     lateinit var pref: PreferenceManager
     lateinit var listener: SemesterListAdapter.SemesterListener
+    lateinit var tran:FragmentTransaction
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,21 +34,22 @@ class MainActivity : AppCompatActivity() {
         //bottom_navigation.inflateMenu(R.menu.bottom_nav_menu)
         bottom_navigation.inflateMenu(R.menu.bottom_nav_menu)
         bottom_navigation.selectedItemId = R.id.navigation_dashboard
-        val tran = supportFragmentManager.beginTransaction()
+        tran = supportFragmentManager.beginTransaction()
         tran.replace(R.id.nav_host_fragment, HomeFragment()).commitAllowingStateLoss()
+
         bottom_navigation.setOnNavigationItemSelectedListener {
             val tran = supportFragmentManager.beginTransaction()
             when(it.itemId){
                 R.id.navigation_home->{
-                    tran.replace(R.id.nav_host_fragment, DashboardFragment()).commitAllowingStateLoss()
+                    tran.replace(R.id.nav_host_fragment, DashboardFragment()).commit()
                     true
                 }
                 R.id.navigation_dashboard->{
-                    tran.replace(R.id.nav_host_fragment, HomeFragment()).commitAllowingStateLoss()
+                    tran.replace(R.id.nav_host_fragment, HomeFragment()).commit()
                     true
                 }
                 R.id.navigation_notifications->{
-                    tran.replace(R.id.nav_host_fragment, NotificationsFragment()).commitAllowingStateLoss()
+                    tran.replace(R.id.nav_host_fragment, NotificationsFragment()).commit()
                     true
                 }
                 else->{
@@ -82,14 +81,14 @@ class MainActivity : AppCompatActivity() {
         pref = PreferenceManager(this)
         var layoutManager = LinearLayoutManager(this, RecyclerView.VERTICAL, false)
 
-        var adapter = SemesterListAdapter(this, pref.myData.semester, supportFragmentManager, listener)
+        var adapter = SemesterListAdapter(
+            this,
+            pref.myData.semester,
+            supportFragmentManager,
+            listener
+        )
         recycler_view.layoutManager = layoutManager
         recycler_view.adapter = adapter
-    }
-
-    override fun onResume() {
-        super.onResume()
-        initRecyclerView()
     }
 
     fun init(){
@@ -97,6 +96,13 @@ class MainActivity : AppCompatActivity() {
             override fun refresh() {
 //                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
                 initRecyclerView()
+                var f = supportFragmentManager.findFragmentById(R.id.nav_host_fragment)
+                tran = supportFragmentManager.beginTransaction()
+                tran.detach(f!!).attach(f).commit()
+//                if(f is HomeFragment){
+//                    tran.detach(f).attach(HomeFragment()).commit()
+//                detach(f!!).attach(f).commit()
+//                }
             }
         }
         initRecyclerView()

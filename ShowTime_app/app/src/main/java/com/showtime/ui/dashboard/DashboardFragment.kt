@@ -1,6 +1,7 @@
 package com.showtime.ui.dashboard
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,7 +15,10 @@ import com.showtime.R
 import com.showtime.data.MyData
 import com.showtime.data.Schedule
 import com.showtime.sharedpreference.PreferenceManager
+import kotlinx.android.synthetic.main.calendar_layout.*
 import kotlinx.android.synthetic.main.fragment_dashboard.*
+import kotlinx.android.synthetic.main.fragment_notifications.*
+import java.util.*
 
 class DashboardFragment : Fragment() {
     lateinit var pref: PreferenceManager
@@ -37,7 +41,23 @@ class DashboardFragment : Fragment() {
 //        recycler_view.layoutManager = layoutManager
 //        recycler_view.adapter = adapter
 
+        var today = Calendar.getInstance()
+        Log.d("Fragment_Calendar", today.get(Calendar.YEAR).toString())
+        Log.d("Fragment_Calendar", today.get(Calendar.MONTH).toString())
+        Log.d("Fragment_Calendar", today.get(Calendar.DATE).toString())
+        Log.d("Fragment_Calendar", today.get(Calendar.DAY_OF_WEEK).toString())
+        Log.d("Fragment_Calendar", today.getActualMaximum(Calendar.DAY_OF_MONTH).toString())
 
+        var adapter = CalendarAdapter(requireContext(), today)
+        calendarView.adapter = adapter
+        calendarView.setCurrentItem((Integer.MAX_VALUE) / 2, false)
+
+        prev.setOnClickListener {
+            calendarView.setCurrentItem(calendarView.currentItem - 1, true)
+        }
+        next.setOnClickListener {
+            calendarView.setCurrentItem(calendarView.currentItem + 1, true)
+        }
     }
 
 }
