@@ -16,11 +16,11 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="top|center_horizontal"
+            android:layout_gravity="top"
             android:text="ShowTime"
             android:textColor="@color/colorPrimary"
             android:fontFamily="@font/permanentmarker"
-            android:textSize="20sp"/>
+            android:textSize="22sp"/>
     </androidx.appcompat.widget.Toolbar>
 
     <include layout="@layout/main_content"/>
@@ -56,18 +56,36 @@
                     android:textColor="@color/colorPrimary"
                     android:fontFamily="@font/permanentmarker"
                     android:text="Show Time" />
-
-<!--                <TextView-->
-<!--                    android:padding="5dp"-->
-<!--                    android:layout_width="wrap_content"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:textSize="13sp"-->
-<!--                    android:textStyle="bold"-->
-<!--                    android:textColor="@color/dark_grey"-->
-<!--                    android:text="시간표 목록"-->
-<!--                    android:layout_marginTop="10dp"-->
-<!--                    android:background="@drawable/table_border"-->
-<!--                    android:backgroundTint="@color/background_gray"/>-->
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingTop="10dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="5dp"
+                android:gravity="center"
+                android:padding="10dp">
+                <TextView
+                    android:padding="5dp"
+                    android:layout_width="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:layout_marginEnd="10dp"
+                    android:text="시간표"
+                    android:textSize="13sp"
+                    android:textColor="@color/dark_grey"
+                    android:textStyle="bold"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="대표"
+                    android:textSize="13sp"
+                    android:textColor="@color/dark_grey"
+                    android:textStyle="bold"
+                    android:padding="5dp"/>
             </LinearLayout>
             <androidx.recyclerview.widget.RecyclerView
                 android:layout_width="match_parent"
@@ -75,8 +93,14 @@
                 android:id="@+id/recycler_view"
                 android:background="@drawable/table_border"
                 android:backgroundTint="@color/white"
-                android:padding="10dp"
+                android:paddingStart="10dp"
+                android:paddingEnd="10dp"
                 />
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginHorizontal="15dp"
+                android:background="@color/background_gray"/>
             <View
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
@@ -85,7 +109,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
-                android:text="C r e a t ed   b y   k i m I n a e ,   o h h y u n g s e o k"
+                android:text="C r e a t e d   b y   k i m i n a e ,   o h h y u n g s e o k"
                 android:background="@drawable/list_border"
                 android:textSize="9sp"
                 android:textColor="@color/table_text_color"

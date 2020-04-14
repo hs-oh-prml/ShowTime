@@ -40,14 +40,14 @@ class HomeFragment : Fragment()    {
     fun init(){
         childFragmentManager.beginTransaction().replace(R.id.table, TableFragment(context!!, 0)).commit()
 
-        var thread = object: Thread(){
-            override fun run() {
-                super.run()
-                sleep(2000)
-                screenCapture()
-            }
-        }
-        thread.start()
+//        var thread = object: Thread(){
+//            override fun run() {
+//                super.run()
+//                sleep(2000)
+//                screenCapture()
+//            }
+//        }
+//        thread.start()
     }
     fun screenCapture(){
 

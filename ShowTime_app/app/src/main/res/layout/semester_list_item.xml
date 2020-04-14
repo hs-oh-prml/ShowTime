@@ -12,7 +12,6 @@
         android:layout_height="wrap_content"
         android:id="@+id/name"
         android:layout_weight="1"
-        android:layout_marginStart="10dp"
         android:textSize="12sp"
         android:textColor="@color/dark_grey"
         />
@@ -41,8 +40,7 @@
         android:id="@+id/score"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@drawable/table_border"
-        android:backgroundTint="@color/table_border"
+        android:background="@drawable/list_border_small"
         android:gravity="center"/>
 
 </LinearLayout>

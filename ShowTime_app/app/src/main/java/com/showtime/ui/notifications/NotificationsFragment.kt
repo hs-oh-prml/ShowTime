@@ -200,13 +200,13 @@ class NotificationsFragment : Fragment() {
         }
         xAxis.setDrawGridLines(false)
         xAxis.setDrawAxisLine(false)
-        xAxis.textColor = ContextCompat.getColor(this.context!!, R.color.table_text_color)
+        xAxis.textColor = ContextCompat.getColor(this.context!!, R.color.middle_gray)
 
 
         val yAxisRight = lineChart.axisLeft
         yAxisRight.isEnabled = true
-        yAxisRight.gridColor = ContextCompat.getColor(this.context!!, R.color.table_text_color)
-        yAxisRight.textColor = ContextCompat.getColor(this.context!!, R.color.table_text_color)
+        yAxisRight.gridColor = ContextCompat.getColor(this.context!!, R.color.middle_gray)
+        yAxisRight.textColor = ContextCompat.getColor(this.context!!, R.color.middle_gray)
         //yAxisRight.setCenterAxisLabels(true)
         yAxisRight.labelCount = 4
         yAxisRight.axisMinimum = 1.0f

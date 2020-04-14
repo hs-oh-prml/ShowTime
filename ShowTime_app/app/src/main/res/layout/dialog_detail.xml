@@ -13,66 +13,70 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:background="@color/colorPrimary"
+        android:background="@color/white"
         >
-        <TextView
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/title"
-            android:padding="15dp"
-            android:textSize="15sp"
-            android:textColor="@color/white"
-            android:text="Title"
-            android:layout_weight="1"
-            />
+            android:orientation="vertical"
+            android:layout_weight="1">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/title"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:textSize="18sp"
+                android:textColor="@color/dark_grey"
+                android:textStyle="bold"
+                android:text="Title"
+                />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:layout_marginStart="10dp"
+                android:layout_marginBottom="10dp"
+                >
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/lecture_count"
+                    android:textColor="@color/dark_grey"
+                    android:textSize="13sp"
+                    android:layout_marginEnd="10dp"
+                    android:text="과목"
+                    />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/total_credit"
+                    android:textColor="@color/dark_grey"
+                    android:textSize="13sp"
+                    android:text="학점"/>
+            </LinearLayout>
+        </LinearLayout>
+
+
         <ImageButton
-            android:layout_width="25dp"
-            android:layout_height="25dp"
-            android:id="@+id/add"
-            android:background="@drawable/ic_add_circle_black_24dp"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:id="@+id/close"
+            android:background="@drawable/ic_close_black_24dp"
             android:layout_gravity="center_vertical"
-            android:layout_marginEnd="7dp"
+            android:layout_marginEnd="10dp"
             />
     </LinearLayout>
-    <LinearLayout
-        android:layout_gravity="center"
+    <View
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:gravity="center"
-        android:padding="5dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginStart="10dp"
-        android:layout_marginEnd="10dp"
-
-        android:background="@drawable/table_border"
-        android:backgroundTint="@color/background_gray"
-        >
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/lecture_count"
-            android:textColor="@color/black"
-            android:textSize="13sp"
-            android:layout_marginEnd="20dp"
-            />
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/total_credit"
-            android:textColor="@color/black"
-            android:textSize="13sp"/>
-    </LinearLayout>
-
-
+        android:layout_height="1dp"
+        android:background="@color/background_gray"/>
     <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/recycler_view"
         android:layout_weight="1"
-        android:background="@drawable/table_border"
-        android:backgroundTint="@color/background_gray"
-        android:layout_margin="10dp"
         android:padding="5dp"
         />
 
@@ -88,8 +92,8 @@
         <TextView
             android:layout_width="130dp"
             android:layout_height="wrap_content"
-            android:id="@+id/close"
-            android:text="닫기"
+            android:id="@+id/add"
+            android:text="시간표 추가하기"
             android:gravity="center"
             android:padding="10dp"
             android:layout_margin="5dp"

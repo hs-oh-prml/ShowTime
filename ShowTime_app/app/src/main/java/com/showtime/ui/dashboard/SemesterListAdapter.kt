@@ -10,6 +10,7 @@ import android.view.View.INVISIBLE
 import android.view.View.VISIBLE
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -51,6 +52,13 @@ class SemesterListAdapter (
         } else {
             holder.is_selected.visibility = INVISIBLE
         }
+
+        //inae
+        holder.is_selected_btn.setOnClickListener {
+            pref.setTableNum(position)
+            listener.refresh()
+        }
+
         var total_credit = 0
         var lect_num = 0
         for(i in data.schedules){
@@ -62,7 +70,7 @@ class SemesterListAdapter (
         holder.credit.text = "${total_credit}학점"
         holder.lecture_count.text = "${lect_num}과목"
 
-        holder.itemView.setOnClickListener {
+        holder.item_semester.setOnClickListener {
 //            var intent = Intent(context, DetailDialog::class.java)
 //            intent.putExtra("tableNum", position)
 //            context.startActivity(intent)
@@ -89,11 +97,15 @@ class SemesterListAdapter (
         var is_selected:ImageView
         var credit:TextView
         var lecture_count:TextView
+        var item_semester:LinearLayout
+        var is_selected_btn:LinearLayout
         init {
             semester = itemView.findViewById(R.id.semester)
             is_selected = itemView.findViewById(R.id.is_selected)
             credit = itemView.findViewById(R.id.credit)
             lecture_count = itemView.findViewById(R.id.lecture_count)
+            item_semester = itemView.findViewById(R.id.item_semester)
+            is_selected_btn = itemView.findViewById(R.id.is_selected_btn)
         }
 
     }

@@ -5,6 +5,7 @@
         android:id="@+id/navigation_home"
         android:icon="@drawable/menu_calendar"
         android:title="일정"
+
         />
 
 <!--    <item-->
