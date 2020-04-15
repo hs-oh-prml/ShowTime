@@ -12,6 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="1"
+        android:id="@+id/calendar_frame"
         >
         <androidx.viewpager2.widget.ViewPager2
             android:layout_width="match_parent"
@@ -22,7 +23,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/prev"
-            android:background="@color/invisible"
+            android:background="@drawable/ripple_effect"
             android:src="@drawable/ic_arrow_left"
             android:layout_alignParentLeft="true"
             android:layout_alignParentTop="true"
@@ -31,7 +32,7 @@
         <ImageButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@color/invisible"
+            android:background="@drawable/ripple_effect"
             android:id="@+id/next"
             android:src="@drawable/ic_arrow_right"
             android:layout_alignParentRight="true"
@@ -44,10 +45,62 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         >
-        <TextView
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:id="@+id/schedule_detail"
-            />
+            android:orientation="vertical"
+            >
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:padding="10dp"
+                >
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/selected_date"
+                    android:layout_weight="1"
+                    android:textColor="@color/black"
+                    />
+                <ImageButton
+                    android:id="@+id/schedule_edit_btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_pencil"
+                    android:padding="10dp"
+                    android:background="@drawable/ripple_effect"
+                    />
+                <ImageButton
+                    android:id="@+id/schedule_commit_btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_check"
+                    android:background="@drawable/ripple_effect"
+                    android:padding="10dp"
+                    android:visibility="gone"
+
+                    />
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/schedule_content"
+                android:padding="10dp"
+
+                />
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/schedule_edit_text"
+                android:inputType="textImeMultiLine"
+                android:background="@android:color/transparent"
+                android:padding="10dp"
+                android:gravity="top"
+                android:visibility="gone"
+                />
+        </LinearLayout>
     </RelativeLayout>
 </LinearLayout>
