@@ -1,6 +1,7 @@
 package com.showtime.ui.dashboard
 
 import android.content.Context
+import android.util.Log
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
@@ -21,8 +22,13 @@ import java.util.*
 
 class CalendarAdapter(
     var context: Context,
-    var today: Calendar
+    var today: Calendar,
+    var listener:calendarListener
 ): RecyclerView.Adapter<CalendarAdapter.ViewHolder>() {
+
+    interface calendarListener{
+        fun onClick(month:Int, year:Int, clickDate:Int, weekDay:String,  v:View)
+    }
 
     var clickDate = -1
 
@@ -87,7 +93,7 @@ class CalendarAdapter(
 
                     var inflater = LayoutInflater.from(context)
 //                var inflater: LayoutInflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
-                    var child = inflater.inflate(R.layout.calendar_item, null)
+                    var child = inflater.inflate(R.layout.calendar_item, holder.calendar, false)
 
 //                var params = LinearLayout.LayoutParams(WRAP_CONTENT, WRAP_CONTENT, 1f)
 //                child.layoutParams = params
@@ -127,32 +133,40 @@ class CalendarAdapter(
                 }
 
                 for((index, i) in holder.calendar.children.withIndex()){
+                    if(index < 7){
+                        continue
+                    }
                     i.setOnClickListener {
                         var i_date = i.findViewById<TextView>(R.id.date)
-                        if(clickDate == index){
-                            i.setBackgroundColor(ContextCompat.getColor(context, R.color.white))
-                            if(j == 0){
-                                i_date.setTextColor((ContextCompat.getColor(context, R.color.red)))
-                            }else if(j == 6){
-                                i_date.setTextColor((ContextCompat.getColor(context, R.color.blue)))
+                        if(i_date.text.toString() != ""){
+                            if(clickDate == index){
+                                i.setBackgroundColor(ContextCompat.getColor(context, R.color.white))
+                                if(index % 7 == 0){
+                                    i_date.setTextColor((ContextCompat.getColor(context, R.color.red)))
+                                }else if(index % 7 == 6){
+                                    i_date.setTextColor((ContextCompat.getColor(context, R.color.blue)))
+                                } else {
+                                    i_date.setTextColor((ContextCompat.getColor(context, R.color.black)))
+                                }
+                                clickDate = -1
                             } else {
-                                i_date.setTextColor((ContextCompat.getColor(context, R.color.black)))
+                                if(clickDate != -1){
+                                    var prev = holder.calendar.getChildAt(clickDate)
+                                    var prev_date = prev.findViewById<TextView>(R.id.date)
+                                    prev.setBackgroundColor(ContextCompat.getColor(context, R.color.white))
+                                    if(clickDate % 7 == 0){
+                                        prev_date.setTextColor((ContextCompat.getColor(context, R.color.red)))
+                                    }else if(clickDate % 7 == 6){
+                                        prev_date.setTextColor((ContextCompat.getColor(context, R.color.blue)))
+                                    } else {
+                                        prev_date.setTextColor((ContextCompat.getColor(context, R.color.black)))
+                                    }
+                                }
+                                i.setBackgroundColor(ContextCompat.getColor(context, R.color.colorPrimary))
+                                i_date.setTextColor(ContextCompat.getColor(context, R.color.white))
+                                clickDate = index
                             }
-                            clickDate = -1
-                        } else {
-                            var prev = holder.calendar.getChildAt(clickDate)
-                            var prev_date = prev.findViewById<TextView>(R.id.date)
-                            prev.setBackgroundColor(ContextCompat.getColor(context, R.color.white))
-                            if(index % 7 == 0){
-                                prev_date.setTextColor((ContextCompat.getColor(context, R.color.red)))
-                            }else if(index % 7 == 6){
-                                prev_date.setTextColor((ContextCompat.getColor(context, R.color.blue)))
-                            } else {
-                                prev_date.setTextColor((ContextCompat.getColor(context, R.color.black)))
-                            }
-                            i.setBackgroundColor(ContextCompat.getColor(context, R.color.colorPrimary))
-                            i_date.setTextColor(ContextCompat.getColor(context, R.color.white))
-                            clickDate = index
+                            listener.onClick(month, year, clickDate, week[index % 7], it)
                         }
                     }
                 }

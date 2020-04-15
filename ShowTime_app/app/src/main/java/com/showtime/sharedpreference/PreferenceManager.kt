@@ -41,6 +41,17 @@ class PreferenceManager(c: Context) {
         }
     }
 
+    fun getDaySchedule(y:Int, m:Int, d:Int):String?{
+        var date = "${y}-${m}-${d}"
+        return pref.getString(date, "")
+    }
+
+    fun setDaySchedule(y:Int, m:Int, d:Int, content:String){
+        var date = "${y}-${m}-${d}"
+        edit.putString(date, content).commit()
+    }
+
+
     fun setTableNum(t:Int){
         edit.putString("table", t.toString()).commit()
         table = t
