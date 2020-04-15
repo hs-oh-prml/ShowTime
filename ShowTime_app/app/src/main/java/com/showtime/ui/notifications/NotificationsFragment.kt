@@ -75,11 +75,14 @@ class NotificationsFragment : Fragment() {
 
         taking_score.text = "${total_credit}학점"
         var gdp = 0.0f
-        for(i in scoreList){
-            gdp += i
+        var score_num = 0
+        for(i in scoreList){ // score 이 nan 이면 패스
+            if(!(i.isNaN())){
+                gdp += i
+                score_num++
+            }
         }
-        gdp /= scoreList.size
-
+        gdp /= score_num.toFloat()
         total_score.text = "%.2f/4.5".format(gdp)
     }
     fun init(){
@@ -155,7 +158,8 @@ class NotificationsFragment : Fragment() {
                     }
                 }
             }
-            scoreList.add(score/credit)
+            scoreList.add((score/credit).toFloat())
+            println("scoreList : "+(score/credit))
         }
     }
 
@@ -209,8 +213,8 @@ class NotificationsFragment : Fragment() {
         yAxisRight.textColor = ContextCompat.getColor(this.context!!, R.color.middle_gray)
         //yAxisRight.setCenterAxisLabels(true)
         yAxisRight.labelCount = 4
-        yAxisRight.axisMinimum = 1.0f
-        yAxisRight.axisMaximum = 4.0f
+        yAxisRight.axisMinimum = 0.0f
+        yAxisRight.axisMaximum = 4.5f
         //yAxisRight.gridLineWidth =
         yAxisRight.setDrawLabels(true)
         yAxisRight.setDrawAxisLine(false)

@@ -47,7 +47,7 @@ class DetailAdapter(
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         var name: TextView
         var credit:TextView
-        var delete: ImageView
+        var delete: TextView
         init {
             name = itemView.findViewById(R.id.name)
             credit = itemView.findViewById(R.id.credit)
