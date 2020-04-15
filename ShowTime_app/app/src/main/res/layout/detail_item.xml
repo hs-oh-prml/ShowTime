@@ -3,10 +3,18 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="horizontal"
-    android:padding="7dp"
+    android:orientation="vertical"
+    android:layout_marginHorizontal="7dp"
+    android:layout_marginBottom="7dp"
     android:gravity="center_vertical"
     >
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        >
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -17,11 +25,11 @@
         android:layout_marginStart="10dp"
         android:textSize="13sp"
         />
-    <View
-        android:layout_width="1dp"
-        android:layout_height="match_parent"
-        android:layout_marginVertical="2dp"
-        android:background="@color/table_border"/>
+<!--    <View-->
+<!--        android:layout_width="1dp"-->
+<!--        android:layout_height="match_parent"-->
+<!--        android:layout_marginVertical="2dp"-->
+<!--        android:background="@color/table_border"/>-->
     <TextView
         android:layout_marginHorizontal="20dp"
         android:layout_width="wrap_content"
@@ -30,17 +38,30 @@
         android:textColor="@color/dark_grey"
         android:textSize="13sp"
         />
-    <View
-        android:layout_width="1dp"
-        android:layout_height="match_parent"
-        android:layout_marginVertical="2dp"
-        android:background="@color/table_border"
-        android:layout_marginEnd="20dp"/>
-    <ImageView
-        android:layout_width="15dp"
-        android:layout_height="15dp"
+<!--    <View-->
+<!--        android:layout_width="1dp"-->
+<!--        android:layout_height="match_parent"-->
+<!--        android:layout_marginVertical="2dp"-->
+<!--        android:background="@color/table_border"-->
+<!--        android:layout_marginEnd="20dp"/>-->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:id="@+id/delete"
-        android:background="@drawable/trash"
         android:layout_marginEnd="10dp"
+        android:text="삭제"
+        android:textSize="10dp"
+        android:textColor="@color/dark_grey"
+        android:background="@drawable/list_border_small"
+        android:padding="3dp"
         />
+    </LinearLayout>
+    <View
+        android:layout_width="wrap_content"
+        android:layout_height="1dp"
+        android:background="@color/background_gray"
+        android:layout_marginTop="5dp"
+        android:layout_marginHorizontal="5dp"/>
 </LinearLayout>
+
+

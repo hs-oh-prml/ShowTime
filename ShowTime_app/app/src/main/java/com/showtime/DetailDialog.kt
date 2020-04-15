@@ -92,10 +92,6 @@ class DetailDialog(
         close.setOnClickListener {
             dismiss()
         }
-        select.setOnClickListener {
-            pref.setTableNum(tableNum)
-            dismiss()
-        }
         add.setOnClickListener {
             var intent = Intent(c, AddScheduleActivity::class.java)
             intent.putExtra("tableNum", tableNum)

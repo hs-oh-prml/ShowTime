@@ -18,6 +18,8 @@ import com.showtime.sharedpreference.PreferenceManager
 import com.showtime.ui.dashboard.DashboardFragment
 import com.showtime.ui.home.HomeFragment
 import com.showtime.ui.notifications.NotificationsFragment
+import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.main_content.*
 
 class MainActivity : AppCompatActivity() {
 
