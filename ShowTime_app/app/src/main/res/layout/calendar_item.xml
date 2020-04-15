@@ -4,12 +4,14 @@
     android:layout_height="wrap_content"
     android:orientation="vertical"
     android:gravity="center"
+    android:id="@+id/calendar_item_layout"
     >
     <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="10dp"
+        android:layout_height="10dp"
+        android:background="@drawable/ic_check"
+        android:backgroundTint="@color/colorPrimary"
         android:id="@+id/isToday"
-        android:src="@drawable/calendar_today_check"
         android:visibility="invisible"
         />
     <TextView
@@ -17,11 +19,12 @@
         android:layout_height="wrap_content"
         android:id="@+id/date"
         />
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+    <View
+        android:layout_width="5dp"
+        android:layout_height="5dp"
+        android:background="@drawable/circle_layout"
+        android:backgroundTint="@color/green_check"
         android:id="@+id/isScheduled"
         android:visibility="invisible"
-        android:text="."
-        />
+        android:layout_marginTop="2dp"/>
 </LinearLayout>
