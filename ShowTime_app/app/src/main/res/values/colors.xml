@@ -17,4 +17,6 @@
     <color name="light_blue">#f7faff</color>
     <color name="middle_gray">#e8e8e8</color>
     <color name="invisible">#00000000</color>
+    <color name="very_light_gray">#f9f9f9</color>
+    <color name="green_check">#78c46e</color>
 </resources>

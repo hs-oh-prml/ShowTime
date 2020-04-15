@@ -11,39 +11,46 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
+        android:layout_weight="2"
         android:id="@+id/calendar_frame"
         >
         <androidx.viewpager2.widget.ViewPager2
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:id="@+id/calendarView"
+            android:layout_margin="10dp"
             />
         <ImageButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
             android:id="@+id/prev"
-            android:background="@drawable/ripple_effect"
-            android:src="@drawable/ic_arrow_left"
+            android:background="@drawable/arrow_left"
+            android:backgroundTint="@color/colorPrimary"
             android:layout_alignParentLeft="true"
             android:layout_alignParentTop="true"
-            android:padding="10dp"
+            android:layout_marginStart="25dp"
+            android:layout_marginTop="25dp"
             />
         <ImageButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/ripple_effect"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:background="@drawable/arrow_right"
+            android:backgroundTint="@color/colorPrimary"
             android:id="@+id/next"
-            android:src="@drawable/ic_arrow_right"
             android:layout_alignParentRight="true"
             android:layout_alignParentTop="true"
-            android:padding="10dp"
+            android:layout_marginEnd="25dp"
+            android:layout_marginTop="25dp"
             />
     </RelativeLayout>
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
+        android:background="@drawable/table_border"
+        android:backgroundTint="@color/very_light_gray"
+        android:layout_marginHorizontal="10dp"
+        android:layout_marginBottom="10dp"
+        android:layout_weight="3"
         >
         <LinearLayout
             android:layout_width="match_parent"
@@ -62,44 +69,95 @@
                     android:layout_height="wrap_content"
                     android:id="@+id/selected_date"
                     android:layout_weight="1"
-                    android:textColor="@color/black"
+                    android:textColor="@color/dark_grey"
+                    android:textStyle="bold"
+                    android:textSize="14sp"
+                    android:layout_marginStart="5dp"
                     />
-                <ImageButton
-                    android:id="@+id/schedule_edit_btn"
+                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/ic_pencil"
-                    android:padding="10dp"
-                    android:background="@drawable/ripple_effect"
-                    />
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:background="@drawable/table_border"
+                    android:backgroundTint="@color/colorPrimary"
+                    android:padding="5dp"
+                    android:id="@+id/schedule_edit_btn"
+
+                    >
+                    <TextView
+                        android:layout_marginEnd="5dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="일정 작성"
+                        android:textColor="@color/white"
+                        android:textSize="11sp"/>
+                    <ImageButton
+                        android:layout_width="10dp"
+                        android:layout_height="10dp"
+                        android:background="@drawable/ic_pencil"
+                        android:backgroundTint="@color/white"
+                        />
+                </LinearLayout>
                 <ImageButton
                     android:id="@+id/schedule_commit_btn"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
                     android:src="@drawable/ic_check"
-                    android:background="@drawable/ripple_effect"
+                    android:background="@drawable/ripple_effect_circle"
+                    android:backgroundTint="@color/colorPrimary"
                     android:padding="10dp"
                     android:visibility="gone"
-
                     />
             </LinearLayout>
 
             <TextView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
                 android:id="@+id/schedule_content"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
                 android:padding="10dp"
+                android:textColor="@color/table_text_color"
+                android:textSize="12sp"
 
                 />
+
             <EditText
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:layout_height="0dp"
                 android:id="@+id/schedule_edit_text"
                 android:inputType="textImeMultiLine"
                 android:background="@android:color/transparent"
                 android:padding="10dp"
                 android:gravity="top"
                 android:visibility="gone"
+                android:hint="일정을 작성하세요"
+                android:textSize="14sp"
+                android:layout_marginStart="5dp"
+                />
+            <ImageButton
+                android:id="@+id/schedule_close_btn"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:src="@drawable/ic_close_white"
+                android:background="@drawable/ripple_effect_circle"
+                android:backgroundTint="@color/colorPrimary"
+                android:padding="7dp"
+                android:layout_gravity="center_horizontal"
+                android:visibility="gone"
+                android:layout_marginBottom="10dp"
+                />
+            <ImageButton
+                android:id="@+id/schedule_delete_btn"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:background="@drawable/trash"
+                android:backgroundTint="@color/table_text_color"
+                android:layout_gravity="right"
+                android:visibility="gone"
+                android:layout_marginBottom="20dp"
+                android:layout_marginEnd="20dp"
                 />
         </LinearLayout>
     </RelativeLayout>
