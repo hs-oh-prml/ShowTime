@@ -15,6 +15,7 @@ import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.view.ViewGroup
+import android.view.ViewGroup.LayoutParams.WRAP_CONTENT
 import android.widget.GridLayout
 import android.widget.RadioGroup
 import android.widget.TextView
@@ -49,6 +50,7 @@ class AddScheduleActivity : AppCompatActivity(){
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_schedule)
+
         init()
 
     }
@@ -114,19 +116,11 @@ class AddScheduleActivity : AppCompatActivity(){
             }
 
             //장소 체크
-            var placeStr = place.text.toString() // 장소 text
-            if(isPlace.isChecked){ // 장소 없음
-
-            }else{ // 장소 있음
-                if(place.text.isEmpty()){
-                    Toast.makeText(this,"장소를 입력하세요",Toast.LENGTH_SHORT).show()
-                    return@setOnClickListener
-                }else{
-                    // 장소 저장
-                }
-
+            var placeTxt = ""
+            if(place.text.isNotEmpty()){
+                // 장소 저장
+                placeTxt = place.text.toString()
             }
-
 
             var isLecture = isLecture.isChecked
             var name = name.text.toString()
@@ -156,40 +150,35 @@ class AddScheduleActivity : AppCompatActivity(){
                     } else {
                         if(!startFlag){
                             timeList.add(timeCell)
+                            timeCell = TimeCell(-1, -1, i, "")
                             startFlag = true
                         }
                     }
                 }
-                if(!startFlag){
-                    timeList.add(timeCell)
-                }
+
             }
-            pref.myData.semester[tableNum].schedules.add(Schedule(isLecture, name, timeList, Ncredit, "null"))
+            pref.myData.semester[tableNum].schedules.add(Schedule(isLecture, name, placeTxt, timeList, Ncredit, "null"))
             pref.savePref()
             finish()
         }
 
     }
 
-
     fun refreshTable(){
         for(i in 1..22){
             for(j in 1..weekList.size){
-//                var cell = row.getChildAt(j)
                 var cell = getChild(i, j)
                 cell.setBackgroundResource(R.color.white)
             }
         }
 
         for((index, i) in  semester.schedules.withIndex()){
-            Log.d("myList", i.name)
             addTable(i, index)
         }
     }
-    fun getChild(row:Int, col:Int): TextView {
-        Log.d("index", row.toString() + ", " + col.toString())
+    fun getChild(row:Int, col:Int): View {
         var index = (timeTable.columnCount * row) + col
-        return timeTable.getChildAt(index) as TextView
+        return timeTable.getChildAt(index)
     }
 
     fun addTable(schedule:Schedule, index:Int){
@@ -198,18 +187,21 @@ class AddScheduleActivity : AppCompatActivity(){
             var flag = 0
             for(j in i.start..i.end){
 
-                var cell = getChild(j, i.week)
+                var cell = timeTable.getChildAt((timeTable.rowCount * i.week) + j)
+                var cell_name = cell.findViewById<TextView>(R.id.cell_name)
+                var cell_place =  cell.findViewById<TextView>(R.id.cell_place)
                 statusMap[j][i.week] = -2   // -2 이미 시간표가 있는 경우
 
                 if(flag == 0){
                     val name = schedule.name
-                    val str = name
-                    cell.textSize = 10f
-                    cell.text = str
-                    cell.gravity = Gravity.LEFT
-                    cell.setTextColor(ContextCompat.getColor(this, R.color.white))
-                    cell.setPadding(5)
-                    val shape:GradientDrawable = GradientDrawable()
+                    var place = ""
+                    if(schedule.place != null){
+                        place = schedule.place
+                    }
+                    cell_name.text = name
+                    cell_place.text = place
+
+                    val shape = GradientDrawable()
                     shape.setColor(Color.parseColor(color[index]))
                     shape.shape = GradientDrawable.RECTANGLE
                     shape.cornerRadius = 15.0f
@@ -218,10 +210,10 @@ class AddScheduleActivity : AppCompatActivity(){
                     var param = GridLayout.LayoutParams()
                     var rowSpan = GridLayout.spec(j, (i.end - i.start + 1), GridLayout.FILL)
                     var colSpan = GridLayout.spec(i.week, 1, GridLayout.FILL)
-
                     param.rowSpec = rowSpan
                     param.columnSpec = colSpan
                     cell.layoutParams = param
+
                 } else {
                     cell.visibility = View.GONE
                 }
@@ -232,73 +224,68 @@ class AddScheduleActivity : AppCompatActivity(){
     }
 
     fun initView(weekList: List<String>){
-
         timeTable.columnCount = weekList.size + 1
         timeTable.rowCount = 23
-        for(i in 0 until timeTable.rowCount){
-            for(j in 0 until timeTable.columnCount){
-                var param = GridLayout.LayoutParams()
-                param.height = GridLayout.LayoutParams.WRAP_CONTENT
-                param.width = GridLayout.LayoutParams.WRAP_CONTENT
-                param.setMargins(1)
-                param.setGravity(Gravity.CENTER)
-                param.columnSpec = GridLayout.spec(j)
-                param.rowSpec = GridLayout.spec(i)
+        for(j in 0 until timeTable.columnCount){
+            for(i in 0 until timeTable.rowCount){
 
-                var textView = TextView(this)
-
-
-                var disp = DisplayMetrics()
-                var dwidth = disp.widthPixels
-                var dheight = disp.heightPixels
-                textView.gravity = Gravity.CENTER
-                textView.setBackgroundResource(R.color.white)
-
+                var params = GridLayout.LayoutParams()
+                params.height = WRAP_CONTENT
+                params.width = WRAP_CONTENT
+                params.setMargins(1)
+                var child: View
                 var colSpan = GridLayout.spec(j, GridLayout.FILL)
                 var rowSpan = GridLayout.spec(i, GridLayout.FILL)
-                param.columnSpec = colSpan
-                param.rowSpec = rowSpan
+                params.columnSpec = colSpan
+                params.rowSpec = rowSpan
 
-                if(i == 0 && j != 0){
+                if(i == 0 && j == 0){
+
+                    child = TextView(this)
+                    child.setTextColor(ContextCompat.getColor(this, R.color.white))
+                    child.textSize = 9f
+                    child.text = "T"
+
+                } else if(i == 0 && j != 0){
+
                     var colSpan = GridLayout.spec(j, GridLayout.FILL, 1f)
-                    param.columnSpec = colSpan
-                    textView.textSize = 10f
-                    textView.text = weekList[j - 1]
-                }
-                if(i != 0 && j == 0){
+                    params.columnSpec = colSpan
+                    child = TextView(this)
+                    child.gravity = Gravity.CENTER
+                    child.textSize = 9f
+                    child.setIncludeFontPadding(false)
+                    child.text = weekList[j - 1]
+
+                } else if(i != 0 && j == 0){
+
+                    child = TextView(this)
+                    child.gravity = Gravity.TOP or Gravity.RIGHT
+                    child.textSize = 9f
                     if(i % 2 == 1){
-                        textView.gravity = Gravity.TOP or Gravity.RIGHT
-                        textView.textSize = 10f
                         if((9 + i / 2) > 12){
-                            textView.text = ((9 + i / 2) % 12).toString()
+                            child .text = ((9 + i / 2) % 12).toString()
                         } else {
-                            textView.text = (9 + i / 2).toString()
+                            child .text = (9 + i / 2).toString()
                         }
                     }
-                }
-                if(j != 0){
-                    var colSpan = GridLayout.spec(j, GridLayout.FILL, 1f)
-                    param.columnSpec = colSpan
+                } else {
+                    var inflater = LayoutInflater.from(this)
+                    child = inflater.inflate(R.layout.table_item, timeTable, false)
                 }
                 if(i != 0){
                     var rowSpan = GridLayout.spec(i, GridLayout.FILL, 1f)
-//                    var rowSpan = GridLayout.spec(GridLayout.UNDEFINED, 2, 1f)
-                    if(i % 2 == 1){
-                        param.setMargins(1,1,1,0)
-                    } else {
-                        param.setMargins(1,0,1,1)
-                    }
-                    param.rowSpec = rowSpan
+                    params.rowSpec = rowSpan
                 }
-                if(i != 0 && j != 0){
-                    textView.width = (dwidth * (1/5) * 0.7).toInt()
-                    textView.height = (dheight * (1/24) * 0.8).toInt()
+                if(i % 2 == 1){
+                    params.setMargins(1,1,1,0)
+                } else {
+                    params.setMargins(1,0,1,1)
                 }
-                textView.layoutParams = param
-                textView.setTextColor(ContextCompat.getColor(this, R.color.table_text_color))
+                child.setBackgroundResource(R.color.white)
+                child.layoutParams = params
 
                 if(i != 0 && j != 0){
-                    textView.setOnClickListener {
+                    child.setOnClickListener {
                         if(statusMap[i][j] == -1){
                             it.setBackgroundColor(ContextCompat.getColor(this, R.color.selected_item))
                             statusMap[i][j] = 0
@@ -312,11 +299,137 @@ class AddScheduleActivity : AppCompatActivity(){
                         }
                     }
                 }
-                timeTable.addView(textView)
+                timeTable.addView(child)
             }
         }
     }
 
+
+//    fun addTable(schedule:Schedule, index:Int){
+//        var time = schedule.time
+//        for(i in time){
+//            var flag = 0
+//            for(j in i.start..i.end){
+//
+//                var cell = getChild(j, i.week)
+//                statusMap[j][i.week] = -2   // -2 이미 시간표가 있는 경우
+//
+//                if(flag == 0){
+//                    val name = schedule.name
+//                    val str = name
+//                    cell.textSize = 10f
+//                    cell.text = str
+//                    cell.gravity = Gravity.LEFT
+//                    cell.setTextColor(ContextCompat.getColor(this, R.color.white))
+//                    cell.setPadding(5)
+//                    val shape:GradientDrawable = GradientDrawable()
+//                    shape.setColor(Color.parseColor(color[index]))
+//                    shape.shape = GradientDrawable.RECTANGLE
+//                    shape.cornerRadius = 15.0f
+//                    cell.background = shape
+//
+//                    var param = GridLayout.LayoutParams()
+//                    var rowSpan = GridLayout.spec(j, (i.end - i.start + 1), GridLayout.FILL)
+//                    var colSpan = GridLayout.spec(i.week, 1, GridLayout.FILL)
+//
+//                    param.rowSpec = rowSpan
+//                    param.columnSpec = colSpan
+//                    cell.layoutParams = param
+//                } else {
+//                    cell.visibility = View.GONE
+//                }
+//                flag++
+//            }
+//
+//        }
+//    }
+//
+//    fun initView(weekList: List<String>){
+//
+//        timeTable.columnCount = weekList.size + 1
+//        timeTable.rowCount = 23
+//        for(i in 0 until timeTable.rowCount){
+//            for(j in 0 until timeTable.columnCount){
+//                var param = GridLayout.LayoutParams()
+//                param.height = GridLayout.LayoutParams.WRAP_CONTENT
+//                param.width = GridLayout.LayoutParams.WRAP_CONTENT
+//                param.setMargins(1)
+//                param.setGravity(Gravity.CENTER)
+//                param.columnSpec = GridLayout.spec(j)
+//                param.rowSpec = GridLayout.spec(i)
+//
+//                var textView = TextView(this)
+//
+//
+//                var disp = DisplayMetrics()
+//                var dwidth = disp.widthPixels
+//                var dheight = disp.heightPixels
+//                textView.gravity = Gravity.CENTER
+//                textView.setBackgroundResource(R.color.white)
+//
+//                var colSpan = GridLayout.spec(j, GridLayout.FILL)
+//                var rowSpan = GridLayout.spec(i, GridLayout.FILL)
+//                param.columnSpec = colSpan
+//                param.rowSpec = rowSpan
+//
+//                if(i == 0 && j != 0){
+//                    var colSpan = GridLayout.spec(j, GridLayout.FILL, 1f)
+//                    param.columnSpec = colSpan
+//                    textView.textSize = 10f
+//                    textView.text = weekList[j - 1]
+//                }
+//                if(i != 0 && j == 0){
+//                    if(i % 2 == 1){
+//                        textView.gravity = Gravity.TOP or Gravity.RIGHT
+//                        textView.textSize = 10f
+//                        if((9 + i / 2) > 12){
+//                            textView.text = ((9 + i / 2) % 12).toString()
+//                        } else {
+//                            textView.text = (9 + i / 2).toString()
+//                        }
+//                    }
+//                }
+//                if(j != 0){
+//                    var colSpan = GridLayout.spec(j, GridLayout.FILL, 1f)
+//                    param.columnSpec = colSpan
+//                }
+//                if(i != 0){
+//                    var rowSpan = GridLayout.spec(i, GridLayout.FILL, 1f)
+////                    var rowSpan = GridLayout.spec(GridLayout.UNDEFINED, 2, 1f)
+//                    if(i % 2 == 1){
+//                        param.setMargins(1,1,1,0)
+//                    } else {
+//                        param.setMargins(1,0,1,1)
+//                    }
+//                    param.rowSpec = rowSpan
+//                }
+//                if(i != 0 && j != 0){
+//                    textView.width = (dwidth * (1/5) * 0.7).toInt()
+//                    textView.height = (dheight * (1/24) * 0.8).toInt()
+//                }
+//                textView.layoutParams = param
+//                textView.setTextColor(ContextCompat.getColor(this, R.color.table_text_color))
+//
+//                if(i != 0 && j != 0){
+//                    textView.setOnClickListener {
+//                        if(statusMap[i][j] == -1){
+//                            it.setBackgroundColor(ContextCompat.getColor(this, R.color.selected_item))
+//                            statusMap[i][j] = 0
+//
+//                        } else if(statusMap[i][j] == -2){
+//                            Toast.makeText(this, "겹치는 시간표가 존재합니다.", Toast.LENGTH_SHORT).show()
+//                        }
+//                        else {
+//                            it.setBackgroundColor(ContextCompat.getColor(this, R.color.white))
+//                            statusMap[i][j] = -1
+//                        }
+//                    }
+//                }
+//                timeTable.addView(textView)
+//            }
+//        }
+//    }
+//
 
 
 

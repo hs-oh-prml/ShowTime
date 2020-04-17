@@ -18,6 +18,7 @@ import com.showtime.sharedpreference.PreferenceManager
 import com.showtime.ui.dashboard.DashboardFragment
 import com.showtime.ui.home.HomeFragment
 import com.showtime.ui.notifications.NotificationsFragment
+import com.showtime.widget.WidgetSettingActivity
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.main_content.*
 
@@ -91,6 +92,11 @@ class MainActivity : AppCompatActivity() {
         recycler_view.adapter = adapter
     }
 
+    override fun onResume() {
+        initRecyclerView()
+        super.onResume()
+    }
+
     fun init(){
         listener = object: SemesterListAdapter.SemesterListener{
             override fun refresh() {
@@ -154,7 +160,11 @@ class MainActivity : AppCompatActivity() {
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         return when (item.itemId) {
-
+            R.id.action_widget->{
+                var intent = Intent(this, WidgetSettingActivity::class.java)
+                startActivity(intent)
+                true
+            }
             R.id.action_settings -> {
                 drawer_layout.openDrawer(Gravity.RIGHT)
                 true

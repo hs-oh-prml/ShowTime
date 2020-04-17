@@ -79,7 +79,6 @@ class DashboardFragment : Fragment() {
 
                 if(clickDate != -1){
                     selected_date.text = "${d}. " + weekDay
-
                     var str = pref.getDaySchedule(year, month, date.toInt())
                     if(str != null){
                         schedule_content.text = str
