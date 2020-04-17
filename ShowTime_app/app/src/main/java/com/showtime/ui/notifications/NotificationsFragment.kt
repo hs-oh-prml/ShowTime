@@ -95,6 +95,7 @@ class NotificationsFragment : Fragment() {
         }
         var adapter = ViewPagerAdapter(requireContext(), myData.semester, listener)
         viewpager.adapter = adapter
+
         TabLayoutMediator(tabLayout, viewpager, object : TabLayoutMediator.TabConfigurationStrategy{
             override fun onConfigureTab(tab: TabLayout.Tab, position: Int) {
 //                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
@@ -169,7 +170,10 @@ class NotificationsFragment : Fragment() {
         lineChart.clear()
         val values = ArrayList<Entry>()
         for(i in 0 until scoreList.size){
-            values.add(Entry(i.toFloat(),scoreList[i]))
+            if(!scoreList[i].isNaN()){
+                values.add(Entry(i.toFloat(),scoreList[i]))
+                println("add value")
+            }
         }
 
         val lineDataSet = LineDataSet(values,"학점")
@@ -185,7 +189,7 @@ class NotificationsFragment : Fragment() {
 
         val xAxis = lineChart.xAxis
         xAxis.position = XAxis.XAxisPosition.BOTTOM
-        xAxis.setLabelCount(8,true)
+        xAxis.setLabelCount(values.size,true)
 //        xAxis.textSize =
         xAxis.valueFormatter = object: ValueFormatter(){
             override fun getFormattedValue(value: Float): String {
@@ -235,6 +239,5 @@ class NotificationsFragment : Fragment() {
         lineChart.setDrawGridBackground(false)
         lineChart.setHighlightPerDragEnabled(false)
         lineChart.setTouchEnabled(false)
-        lineChart.setPadding(20)
     }
 }

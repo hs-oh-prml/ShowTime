@@ -8,6 +8,7 @@
     <color name="black">#000000</color>
     <color name="selected_item">#ebebeb</color>
     <color name="red">#EA3E44</color>
+    <color name="light_red">#ff9c9c</color>
     <color name="blue">#496EDE</color>
 
     <color name="table_border">#EEEDED</color>
@@ -17,4 +18,6 @@
     <color name="light_blue">#f7faff</color>
     <color name="middle_gray">#e8e8e8</color>
     <color name="invisible">#00000000</color>
+    <color name="very_light_gray">#f9f9f9</color>
+    <color name="green_check">#4ea78b</color>
 </resources>

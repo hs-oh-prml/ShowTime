@@ -1,6 +1,8 @@
 package com.showtime.ui.dashboard
 
 import android.content.Context
+import android.graphics.Color
+import android.graphics.drawable.GradientDrawable
 import android.util.Log
 import android.view.Gravity
 import android.view.LayoutInflater
@@ -13,10 +15,15 @@ import android.widget.GridLayout
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.core.content.ContextCompat
 import androidx.core.view.children
+import androidx.core.view.marginBottom
 import androidx.recyclerview.widget.RecyclerView
 import com.showtime.R
+import com.showtime.sharedpreference.PreferenceManager
+import kotlinx.android.synthetic.main.calendar_item.view.*
+import kotlinx.android.synthetic.main.fragment_dashboard.*
 import org.w3c.dom.Text
 import java.util.*
 
@@ -30,11 +37,14 @@ class CalendarAdapter(
         fun onClick(month:Int, year:Int, clickDate:Int, weekDay:String,  v:View)
     }
 
+    var pref: PreferenceManager = PreferenceManager(context)
+
     var clickDate = -1
 
     val CURRENT = Int.MAX_VALUE / 2
 
-    var week = listOf("SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT")
+//    var week = listOf("SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT")
+    var week = listOf("일", "월", "화", "수", "목", "금", "토")
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CalendarAdapter.ViewHolder {
         val v = LayoutInflater.from(parent.context)
@@ -57,6 +67,7 @@ class CalendarAdapter(
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
 //        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+
         var gap = position - CURRENT
         var cal = today.clone() as Calendar
         cal.add(Calendar.MONTH, gap)
@@ -64,19 +75,20 @@ class CalendarAdapter(
 
         var month = cal.get(Calendar.MONTH) + 1
         var year = cal.get(Calendar.YEAR)
-        holder.title.text = "${year}년 ${month}월"
+        holder.title.text = "${month}"
+        holder.title2.text = "${year}"
 
         var count = 1
-//
 //        holder.calendar.layoutParams = grid_params
         for(i in 0..6){
             for(j in 0..6){
                 if(i == 0){
                     var textView = TextView(context)
                     textView.gravity = Gravity.CENTER
-                    textView.setBackgroundResource(R.color.white)
+//                    textView.setBackgroundResource(R.color.white)
+                    textView.setBackgroundResource(R.drawable.table_border)
                     textView.text = week[j]
-                    textView.textSize = 10f
+                    textView.textSize = 11f
                     if(j == 0){
                         textView.setTextColor(ContextCompat.getColor(context, R.color.red))
                     } else if(j == 6){
@@ -88,6 +100,7 @@ class CalendarAdapter(
                     params.columnSpec = GridLayout.spec(GridLayout.UNDEFINED, GridLayout.FILL, 1f)
 
                     textView.layoutParams = params
+
                     holder.calendar.addView(textView)
                 } else {
 
@@ -104,9 +117,9 @@ class CalendarAdapter(
                     params.height = 0
                     params.width = 0
                     child.layoutParams = params
-                    var isScheduled = child.findViewById<TextView>(R.id.isScheduled)
-                    var date = child.findViewById<TextView>(R.id.date)
                     var isToday = child.findViewById<ImageView>(R.id.isToday)
+                    var isScheduled = child.findViewById<View>(R.id.isScheduled)
+                    var date = child.findViewById<TextView>(R.id.date)
                     date.textSize = 10f
                     if(count <= cal.getActualMaximum(Calendar.DAY_OF_MONTH)) {
                         if (i == 1) {
@@ -119,7 +132,14 @@ class CalendarAdapter(
                             count++
                         }
                     }
-                    if(year == today.get(Calendar.YEAR) && month == (today.get(Calendar.MONTH) + 1) && count == today.get(Calendar.DATE)){
+                    if(year == today.get(Calendar.YEAR) && month == (today.get(Calendar.MONTH) + 1) && count-1 == today.get(Calendar.DATE)){
+//                        val shape: GradientDrawable = GradientDrawable()
+//                        shape.setColor(ContextCompat.getColor(context, R.color.white))
+//                        shape.shape = GradientDrawable.RECTANGLE
+//                        shape.cornerRadius = 15.0f
+//                        shape.setStroke(1,ContextCompat.getColor(context, R.color.blue))
+//                        schedule_item_layout.background = shape
+                        //schedule_item_layout.setBackgroundColor(ContextCompat.getColor(context, R.color.red))
                         isToday.visibility = VISIBLE
                     }
                     if(j == 0){
@@ -129,6 +149,11 @@ class CalendarAdapter(
                     } else {
                         date.setTextColor((ContextCompat.getColor(context, R.color.black)))
                     }
+                    var str = pref.getDaySchedule(year, month, count-1)
+                    if(str != ""){
+                        isScheduled.visibility = VISIBLE
+                    }
+                    //child.isScheduled.visibility = VISIBLE
                     holder.calendar.addView(child)
                 }
 
@@ -140,7 +165,7 @@ class CalendarAdapter(
                         var i_date = i.findViewById<TextView>(R.id.date)
                         if(i_date.text.toString() != ""){
                             if(clickDate == index){
-                                i.setBackgroundColor(ContextCompat.getColor(context, R.color.white))
+                                i.date.setBackgroundColor(ContextCompat.getColor(context, R.color.white))
                                 if(index % 7 == 0){
                                     i_date.setTextColor((ContextCompat.getColor(context, R.color.red)))
                                 }else if(index % 7 == 6){
@@ -153,7 +178,7 @@ class CalendarAdapter(
                                 if(clickDate != -1){
                                     var prev = holder.calendar.getChildAt(clickDate)
                                     var prev_date = prev.findViewById<TextView>(R.id.date)
-                                    prev.setBackgroundColor(ContextCompat.getColor(context, R.color.white))
+                                    prev.date.setBackgroundColor(ContextCompat.getColor(context, R.color.white))
                                     if(clickDate % 7 == 0){
                                         prev_date.setTextColor((ContextCompat.getColor(context, R.color.red)))
                                     }else if(clickDate % 7 == 6){
@@ -162,8 +187,15 @@ class CalendarAdapter(
                                         prev_date.setTextColor((ContextCompat.getColor(context, R.color.black)))
                                     }
                                 }
-                                i.setBackgroundColor(ContextCompat.getColor(context, R.color.colorPrimary))
-                                i_date.setTextColor(ContextCompat.getColor(context, R.color.white))
+                                //i.setBackgroundColor(ContextCompat.getColor(context, R.color.colorPrimary))
+                                val shape: GradientDrawable = GradientDrawable()
+                                shape.setColor(ContextCompat.getColor(context, R.color.table_border))
+                                shape.shape = GradientDrawable.OVAL
+                                //shape.cornerRadius = 15.0f
+                                shape.setStroke(1,ContextCompat.getColor(context, R.color.table_border))
+                                i_date.background = shape
+                                //i.background = shape
+                                //i_date.setTextColor(ContextCompat.getColor(context, R.color.white))
                                 clickDate = index
                             }
                             listener.onClick(month, year, clickDate, week[index % 7], it)
@@ -177,10 +209,14 @@ class CalendarAdapter(
 
     inner class ViewHolder(itemView: View): RecyclerView.ViewHolder(itemView){
         var title: TextView
+        var title2: TextView
         var calendar: GridLayout
+//        var calendar_item:LinearLayout
         init{
             title = itemView.findViewById(R.id.title)
             calendar = itemView.findViewById(R.id.calendar_grid)
+            title2 = itemView.findViewById(R.id.title2)
+//            calendar_item = itemView.findViewById(R.id.calendar_item_layout)
         }
     }
 
