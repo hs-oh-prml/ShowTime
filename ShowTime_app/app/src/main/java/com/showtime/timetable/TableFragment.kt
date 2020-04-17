@@ -38,7 +38,7 @@ class TableFragment(var c: Context, var semesterNum:Int) : Fragment() {
     lateinit var semester: MyData.Semester
     lateinit var color: Array<String>
     lateinit var weekList:List<String>
-
+    lateinit var pref:PreferenceManager
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -49,9 +49,10 @@ class TableFragment(var c: Context, var semesterNum:Int) : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        var pref =  PreferenceManager(c)
+        pref =  PreferenceManager(c)
         semester = pref.myData.semester[pref.table]
-        color = this.resources.getStringArray(R.array.colorList6)
+        var theme = pref.getTheme()
+        color = this.resources.getStringArray(theme)
         when(semester.dayMode){
             5->weekList = listOf("월", "화", "수", "목", "금")
             6->weekList = listOf("월", "화", "수", "목", "금","토")
@@ -100,7 +101,7 @@ class TableFragment(var c: Context, var semesterNum:Int) : Fragment() {
                     cell_place.text = place
 
                     val shape = GradientDrawable()
-                    shape.setColor(Color.parseColor(color[index]))
+                    shape.setColor(Color.parseColor(color[index % color.size]))
                     shape.shape = GradientDrawable.RECTANGLE
                     shape.cornerRadius = 15.0f
                     cell.background = shape
@@ -191,6 +192,9 @@ class TableFragment(var c: Context, var semesterNum:Int) : Fragment() {
 
     override fun onResume() {
         super.onResume()
+        pref =  PreferenceManager(c)
+        var theme = pref.getTheme()
+        color = this.resources.getStringArray(theme)
         refreshTable()
     }
 }

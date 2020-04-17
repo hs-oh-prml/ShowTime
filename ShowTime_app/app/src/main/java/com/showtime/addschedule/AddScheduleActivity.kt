@@ -66,7 +66,8 @@ class AddScheduleActivity : AppCompatActivity(){
             7-> weekList = listOf("월", "화", "수", "목", "금", "토", "일")
             else-> weekList = listOf("월", "화", "수", "목", "금")
         }
-        color = this.resources.getStringArray(R.array.colorList6)
+        var theme = pref.getTheme()
+        color = this.resources.getStringArray(theme)
         weekList = listOf("월", "화", "수", "목", "금")
         initView(weekList)
         refreshTable()
@@ -202,7 +203,7 @@ class AddScheduleActivity : AppCompatActivity(){
                     cell_place.text = place
 
                     val shape = GradientDrawable()
-                    shape.setColor(Color.parseColor(color[index]))
+                    shape.setColor(Color.parseColor(color[index % color.size]))
                     shape.shape = GradientDrawable.RECTANGLE
                     shape.cornerRadius = 15.0f
                     cell.background = shape

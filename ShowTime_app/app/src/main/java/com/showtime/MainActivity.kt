@@ -6,6 +6,7 @@ import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.util.DisplayMetrics
 import android.util.Log
 import android.view.Gravity
 import android.view.Menu
@@ -37,13 +38,15 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+//        var disp = DisplayMetrics()
+//        Log.d("DISPLAY SIZE", "${disp.widthPixels}, ${disp.heightPixels}")
+
 //        val navView: CustomBottomNavigationView = findViewById(R.id.nav_view)
         //bottom_navigation.inflateMenu(R.menu.bottom_nav_menu)
         bottom_navigation.inflateMenu(R.menu.bottom_nav_menu)
         bottom_navigation.selectedItemId = R.id.navigation_dashboard
         tran = supportFragmentManager.beginTransaction()
         tran.replace(R.id.nav_host_fragment, HomeFragment()).commitAllowingStateLoss()
-
         bottom_navigation.setOnNavigationItemSelectedListener {
             val tran = supportFragmentManager.beginTransaction()
             when(it.itemId){
@@ -90,6 +93,7 @@ class MainActivity : AppCompatActivity() {
 
     fun initRecyclerView(){
         pref = PreferenceManager(this)
+
         var layoutManager = LinearLayoutManager(this, RecyclerView.VERTICAL, false)
 
         var adapter = SemesterListAdapter(
@@ -111,18 +115,35 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun notificationInit(){
+
+        var alarmInfo = pref.getAlarmTime()
+        var list = alarmInfo!!.split(" ")
+
+        var hasSchedule = Calendar.getInstance()
+        hasSchedule.add(Calendar.DATE, -(list[0].toInt()))
+
+        var y= hasSchedule.get(Calendar.YEAR)
+        var m= hasSchedule.get(Calendar.MONTH) + 1
+        var d = hasSchedule.get(Calendar.DATE)
+        var str = pref.getDaySchedule(y, m, d)
+        if(str == null || str == ""){
+            return
+        }
+
         var manager = getSystemService(Context.ALARM_SERVICE) as AlarmManager
 
         var calendar = Calendar.getInstance()
+        calendar.set(Calendar.HOUR_OF_DAY, list[1].toInt())
+        calendar.set(Calendar.MINUTE, 0)
+        calendar.set(Calendar.SECOND, 0)
 
 //        calendar.set(Calendar.MINUTE, 15)
         var intent = Intent(this, NotificationReceiver::class.java)
         var pi = PendingIntent.getBroadcast(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT)
-        Log.d("TRIGGER TIME", "${calendar.get(Calendar.HOUR_OF_DAY)}:${calendar.get(Calendar.MINUTE)}:${calendar.get(Calendar.SECOND)}")
         manager.setRepeating(
             AlarmManager.RTC_WAKEUP,
             calendar.getTimeInMillis(),
-            1000,
+             24 * 60 * 60 * 1000,
             pi);
     }
 

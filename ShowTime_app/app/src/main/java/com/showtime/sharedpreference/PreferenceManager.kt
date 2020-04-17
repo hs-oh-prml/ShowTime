@@ -6,6 +6,7 @@ import android.graphics.Bitmap
 import android.util.Base64
 import android.util.Log
 import com.google.gson.Gson
+import com.showtime.R
 import com.showtime.data.MyData
 import com.showtime.data.Schedule
 import com.showtime.data.TimeCell
@@ -57,6 +58,23 @@ class PreferenceManager(c: Context) {
     fun setDaySchedule(y:Int, m:Int, d:Int, content:String){
         var date = "${y}-${m}-${d}"
         edit.putString(date, content).commit()
+    }
+
+
+    fun getTheme():Int{
+        return pref.getInt("theme", R.array.theme1)
+    }
+
+    fun setTheme(theme:Int){
+        edit.putInt("theme", theme).commit()
+    }
+
+    fun getAlarmTime():String?{
+        return pref.getString("alarm", "-1 23")
+    }
+
+    fun setAlarmTime(day:Int, hour:Int){
+        edit.putString("alarm", "${day} ${hour}").commit()
     }
 
 
