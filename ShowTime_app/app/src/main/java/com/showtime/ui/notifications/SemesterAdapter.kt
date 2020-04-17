@@ -26,6 +26,16 @@ class SemesterAdapter  (
         fun spinnerChanged()
     }
 
+    override fun onViewAttachedToWindow(holder: ViewHolder) {
+        holder.setIsRecyclable(false)
+        super.onViewAttachedToWindow(holder)
+    }
+
+    override fun onViewDetachedFromWindow(holder: ViewHolder) {
+        holder.setIsRecyclable(true)
+        super.onViewDetachedFromWindow(holder)
+    }
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val v = LayoutInflater.from(context)
             .inflate(R.layout.semester_list_item, parent, false)

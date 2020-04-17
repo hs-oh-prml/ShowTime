@@ -1,66 +1,102 @@
-package com.showtime.timetable
+package com.showtime.widget
 
-
-import android.app.Activity
-import android.content.Context
-import android.content.SharedPreferences
+import android.appwidget.AppWidgetManager
+import android.content.ComponentName
+import android.content.Intent
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
+import android.graphics.Canvas
 import android.graphics.Color
-import android.graphics.drawable.Drawable
 import android.graphics.drawable.GradientDrawable
+import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.DisplayMetrics
+import android.os.HandlerThread
+import android.util.Base64
 import android.util.Log
 import android.view.Gravity
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.ViewGroup.LayoutParams.WRAP_CONTENT
-import android.widget.GridLayout
-import android.widget.TextView
+import android.widget.*
 import androidx.core.content.ContextCompat
 import androidx.core.view.setMargins
-import androidx.core.view.setPadding
+import androidx.fragment.app.FragmentActivity
 import com.showtime.R
 import com.showtime.data.MyData
 import com.showtime.data.Schedule
 import com.showtime.sharedpreference.PreferenceManager
+import com.showtime.timetable.TableFragment
 import kotlinx.android.synthetic.main.activity_add_schedule.*
-import kotlinx.android.synthetic.main.fragment_table.*
-import kotlinx.android.synthetic.main.fragment_table.timeTable
-import org.w3c.dom.Text
+import kotlinx.android.synthetic.main.activity_widget_setting.*
+import kotlinx.android.synthetic.main.activity_widget_setting.timeTable
+import kotlinx.android.synthetic.main.fragment_home.*
+import kotlinx.android.synthetic.main.semester_item.*
 
-/**
- * A simple [Fragment] subclass.
- */
-class TableFragment(var c: Context, var semesterNum:Int) : Fragment() {
+class WidgetSettingActivity : FragmentActivity() {
+
+    lateinit var pref:PreferenceManager
 
     lateinit var semester: MyData.Semester
     lateinit var color: Array<String>
     lateinit var weekList:List<String>
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_table, container, false)
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_widget_setting)
+        init()
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        var pref =  PreferenceManager(c)
+
+    fun init(){
+        pref = PreferenceManager(this)
+        weekList = listOf("월", "화", "수", "목", "금")
         semester = pref.myData.semester[pref.table]
         color = this.resources.getStringArray(R.array.colorList6)
-        when(semester.dayMode){
-            5->weekList = listOf("월", "화", "수", "목", "금")
-            6->weekList = listOf("월", "화", "수", "목", "금","토")
-            7->weekList = listOf("월", "화", "수", "목", "금","토","일")
-            else->weekList = listOf("월", "화", "수", "목", "금")
-        }
-        initView(weekList)
-        refreshTable()
 
+        var thread = object: Thread(){
+            override fun run() {
+                super.run()
+                sleep(1000)
+
+                runOnUiThread {
+                    initView(weekList)
+                    refreshTable()
+                    widget_setting_btn.isEnabled = true
+                }
+            }
+        }
+        thread.start()
+
+        widget_setting_btn.setOnClickListener {
+            screenCapture()
+            preview.setImageBitmap(str2Bitmap(pref.getImg()!!))
+        }
+    }
+
+
+    fun screenCapture(){
+
+        // Make Bitmap By Captured View
+        var bitmap = Bitmap.createBitmap(timeTable.width, timeTable.height, Bitmap.Config.ARGB_8888)
+        Log.v("IMAGE SIZE", "${timeTable.width}, ${timeTable.height}")
+        var canvas = Canvas(bitmap)
+        timeTable.draw(canvas)
+        pref.saveImage(bitmap)
+
+        // Widget Update
+        var intent = Intent(this, WidgetProvider::class.java)
+        intent.setAction(AppWidgetManager.ACTION_APPWIDGET_UPDATE)
+        var ids= AppWidgetManager.getInstance(this)
+            .getAppWidgetIds(ComponentName(this, WidgetProvider::class.java))
+        intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, ids)
+        sendBroadcast(intent)
+    }
+
+    fun str2Bitmap(encodedStr:String): Bitmap {
+        var encodeByte = Base64.decode(encodedStr, Base64.DEFAULT)
+        var bitmap = BitmapFactory.decodeByteArray(encodeByte, 0, encodeByte.size)
+        return bitmap
     }
 
     fun refreshTable(){
@@ -80,7 +116,7 @@ class TableFragment(var c: Context, var semesterNum:Int) : Fragment() {
         return timeTable.getChildAt(index)
     }
 
-    fun addTable(schedule:Schedule, index:Int){
+    fun addTable(schedule: Schedule, index:Int){
         var time = schedule.time
         for(i in time){
             var flag = 0
@@ -96,8 +132,12 @@ class TableFragment(var c: Context, var semesterNum:Int) : Fragment() {
                     if(schedule.place != null){
                         place = schedule.place
                     }
+                    cell_name.setPadding(3, 3, 0, 0)
+                    cell_place.setPadding(3, 0, 0, 0)
                     cell_name.text = name
                     cell_place.text = place
+                    cell_name.textSize = 7f
+                    cell_place.textSize = 6f
 
                     val shape = GradientDrawable()
                     shape.setColor(Color.parseColor(color[index]))
@@ -122,42 +162,56 @@ class TableFragment(var c: Context, var semesterNum:Int) : Fragment() {
     }
 
     fun initView(weekList: List<String>){
+
         timeTable.columnCount = weekList.size + 1
         timeTable.rowCount = 23
+
+        var f_height = timeTable.height
+        var f_width = timeTable.width
+
+        var flag = true
         for(j in 0 until timeTable.columnCount){
             for(i in 0 until timeTable.rowCount){
 
                 var params = GridLayout.LayoutParams()
-                params.height = WRAP_CONTENT
-                params.width = WRAP_CONTENT
+                if(!flag){
+                    params.height = (f_height / 23.5).toInt()
+
+                }
                 params.setMargins(1)
                 var child: View
                 var colSpan = GridLayout.spec(j, GridLayout.FILL)
                 var rowSpan = GridLayout.spec(i, GridLayout.FILL)
+
                 params.columnSpec = colSpan
                 params.rowSpec = rowSpan
 
                 if(i == 0 && j == 0){
+                    child = TextView(this)
+                    child.setTextColor(ContextCompat.getColor(this, R.color.white))
+                    child.textSize = 7f
 
-                    child = TextView(context)
-                    child.setTextColor(ContextCompat.getColor(context!!, R.color.white))
-                    child.textSize = 10f
-                    child.text = "T"
-
+                    f_width -= child.width
+                    f_height -= child.height
+                    flag = false
                 } else if(i == 0 && j != 0){
 
                     var colSpan = GridLayout.spec(j, GridLayout.FILL, 1f)
                     params.columnSpec = colSpan
-                    child = TextView(context)
+                    child = TextView(this)
                     child.gravity = Gravity.CENTER
-                    child.textSize = 9f
+                    child.textSize = 7f
                     child.text = weekList[j - 1]
+                    params.height = child.height
 
                 } else if(i != 0 && j == 0){
 
-                    child = TextView(context)
+                    child = TextView(this)
                     child.gravity = Gravity.TOP or Gravity.RIGHT
-                    child.textSize = 9f
+                    child.textSize = 7f
+                    child.includeFontPadding = false
+                    child.height = WRAP_CONTENT
+                    params.height = child.height
                     if(i % 2 == 1){
                         if((9 + i / 2) > 12){
                             child .text = ((9 + i / 2) % 12).toString()
@@ -166,28 +220,25 @@ class TableFragment(var c: Context, var semesterNum:Int) : Fragment() {
                         }
                     }
                 } else {
-                    var inflater = LayoutInflater.from(context)
+                    var inflater = LayoutInflater.from(this)
                     child = inflater.inflate(R.layout.table_item, timeTable, false)
                 }
-                if(i != 0){
-                    var rowSpan = GridLayout.spec(i, GridLayout.FILL, 1f)
-                    params.rowSpec = rowSpan
-                }
+
                 if(i % 2 == 1){
                     params.setMargins(1,1,1,0)
                 } else {
-                    params.setMargins(1,0,1,1)
+                    if(i == 0){
+                        params.setMargins(1,1,1,1)
+                    }else {
+                        params.setMargins(1,0,1,1)
+                    }
                 }
                 child.setBackgroundResource(R.color.white)
                 child.layoutParams = params
+
                 timeTable.addView(child)
             }
         }
     }
 
-    override fun onResume() {
-        super.onResume()
-        refreshTable()
-    }
 }
-
