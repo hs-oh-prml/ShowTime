@@ -224,6 +224,11 @@ class AddScheduleActivity : AppCompatActivity(){
     }
 
     fun initView(weekList: List<String>){
+
+        var disp = DisplayMetrics()
+        var dwidth = disp.widthPixels
+        var dheight = disp.heightPixels
+
         timeTable.columnCount = weekList.size + 1
         timeTable.rowCount = 23
         for(j in 0 until timeTable.columnCount){
@@ -285,6 +290,8 @@ class AddScheduleActivity : AppCompatActivity(){
                 child.layoutParams = params
 
                 if(i != 0 && j != 0){
+                    params.width = (dwidth * (1/5) * 0.7).toInt()
+                    params.height = (dheight * (1/24) * 0.8).toInt()
                     child.setOnClickListener {
                         if(statusMap[i][j] == -1){
                             it.setBackgroundColor(ContextCompat.getColor(this, R.color.selected_item))
