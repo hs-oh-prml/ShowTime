@@ -7,24 +7,26 @@
     android:id="@+id/calendar_item_layout"
     >
     <ImageView
-        android:layout_width="10dp"
-        android:layout_height="10dp"
-        android:background="@drawable/ic_check"
+        android:layout_width="wrap_content"
+        android:layout_height="7dp"
+        android:background="@drawable/calendar_today_check"
         android:backgroundTint="@color/colorPrimary"
         android:id="@+id/isToday"
         android:visibility="invisible"
         />
     <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="22dp"
+        android:layout_height="22dp"
+        android:paddingVertical="3dp"
+        android:paddingHorizontal="5dp"
+        android:gravity="center"
         android:id="@+id/date"
         />
     <View
-        android:layout_width="5dp"
-        android:layout_height="5dp"
+        android:layout_width="4dp"
+        android:layout_height="4dp"
         android:background="@drawable/circle_layout"
         android:backgroundTint="@color/green_check"
         android:id="@+id/isScheduled"
-        android:visibility="invisible"
-        android:layout_marginTop="2dp"/>
+        android:visibility="invisible" />
 </LinearLayout>
