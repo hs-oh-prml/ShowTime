@@ -11,6 +11,29 @@
     >
     <LinearLayout
         android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:background="@color/background_gray">
+        <ImageView
+            android:layout_marginStart="5dp"
+            android:layout_width="25dp"
+            android:layout_height="20dp"
+            android:src="@drawable/ic_arrow_left"
+            android:background="@color/background_gray"
+            android:id="@+id/setting_close"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:text="위젯"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:textColor="@color/dark_grey"
+            android:layout_marginEnd="25dp"
+            android:textSize="18sp"/>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
         android:orientation="horizontal"

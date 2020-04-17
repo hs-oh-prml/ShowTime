@@ -213,6 +213,7 @@ class MainActivity : AppCompatActivity() {
             R.id.action_widget->{
                 var intent = Intent(this, SettingActivity::class.java)
                 startActivity(intent)
+                overridePendingTransition(R.anim.fade_in,R.anim.fade_out)
                 true
             }
             R.id.action_settings -> {
@@ -223,6 +224,7 @@ class MainActivity : AppCompatActivity() {
                 var intent = Intent(this, AddScheduleActivity::class.java)
                 intent.putExtra("tableNum", pref.table)
                 startActivity(intent)
+                overridePendingTransition(R.anim.fade_in,R.anim.fade_out)
                 true
             }
 
