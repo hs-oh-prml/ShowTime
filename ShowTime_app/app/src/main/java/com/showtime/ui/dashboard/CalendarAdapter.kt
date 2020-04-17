@@ -79,13 +79,11 @@ class CalendarAdapter(
         holder.title2.text = "${year}"
 
         var count = 1
-//        holder.calendar.layoutParams = grid_params
         for(i in 0..6){
             for(j in 0..6){
                 if(i == 0){
                     var textView = TextView(context)
                     textView.gravity = Gravity.CENTER
-//                    textView.setBackgroundResource(R.color.white)
                     textView.setBackgroundResource(R.drawable.table_border)
                     textView.text = week[j]
                     textView.textSize = 11f
@@ -105,11 +103,8 @@ class CalendarAdapter(
                 } else {
 
                     var inflater = LayoutInflater.from(context)
-//                var inflater: LayoutInflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
                     var child = inflater.inflate(R.layout.calendar_item, holder.calendar, false)
 
-//                var params = LinearLayout.LayoutParams(WRAP_CONTENT, WRAP_CONTENT, 1f)
-//                child.layoutParams = params
                     var params = GridLayout.LayoutParams(
                         GridLayout.spec(GridLayout.UNDEFINED, GridLayout.FILL, 1f),
                         GridLayout.spec(GridLayout.UNDEFINED, GridLayout.FILL, 1f)
@@ -131,6 +126,10 @@ class CalendarAdapter(
                             date.text = "${count}"
                             count++
                         }
+                        var str = pref.getDaySchedule(year, month, count - 1)
+                        if(str != ""){
+                            isScheduled.visibility = VISIBLE
+                        }
                     }
                     if(year == today.get(Calendar.YEAR) && month == (today.get(Calendar.MONTH) + 1) && count-1 == today.get(Calendar.DATE)){
 //                        val shape: GradientDrawable = GradientDrawable()
@@ -149,10 +148,7 @@ class CalendarAdapter(
                     } else {
                         date.setTextColor((ContextCompat.getColor(context, R.color.black)))
                     }
-                    var str = pref.getDaySchedule(year, month, count-1)
-                    if(str != ""){
-                        isScheduled.visibility = VISIBLE
-                    }
+
                     //child.isScheduled.visibility = VISIBLE
                     holder.calendar.addView(child)
                 }

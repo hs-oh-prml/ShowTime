@@ -29,11 +29,12 @@ class ViewPagerAdapter (
     }
     override fun onBindViewHolder(holder: ViewPagerAdapter.ViewHolder, position: Int) {
 //        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-        var data = itemlist[position]
-        var adapter = SemesterAdapter(context, data.schedules, position, listener)
+        var data = itemlist[position]       //data.schedules
+        var adapter = SemesterAdapter(context, position, listener)
         var layoutManager = LinearLayoutManager(context!!, RecyclerView.VERTICAL, false)
         holder.semester_recyclerView.layoutManager = layoutManager
         holder.semester_recyclerView.adapter = adapter
+
     }
 
     inner class ViewHolder(itemView: View): RecyclerView.ViewHolder(itemView){

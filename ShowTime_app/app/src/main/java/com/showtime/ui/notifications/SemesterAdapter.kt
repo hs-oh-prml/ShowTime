@@ -18,10 +18,13 @@ import com.showtime.sharedpreference.PreferenceManager
 
 class SemesterAdapter  (
     val context: Context,
-    var items:ArrayList<Schedule>,
     var semesterNum:Int,
     var listener:SemesterAdapterListener
 ): RecyclerView.Adapter<SemesterAdapter.ViewHolder>() {
+
+    var pref = PreferenceManager(context)
+
+
     interface SemesterAdapterListener{
         fun spinnerChanged()
     }
@@ -43,11 +46,13 @@ class SemesterAdapter  (
     }
 
     override fun getItemCount(): Int {
-        return items.size
+
+        return pref.myData.semester[semesterNum].schedules.size
     }
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val data = items[position]
-        Log.d("RECYCLER VIEW", data.name)
+        val data = pref.myData.semester[semesterNum].schedules[position]
+
+//        Log.d("RECYCLER VIEW", data.name)
         holder.name.text = data.name
         var adapter = ArrayAdapter(context, R.layout.spinner_layout, context.resources.getStringArray(R.array.score))
 
@@ -65,10 +70,10 @@ class SemesterAdapter  (
 
             override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
 //                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-                var pref = PreferenceManager(context)
+                pref = PreferenceManager(context)
                 pref.myData.semester[semesterNum].schedules[position].score = holder.score.selectedItem.toString()
                 pref.savePref()
-                listener.spinnerChanged()
+
             }
         }
         if(data.isLecture){

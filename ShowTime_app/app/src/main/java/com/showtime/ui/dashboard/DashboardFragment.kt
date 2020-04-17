@@ -54,13 +54,8 @@ class DashboardFragment : Fragment() {
         imm = context!!.getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
 
         pref = PreferenceManager(requireContext())
-//        var layoutManager = LinearLayoutManager(context!!, RecyclerView.VERTICAL, false)
-//        var adapter = SemesterListAdapter(requireContext(), pref.myData.semester)
-//        recycler_view.layoutManager = layoutManager
-//        recycler_view.adapter = adapter
 
         var today = Calendar.getInstance()
-        var context = this.context!!
         var listener = object: CalendarAdapter.calendarListener{
             override fun onClick(month:Int, year:Int, clickDate:Int, weekDay:String, v:View) {
 //                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
@@ -110,13 +105,16 @@ class DashboardFragment : Fragment() {
             schedule_commit_btn.visibility = GONE
             schedule_edit_btn.visibility = VISIBLE
             pref.setDaySchedule(y, m, d, schedule_edit_text.text.toString())
-            Log.d("EDIT DATE", "${y}-${m}-${d}")
-            Log.d("EDIT DATE", pref.getDaySchedule(y, m, d))
-
             schedule_content.text = schedule_edit_text.text.toString()
             schedule_content.visibility = VISIBLE
             schedule_edit_text.visibility = GONE
             schedule_close_btn.visibility = GONE
+
+            var idx = calendarView.currentItem
+            var adapter = CalendarAdapter(requireContext(), today, listener)
+            calendarView.adapter = adapter
+            calendarView.setCurrentItem(idx ,false)
+
         }
 
         schedule_edit_btn.setOnClickListener {
@@ -148,6 +146,16 @@ class DashboardFragment : Fragment() {
         schedule_delete_btn.setOnClickListener {
             pref.setDaySchedule(y, m, d.toInt(),"")
             schedule_delete_btn.visibility = GONE
+
+            var idx = calendarView.currentItem
+            var adapter = CalendarAdapter(requireContext(), today, listener)
+            calendarView.adapter = adapter
+            calendarView.setCurrentItem(idx ,false)
+
+            schedule_content.text = ""
+            schedule_edit_text.setText("")
+            schedule_delete_btn.visibility = VISIBLE
+
         }
     }
 

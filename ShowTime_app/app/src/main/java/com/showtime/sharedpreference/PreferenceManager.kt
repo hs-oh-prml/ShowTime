@@ -41,6 +41,14 @@ class PreferenceManager(c: Context) {
         }
     }
 
+    fun setAlarmFlag(flag:String){
+        edit.putString("push", flag).commit()
+    }
+    fun getAlarmFlag():String? {
+        return pref.getString("push","")
+    }
+
+
     fun getDaySchedule(y:Int, m:Int, d:Int):String?{
         var date = "${y}-${m}-${d}"
         return pref.getString(date, "")

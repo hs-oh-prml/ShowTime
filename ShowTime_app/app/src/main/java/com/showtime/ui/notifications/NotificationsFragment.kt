@@ -44,7 +44,7 @@ class NotificationsFragment : Fragment() {
     lateinit var myData:MyData
 
     var total_credit = 0
-
+    lateinit var adapter:ViewPagerAdapter
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -64,7 +64,6 @@ class NotificationsFragment : Fragment() {
         // Data init
         pref = PreferenceManager(requireContext())
         myData = pref.myData
-        Log.d("MY DATA", myData.semester.toString())
         scoreList = ArrayList()
 
         //평점 통계
@@ -91,9 +90,10 @@ class NotificationsFragment : Fragment() {
             override fun spinnerChanged() {
 //                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
                 initData()
+
             }
         }
-        var adapter = ViewPagerAdapter(requireContext(), myData.semester, listener)
+        adapter = ViewPagerAdapter(requireContext(), myData.semester, listener)
         viewpager.adapter = adapter
 
         TabLayoutMediator(tabLayout, viewpager, object : TabLayoutMediator.TabConfigurationStrategy{
@@ -160,7 +160,6 @@ class NotificationsFragment : Fragment() {
                 }
             }
             scoreList.add((score/credit).toFloat())
-            println("scoreList : "+(score/credit))
         }
     }
 
@@ -172,7 +171,6 @@ class NotificationsFragment : Fragment() {
         for(i in 0 until scoreList.size){
             if(!scoreList[i].isNaN()){
                 values.add(Entry(i.toFloat(),scoreList[i]))
-                println("add value")
             }
         }
 

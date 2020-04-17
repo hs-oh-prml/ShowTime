@@ -1,8 +1,12 @@
 package com.showtime
 
 import android.Manifest
+import android.app.AlarmManager
+import android.app.PendingIntent
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.Gravity
 import android.view.Menu
 import android.view.MenuItem
@@ -14,13 +18,15 @@ import androidx.recyclerview.widget.RecyclerView
 import com.gun0912.tedpermission.PermissionListener
 import com.gun0912.tedpermission.TedPermission
 import com.showtime.addschedule.AddScheduleActivity
+import com.showtime.setting.NotificationReceiver
+import com.showtime.setting.SettingActivity
 import com.showtime.sharedpreference.PreferenceManager
 import com.showtime.ui.dashboard.DashboardFragment
 import com.showtime.ui.home.HomeFragment
 import com.showtime.ui.notifications.NotificationsFragment
-import com.showtime.widget.WidgetSettingActivity
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.main_content.*
+import java.util.*
 
 class MainActivity : AppCompatActivity() {
 
@@ -76,6 +82,10 @@ class MainActivity : AppCompatActivity() {
 //        bottom_navigation.setupWithNavController(navController)
 
         init()
+        if(pref.getAlarmFlag() == "true"){
+            notificationInit()
+        }
+
     }
 
     fun initRecyclerView(){
@@ -94,7 +104,26 @@ class MainActivity : AppCompatActivity() {
 
     override fun onResume() {
         initRecyclerView()
+        if(pref.getAlarmFlag() == "true"){
+            notificationInit()
+        }
         super.onResume()
+    }
+
+    fun notificationInit(){
+        var manager = getSystemService(Context.ALARM_SERVICE) as AlarmManager
+
+        var calendar = Calendar.getInstance()
+
+//        calendar.set(Calendar.MINUTE, 15)
+        var intent = Intent(this, NotificationReceiver::class.java)
+        var pi = PendingIntent.getBroadcast(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT)
+        Log.d("TRIGGER TIME", "${calendar.get(Calendar.HOUR_OF_DAY)}:${calendar.get(Calendar.MINUTE)}:${calendar.get(Calendar.SECOND)}")
+        manager.setRepeating(
+            AlarmManager.RTC_WAKEUP,
+            calendar.getTimeInMillis(),
+            1000,
+            pi);
     }
 
     fun init(){
@@ -161,7 +190,7 @@ class MainActivity : AppCompatActivity() {
         // as you specify a parent activity in AndroidManifest.xml.
         return when (item.itemId) {
             R.id.action_widget->{
-                var intent = Intent(this, WidgetSettingActivity::class.java)
+                var intent = Intent(this, SettingActivity::class.java)
                 startActivity(intent)
                 true
             }
