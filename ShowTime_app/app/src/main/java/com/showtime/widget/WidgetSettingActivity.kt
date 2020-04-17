@@ -53,7 +53,8 @@ class WidgetSettingActivity : FragmentActivity() {
         pref = PreferenceManager(this)
         weekList = listOf("월", "화", "수", "목", "금")
         semester = pref.myData.semester[pref.table]
-        color = this.resources.getStringArray(R.array.colorList6)
+        var theme = pref.getTheme()
+        color = this.resources.getStringArray(theme)
 
         var thread = object: Thread(){
             override fun run() {
@@ -150,7 +151,7 @@ class WidgetSettingActivity : FragmentActivity() {
                     cell_place.textSize = 6f
 
                     val shape = GradientDrawable()
-                    shape.setColor(Color.parseColor(color[index]))
+                    shape.setColor(Color.parseColor(color[index % color.size]))
                     shape.shape = GradientDrawable.RECTANGLE
                     shape.cornerRadius = 15.0f
                     cell.background = shape

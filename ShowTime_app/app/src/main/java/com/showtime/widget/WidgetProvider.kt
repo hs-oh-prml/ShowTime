@@ -43,17 +43,14 @@ class WidgetProvider : AppWidgetProvider() {
         Log.d("Widget Array", appWidgetIds.toString())
         for(i in appWidgetIds){
 
-//            var intent = Intent(context, WidgetService::class.java)
-//            intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, i)
-//            intent.data = Uri.parse(intent.toUri(Intent.URI_INTENT_SCHEME))
-//            val views = RemoteViews(context.packageName, R.layout.table_widget)
-//            views.setRemoteAdapter(R.id.timeTable, intent)
-//            views.setEmptyView(R.id.timeTable, R.id.empty_view)
-
             val views = RemoteViews(context.packageName, R.layout.table_widget)
             var encodedStr = PreferenceManager(context).getImg()
             var img = str2Bitmap(encodedStr!!)
-            views.setImageViewBitmap(R.id.timeTable, img)
+            if(img == null){
+
+            } else {
+                views.setImageViewBitmap(R.id.timeTable, img)
+            }
 
             var intent = Intent(context, MainActivity::class.java)
             var pi = PendingIntent.getActivity(context, 0, intent, 0)
@@ -68,7 +65,7 @@ class WidgetProvider : AppWidgetProvider() {
 
     }
 
-    fun str2Bitmap(encodedStr:String): Bitmap {
+    fun str2Bitmap(encodedStr:String): Bitmap? {
         var encodeByte = Base64.decode(encodedStr, Base64.DEFAULT)
         var bitmap = BitmapFactory.decodeByteArray(encodeByte, 0, encodeByte.size)
         return bitmap
