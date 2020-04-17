@@ -3,11 +3,12 @@ package com.showtime
 import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
+import android.graphics.Point
 import android.os.Bundle
+import android.util.DisplayMetrics
 import android.util.Log
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
+import androidx.core.content.ContextCompat.getSystemService
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.showtime.data.MyData
@@ -46,11 +47,15 @@ class DetailDialog(
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        //dialog!!.window!!.requestFeature(Window.FEATURE_NO_TITLE)
         init()
     }
 
     override fun onResume() {
         super.onResume()
+//        val width = DisplayMetrics().widthPixels
+//        val height = DisplayMetrics().heightPixels
+//        dialog!!.window!!.setLayout((width*0.9).toInt(),(height*0.9).toInt())
         init()
     }
 

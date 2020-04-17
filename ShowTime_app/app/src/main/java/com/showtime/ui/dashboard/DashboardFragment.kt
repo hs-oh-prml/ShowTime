@@ -75,7 +75,7 @@ class DashboardFragment : Fragment() {
                 if(clickDate != -1){
                     selected_date.text = "${d}. " + weekDay
                     var str = pref.getDaySchedule(year, month, date.toInt())
-                    if(str != null){
+                    if(str != null && str != ""){
                         schedule_content.text = str
                         schedule_edit_text.setText(str)
                         schedule_delete_btn.visibility = VISIBLE

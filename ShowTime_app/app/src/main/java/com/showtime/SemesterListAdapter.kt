@@ -40,6 +40,7 @@ class SemesterListAdapter (
         holder.setIsRecyclable(false)
         val data = items[position]
         holder.semester.text = data.semester
+        holder.semester.textSize = 12f
 
         var pref = PreferenceManager(context)
 
@@ -64,6 +65,9 @@ class SemesterListAdapter (
         }
         holder.credit.text = "${total_credit}학점"
         holder.lecture_count.text = "${lect_num}과목"
+
+        holder.credit.textSize = 12f
+        holder.lecture_count.textSize = 12f
 
         holder.item_semester.setOnClickListener {
 //            var intent = Intent(context, DetailDialog::class.java)

@@ -127,7 +127,7 @@ class CalendarAdapter(
                             count++
                         }
                         var str = pref.getDaySchedule(year, month, count - 1)
-                        if(str != ""){
+                        if(str != "" && str != null){
                             isScheduled.visibility = VISIBLE
                         }
                     }

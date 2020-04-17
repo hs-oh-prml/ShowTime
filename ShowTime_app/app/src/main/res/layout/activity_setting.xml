@@ -7,35 +7,181 @@
     android:layout_height="match_parent"
     tools:context=".setting.SettingActivity"
     android:orientation="vertical"
+    android:background="@color/white"
+    android:animateLayoutChanges="true"
     >
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="50dp"
         android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:background="@color/background_gray">
+        <ImageView
+            android:layout_marginStart="5dp"
+            android:layout_width="25dp"
+            android:layout_height="20dp"
+            android:src="@drawable/ic_arrow_left"
+            android:background="@color/background_gray"
+            android:id="@+id/setting_close"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:text="설정"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:textColor="@color/dark_grey"
+            android:layout_marginEnd="25dp"
+            android:textSize="18sp"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:paddingStart="10dp"
+        android:background="@drawable/ripple_effect_btn"
         >
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="푸시 알람"
+            android:layout_marginEnd="10dp"
+            android:textSize="15sp"
+            android:textColor="@color/dark_grey"
             />
+        <View
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_weight="1"/>
         <com.google.android.material.switchmaterial.SwitchMaterial
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/push_switch"
+            android:layout_marginEnd="10dp"
             />
 
     </LinearLayout>
-
-    <TextView
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:background="@color/very_light_gray"
+        android:id="@+id/alarm_detail"
+        android:visibility="gone"
+        android:gravity="center"
+        >
+        <Spinner
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/day_alarm"
+            android:layout_marginEnd="20dp"/>
+        <Spinner
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/hour_alarm"/>
+    </LinearLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/background_gray"
+        android:layout_marginHorizontal="5dp"/>
+    <TextView
+        android:background="@drawable/ripple_effect_btn"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:paddingStart="10dp"
         android:text="위젯 새로고침"
         android:id="@+id/setWidget"
+        android:textSize="15sp"
+        android:textColor="@color/dark_grey"
         />
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/background_gray"
+        android:layout_marginHorizontal="5dp"/>
     <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:background="@drawable/ripple_effect_btn"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:paddingStart="10dp"
         android:text="테마 변경"
         android:id="@+id/setColorTheme"
+        android:textSize="15sp"
+        android:textColor="@color/dark_grey"
         />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="@color/very_light_gray"
+        android:id="@+id/theme_detail"
+        android:visibility="gone">
+        <RadioGroup
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/theme_group"
+            android:orientation="horizontal">
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="핑크"
+                android:id="@+id/theme1"
+                android:textSize="13sp"
+                android:textColor="@color/dark_grey"
+                android:paddingStart="10dp"/>
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="파랭"
+                android:id="@+id/theme2"
+                android:textSize="13sp"
+                android:textColor="@color/dark_grey"
+                android:paddingStart="10dp"/>
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="초롱"
+                android:id="@+id/theme3"
+                android:textSize="13sp"
+                android:textColor="@color/dark_grey"
+                android:paddingStart="10dp"/>
+        </RadioGroup>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <ImageView
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="30dp"
+                android:background="@drawable/trash"
+                android:layout_margin="10dp"/>
+            <ImageView
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="30dp"
+                android:background="@drawable/trash"
+                android:layout_margin="10dp"/>
+            <ImageView
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="30dp"
+                android:background="@drawable/trash"
+                android:layout_margin="10dp"/>
+        </LinearLayout>
+    </LinearLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/background_gray"
+        android:layout_marginHorizontal="5dp"/>
 </LinearLayout>
