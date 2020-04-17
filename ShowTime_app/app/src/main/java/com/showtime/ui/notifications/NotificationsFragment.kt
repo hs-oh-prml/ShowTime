@@ -95,6 +95,7 @@ class NotificationsFragment : Fragment() {
         }
         var adapter = ViewPagerAdapter(requireContext(), myData.semester, listener)
         viewpager.adapter = adapter
+
         TabLayoutMediator(tabLayout, viewpager, object : TabLayoutMediator.TabConfigurationStrategy{
             override fun onConfigureTab(tab: TabLayout.Tab, position: Int) {
 //                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.

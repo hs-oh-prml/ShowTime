@@ -78,7 +78,7 @@ class DashboardFragment : Fragment() {
                 isSelected = true
 
                 if(clickDate != -1){
-                    selected_date.text = "${y}년 ${m}월 ${d}일 " + weekDay
+                    selected_date.text = "${d}. " + weekDay
 
                     var str = pref.getDaySchedule(year, month, date.toInt())
                     if(str != null){
