@@ -72,11 +72,15 @@ class WidgetSettingActivity : FragmentActivity() {
         widget_setting_btn.setOnClickListener {
             val currentDegree = widget_setting_btn.rotation
             ObjectAnimator.ofFloat(widget_setting_btn, View.ROTATION, currentDegree, currentDegree + 360f)
-                .setDuration(500)
+                .setDuration(1000)
                 .start()
             screenCapture()
             //preview.setImageBitmap(str2Bitmap(pref.getImg()!!))
             Toast.makeText(this,"시간표가 변경되었습니다.",Toast.LENGTH_SHORT).show()
+        }
+
+        setting_close.setOnClickListener {
+            this.finish()
         }
     }
 
