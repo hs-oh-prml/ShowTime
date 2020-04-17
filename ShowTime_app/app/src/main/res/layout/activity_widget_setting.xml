@@ -7,15 +7,34 @@
     android:layout_height="match_parent"
     tools:context=".widget.WidgetSettingActivity"
     android:orientation="vertical"
+    android:background="@color/white"
     >
-    <Button
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/widget_setting_btn"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:background="@drawable/table_border"
+        android:backgroundTint="@color/background_gray"
         android:layout_margin="10dp"
-        android:text="위젯 설정"
-        android:enabled="false"
-        />
+        android:padding="7dp">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="현재 시간표로 위젯 변경하기"
+            android:layout_marginEnd="20dp"/>
+        <ImageView
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:id="@+id/widget_setting_btn"
+            android:enabled="false"
+            android:src="@drawable/ic_autorenew_black_24dp"
+            android:background="@drawable/circle_layout"
+            android:backgroundTint="@color/colorPrimary"
+            android:padding="5dp"
+            />
+    </LinearLayout>
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -38,23 +57,23 @@
         android:layout_marginHorizontal="10dp"
         android:layout_weight="1"
         >
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="미리보기"
-            />
+<!--        <TextView-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:text="미리보기"-->
+<!--            />-->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
             android:gravity="center"
             >
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/preview"
-                android:scaleType="center"
-                />
+<!--            <ImageView-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:id="@+id/preview"-->
+<!--                android:scaleType="center"-->
+<!--                />-->
 
         </LinearLayout>
     </RelativeLayout>

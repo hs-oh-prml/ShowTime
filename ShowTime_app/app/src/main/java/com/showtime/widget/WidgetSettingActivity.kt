@@ -70,7 +70,8 @@ class WidgetSettingActivity : FragmentActivity() {
 
         widget_setting_btn.setOnClickListener {
             screenCapture()
-            preview.setImageBitmap(str2Bitmap(pref.getImg()!!))
+            //preview.setImageBitmap(str2Bitmap(pref.getImg()!!))
+            Toast.makeText(this,"시간표가 변경되었습니다.",Toast.LENGTH_SHORT).show()
         }
     }
 

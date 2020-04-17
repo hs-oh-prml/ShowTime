@@ -27,6 +27,7 @@
         android:paddingEnd="15dp"
         android:paddingTop="10dp"
         android:paddingBottom="10dp"
+        android:animateLayoutChanges="true"
         >
         <GridLayout
             android:layout_width="match_parent"
@@ -86,7 +87,7 @@
             android:id="@+id/lineChart"
             android:layout_width="match_parent"
             android:layout_height="130dp"
-            android:clickable="false"/>
+            android:clickable="false" />
     </LinearLayout>
     <androidx.viewpager2.widget.ViewPager2
         android:background="@drawable/list_border"
