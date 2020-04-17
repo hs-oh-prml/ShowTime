@@ -124,12 +124,15 @@ class TableFragment(var c: Context, var semesterNum:Int) : Fragment() {
     fun initView(weekList: List<String>){
         timeTable.columnCount = weekList.size + 1
         timeTable.rowCount = 23
+
+        var disp = DisplayMetrics()
+        var dwidth = disp.widthPixels
+        var dheight = disp.heightPixels
+
         for(j in 0 until timeTable.columnCount){
             for(i in 0 until timeTable.rowCount){
 
                 var params = GridLayout.LayoutParams()
-                params.height = WRAP_CONTENT
-                params.width = WRAP_CONTENT
                 params.setMargins(1)
                 var child: View
                 var colSpan = GridLayout.spec(j, GridLayout.FILL)
@@ -142,7 +145,6 @@ class TableFragment(var c: Context, var semesterNum:Int) : Fragment() {
                     child = TextView(context)
                     child.setTextColor(ContextCompat.getColor(context!!, R.color.white))
                     child.textSize = 10f
-                    child.text = "T"
 
                 } else if(i == 0 && j != 0){
 
@@ -168,6 +170,8 @@ class TableFragment(var c: Context, var semesterNum:Int) : Fragment() {
                 } else {
                     var inflater = LayoutInflater.from(context)
                     child = inflater.inflate(R.layout.table_item, timeTable, false)
+                    params.width = (dwidth * (1/5) * 0.7).toInt()
+                    params.height = (dheight * (1/24) * 0.8).toInt()
                 }
                 if(i != 0){
                     var rowSpan = GridLayout.spec(i, GridLayout.FILL, 1f)
