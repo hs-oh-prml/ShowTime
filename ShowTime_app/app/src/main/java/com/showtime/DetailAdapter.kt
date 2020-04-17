@@ -6,9 +6,11 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.showtime.data.Schedule
 import com.showtime.sharedpreference.PreferenceManager
+import kotlinx.android.synthetic.main.custom_toast.view.*
 
 class DetailAdapter(
     val context: Context,
@@ -41,6 +43,18 @@ class DetailAdapter(
             pref.myData.semester[tableNum].schedules.removeAt(position)
             pref.savePref()
             listener.refresh()
+
+
+            var inflater = LayoutInflater.from(context)
+            var t_view = inflater.inflate(R.layout.custom_toast,null, false)
+            //var custom_toast = LayoutInflater.from(context).inflate(R.layout.toast_design, null)
+            t_view.toast_text.text = holder.name.text.toString() + "이(가) 삭제되었습니다."
+            var t2 = Toast(this.context)
+            t2.view = t_view
+            t2.show()
+
+//            val str = holder.name.text.toString() + "이(가) 삭제되었습니다."
+//            Toast.makeText(context!!,str,Toast.LENGTH_SHORT ).show()
         }
     }
 
