@@ -31,7 +31,7 @@ class ViewPagerAdapter (
 //        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
         var data = itemlist[position]       //data.schedules
         var adapter = SemesterAdapter(context, position, listener)
-        var layoutManager = LinearLayoutManager(context!!, RecyclerView.VERTICAL, false)
+        var layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
         holder.semester_recyclerView.layoutManager = layoutManager
         holder.semester_recyclerView.adapter = adapter
 
