@@ -99,6 +99,8 @@ class TableFragment(var c: Context, var semesterNum:Int) : Fragment() {
                     }
                     cell_name.text = name
                     cell_place.text = place
+                    cell_name.setPadding(3, 3, 0, 0)
+                    cell_place.setPadding(3, 0, 0, 0)
 
                     val shape = GradientDrawable()
                     shape.setColor(Color.parseColor(color[index % color.size]))
@@ -113,6 +115,14 @@ class TableFragment(var c: Context, var semesterNum:Int) : Fragment() {
                     param.columnSpec = colSpan
                     cell.layoutParams = param
 
+                    cell.setOnClickListener {
+                        var dialog = CellDialog(context!!,semesterNum, index)
+                        var fm = parentFragmentManager
+
+
+                        dialog.show(fm, "")
+
+                    }
                 } else {
                     cell.visibility = View.GONE
                 }
