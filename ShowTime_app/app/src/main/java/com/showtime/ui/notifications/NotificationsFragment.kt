@@ -174,6 +174,7 @@ class NotificationsFragment : Fragment() {
             }
         }
 
+
         val lineDataSet = LineDataSet(values,"학점")
         lineDataSet.setColor(ContextCompat.getColor(this.context!!, R.color.colorPrimary))
         lineDataSet.setCircleColor(ContextCompat.getColor(this.context!!, R.color.colorPrimary))
@@ -187,10 +188,15 @@ class NotificationsFragment : Fragment() {
 
         val xAxis = lineChart.xAxis
         xAxis.position = XAxis.XAxisPosition.BOTTOM
-        xAxis.setLabelCount(values.size,true)
-//        xAxis.textSize =
+        xAxis.setLabelCount(values.size,false)
+        Log.d("CHART_VALUE", scoreList.toString())
+        Log.d("CHART_VALUE", values.toString())
+        Log.d("CHART_VALUE", values.size.toString())
+        xAxis.axisMinimum = 0f
+        xAxis.mAxisMaximum = values.size.toFloat()
         xAxis.valueFormatter = object: ValueFormatter(){
             override fun getFormattedValue(value: Float): String {
+                Log.d("CAHRT_X", value.toString())
                 return when(value){
                     0f->"1 - 1"
                     1f->"1 - 2"
@@ -200,7 +206,7 @@ class NotificationsFragment : Fragment() {
                     5f->"3 - 2"
                     6f->"4 - 1"
                     7f->"4 - 2"
-                    else->"null"
+                    else->""
                 }
             }
         }

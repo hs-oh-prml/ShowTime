@@ -73,7 +73,7 @@ class SemesterAdapter  (
                 pref = PreferenceManager(context)
                 pref.myData.semester[semesterNum].schedules[position].score = holder.score.selectedItem.toString()
                 pref.savePref()
-
+                listener.spinnerChanged()
             }
         }
         if(data.isLecture){

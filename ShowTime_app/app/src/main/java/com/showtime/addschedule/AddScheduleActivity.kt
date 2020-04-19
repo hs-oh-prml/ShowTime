@@ -159,7 +159,7 @@ class AddScheduleActivity : AppCompatActivity(){
                 }
 
             }
-            pref.myData.semester[tableNum].schedules.add(Schedule(isLecture, name, placeTxt, timeList, Ncredit, "null"))
+            pref.myData.semester[tableNum].schedules.add(Schedule(isLecture, name, placeTxt, timeList, Ncredit, "A+"))
             pref.savePref()
 
             val toast = CustomToast(this, "["+name+"] 과목이 추가되었습니다.")
@@ -195,6 +195,8 @@ class AddScheduleActivity : AppCompatActivity(){
                 var cell = timeTable.getChildAt((timeTable.rowCount * i.week) + j)
                 var cell_name = cell.findViewById<TextView>(R.id.cell_name)
                 var cell_place =  cell.findViewById<TextView>(R.id.cell_place)
+                cell_name.setPadding(3, 3, 0, 0)
+                cell_place.setPadding(3, 0, 0, 0)
                 statusMap[j][i.week] = -2   // -2 이미 시간표가 있는 경우
 
                 if(flag == 0){
