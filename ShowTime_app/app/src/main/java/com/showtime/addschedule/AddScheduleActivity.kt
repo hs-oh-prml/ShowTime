@@ -24,6 +24,7 @@ import androidx.core.content.ContextCompat
 import androidx.core.view.children
 import androidx.core.view.setMargins
 import androidx.core.view.setPadding
+import com.showtime.CustomToast
 import com.showtime.R
 import com.showtime.data.MyData
 import com.showtime.data.Schedule
@@ -160,6 +161,9 @@ class AddScheduleActivity : AppCompatActivity(){
             }
             pref.myData.semester[tableNum].schedules.add(Schedule(isLecture, name, placeTxt, timeList, Ncredit, "null"))
             pref.savePref()
+
+            val toast = CustomToast(this, "["+name+"] 과목이 추가되었습니다.")
+            toast.show()
             finish()
         }
 

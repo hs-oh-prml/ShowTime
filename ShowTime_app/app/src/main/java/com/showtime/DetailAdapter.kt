@@ -1,5 +1,6 @@
 package com.showtime
 
+import android.app.Activity
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
@@ -11,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.showtime.data.Schedule
 import com.showtime.sharedpreference.PreferenceManager
 import kotlinx.android.synthetic.main.custom_toast.view.*
+import com.jeevandeshmukh.glidetoastlib.GlideToast as GlideToast1
 
 class DetailAdapter(
     val context: Context,
@@ -44,17 +46,8 @@ class DetailAdapter(
             pref.savePref()
             listener.refresh()
 
-
-            var inflater = LayoutInflater.from(context)
-            var t_view = inflater.inflate(R.layout.custom_toast,null, false)
-            //var custom_toast = LayoutInflater.from(context).inflate(R.layout.toast_design, null)
-            t_view.toast_text.text = holder.name.text.toString() + "이(가) 삭제되었습니다."
-            var t2 = Toast(this.context)
-            t2.view = t_view
-            t2.show()
-
-//            val str = holder.name.text.toString() + "이(가) 삭제되었습니다."
-//            Toast.makeText(context!!,str,Toast.LENGTH_SHORT ).show()
+            val str = holder.name.text.toString() + "이(가) 삭제되었습니다."
+            CustomToast(context, str).show()
         }
     }
 

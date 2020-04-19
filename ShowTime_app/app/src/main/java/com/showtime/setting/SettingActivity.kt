@@ -8,6 +8,7 @@ import android.view.View.*
 import android.widget.NumberPicker
 import android.widget.Toast
 import com.github.mikephil.charting.utils.Utils.init
+import com.showtime.CustomToast
 import com.showtime.R
 import com.showtime.sharedpreference.PreferenceManager
 import com.showtime.widget.WidgetSettingActivity
@@ -32,7 +33,9 @@ class SettingActivity : AppCompatActivity() {
         d_day_alarm.maxValue = 5
         d_day_alarm.displayedValues = arrayOf("D-5", "D-4", "D-3", "D-2", "D-1", "D-Day")
         d_day_alarm.wrapSelectorWheel = false
+        d_day_alarm.descendantFocusability = NumberPicker.FOCUS_BLOCK_DESCENDANTS
 
+        hour_alarm.descendantFocusability = NumberPicker.FOCUS_BLOCK_DESCENDANTS
         hour_alarm.minValue = 0
         hour_alarm.maxValue = 23
         hour_alarm.displayedValues = arrayOf("12 AM",
@@ -48,12 +51,14 @@ class SettingActivity : AppCompatActivity() {
         push_switch.setOnCheckedChangeListener { compoundButton, b ->
             if(b){
                 pref.setAlarmFlag("true")
-                Toast.makeText(this, "푸시 알람이 설정되었습니다.", Toast.LENGTH_SHORT).show()
-//                alarm_detail.visibility = VISIBLE
+                val str = "푸시 알람을 설정합니다."
+                CustomToast(this, str).show()
+                alarm_detail.visibility = VISIBLE
             } else {
                 pref.setAlarmFlag("false")
-                Toast.makeText(this, "푸시 알람이 해제되었습니다.", Toast.LENGTH_SHORT).show()
-//                alarm_detail.visibility = GONE
+                val str = "푸시 알람을 해제합니다."
+                CustomToast(this, str).show()
+                alarm_detail.visibility = GONE
             }
         }
         //위젯설정
@@ -92,12 +97,18 @@ class SettingActivity : AppCompatActivity() {
             when(i){
                 R.id.theme1->{
                     pref.setTheme(R.array.theme1)
+                    val str = "테마1 로 변경되었습니다."
+                    CustomToast(this, str).show()
                 }
                 R.id.theme2->{
                     pref.setTheme(R.array.theme2)
+                    val str = "테마2 로 변경되었습니다."
+                    CustomToast(this, str).show()
                 }
                 else->{
                     pref.setTheme(R.array.theme3)
+                    val str = "테마3 로 변경되었습니다."
+                    CustomToast(this, str).show()
                 }
             }
         }

@@ -23,6 +23,7 @@ import android.widget.*
 import androidx.core.content.ContextCompat
 import androidx.core.view.setMargins
 import androidx.fragment.app.FragmentActivity
+import com.showtime.CustomToast
 import com.showtime.R
 import com.showtime.data.MyData
 import com.showtime.data.Schedule
@@ -77,7 +78,8 @@ class WidgetSettingActivity : FragmentActivity() {
                 .start()
             screenCapture()
             //preview.setImageBitmap(str2Bitmap(pref.getImg()!!))
-            Toast.makeText(this,"시간표가 변경되었습니다.",Toast.LENGTH_SHORT).show()
+            val str = "현재 시간표로 변경되었습니다."
+            CustomToast(this, str).show()
         }
 
         setting_close.setOnClickListener {
