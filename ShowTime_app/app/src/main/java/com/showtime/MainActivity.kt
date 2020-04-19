@@ -211,6 +211,7 @@ class MainActivity : AppCompatActivity() {
         // as you specify a parent activity in AndroidManifest.xml.
         return when (item.itemId) {
             R.id.action_widget->{
+
                 var intent = Intent(this, SettingActivity::class.java)
                 startActivity(intent)
                 overridePendingTransition(R.anim.fade_in,R.anim.fade_out)

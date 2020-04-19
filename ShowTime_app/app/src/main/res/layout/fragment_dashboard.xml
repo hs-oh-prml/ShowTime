@@ -104,20 +104,22 @@
 <!--                android:layout_marginVertical="10dp"/>-->
 
             <ScrollView
+                android:id="@+id/edit_layout2"
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:id="@+id/edit_layout2">
-                <TextView
-                    android:id="@+id/schedule_content"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/table_text_color"
-                    android:textSize="12sp"
-                    android:layout_marginStart="3dp"
-                    android:layout_marginTop="5dp"
-                    />
+                android:layout_height="match_parent"
+                android:visibility="gone"
+                >
             </ScrollView>
+            <TextView
+                android:id="@+id/schedule_content"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginStart="3dp"
+                android:layout_marginTop="5dp"
+                android:textColor="@color/table_text_color"
+                android:textSize="12sp"
+                android:scrollbars="vertical"
+                />
             <EditText
                 android:layout_width="match_parent"
                 android:layout_weight="1"

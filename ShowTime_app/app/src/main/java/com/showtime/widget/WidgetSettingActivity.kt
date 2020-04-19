@@ -1,9 +1,12 @@
 package com.showtime.widget
 
+import android.Manifest
 import android.animation.ObjectAnimator
 import android.appwidget.AppWidgetManager
 import android.content.ComponentName
+import android.content.ContentValues
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.Canvas
@@ -11,7 +14,9 @@ import android.graphics.Color
 import android.graphics.drawable.GradientDrawable
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Environment
 import android.os.HandlerThread
+import android.provider.MediaStore
 import android.util.Base64
 import android.util.Log
 import android.view.Gravity
@@ -34,6 +39,10 @@ import kotlinx.android.synthetic.main.activity_widget_setting.*
 import kotlinx.android.synthetic.main.activity_widget_setting.timeTable
 import kotlinx.android.synthetic.main.fragment_home.*
 import kotlinx.android.synthetic.main.semester_item.*
+import java.io.File
+import java.io.FileNotFoundException
+import java.io.FileOutputStream
+import java.io.IOException
 
 class WidgetSettingActivity : FragmentActivity() {
 
@@ -85,9 +94,8 @@ class WidgetSettingActivity : FragmentActivity() {
         setting_close.setOnClickListener {
             this.finish()
         }
+
     }
-
-
     fun screenCapture(){
 
         // Make Bitmap By Captured View
@@ -96,14 +104,6 @@ class WidgetSettingActivity : FragmentActivity() {
         var canvas = Canvas(bitmap)
         timeTable.draw(canvas)
         pref.saveImage(bitmap)
-
-        // Widget Update
-        var intent = Intent(this, WidgetProvider::class.java)
-        intent.setAction(AppWidgetManager.ACTION_APPWIDGET_UPDATE)
-        var ids= AppWidgetManager.getInstance(this)
-            .getAppWidgetIds(ComponentName(this, WidgetProvider::class.java))
-        intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, ids)
-        sendBroadcast(intent)
     }
 
     fun str2Bitmap(encodedStr:String): Bitmap {

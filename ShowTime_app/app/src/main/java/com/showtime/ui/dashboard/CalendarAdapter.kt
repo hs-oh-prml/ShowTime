@@ -44,7 +44,7 @@ class CalendarAdapter(
     val CURRENT = Int.MAX_VALUE / 2
 
 //    var week = listOf("SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT")
-    var week = listOf("일", "월", "화", "수", "목", "금", "토")
+    val week = listOf("일", "월", "화", "수", "목", "금", "토")
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CalendarAdapter.ViewHolder {
         val v = LayoutInflater.from(parent.context)
@@ -140,6 +140,7 @@ class CalendarAdapter(
 //                        schedule_item_layout.background = shape
                         //schedule_item_layout.setBackgroundColor(ContextCompat.getColor(context, R.color.red))
                         isToday.visibility = VISIBLE
+                        listener.onClick(today.get(Calendar.MONTH) + 1, today.get(Calendar.YEAR), today.get(Calendar.DATE), week[today.get(Calendar.DAY_OF_WEEK) - 1], child)
                     }
                     if(j == 0){
                         date.setTextColor((ContextCompat.getColor(context, R.color.red)))
