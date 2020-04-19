@@ -102,9 +102,6 @@ class DetailDialog(
         total_credit.text = "${_credit}학점"
         lecture_count.text = "${_count} 과목"
 
-        close.setOnClickListener {
-            dismiss()
-        }
         add.setOnClickListener {
             var intent = Intent(c, AddScheduleActivity::class.java)
             intent.putExtra("tableNum", tableNum)

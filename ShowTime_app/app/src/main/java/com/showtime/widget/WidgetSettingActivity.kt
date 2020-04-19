@@ -57,6 +57,8 @@ class WidgetSettingActivity : FragmentActivity() {
         var theme = pref.getTheme()
         color = this.resources.getStringArray(theme)
 
+        widget_setting_btn.isEnabled = false
+
         var thread = object: Thread(){
             override fun run() {
                 super.run()
@@ -66,10 +68,13 @@ class WidgetSettingActivity : FragmentActivity() {
                     initView(weekList)
                     refreshTable()
                     widget_setting_btn.isEnabled = true
+                    widget_wait.text = "현재 시간표로 위젯 변경하기"
                 }
             }
         }
         thread.start()
+
+
 
         widget_setting_btn.setOnClickListener {
             val currentDegree = widget_setting_btn.rotation

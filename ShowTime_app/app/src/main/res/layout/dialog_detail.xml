@@ -15,7 +15,8 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:gravity="center"
-        android:background="@drawable/table_border"
+        android:background="@drawable/ripple_effect_btn"
+        android:backgroundTint="@color/light_blue"
         android:padding="10dp"
         >
         <LinearLayout
@@ -50,17 +51,6 @@
                 android:textSize="12sp"
                 android:text="학점"/>
         </LinearLayout>
-
-            <View
-                android:layout_width="0dp"
-                android:layout_height="1dp"
-                android:layout_weight="1"/>
-            <ImageButton
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:id="@+id/close"
-                android:background="@drawable/ic_close_black_24dp"
-                android:backgroundTint="@color/dark_grey"/>
     </LinearLayout>
     <ScrollView
         android:layout_width="match_parent"

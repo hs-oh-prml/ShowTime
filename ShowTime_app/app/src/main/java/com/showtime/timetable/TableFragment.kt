@@ -8,6 +8,7 @@ import android.graphics.Color
 import android.graphics.drawable.Drawable
 import android.graphics.drawable.GradientDrawable
 import android.os.Bundle
+import android.text.TextUtils
 import android.util.DisplayMetrics
 import android.util.Log
 import android.view.Gravity
@@ -21,6 +22,7 @@ import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.core.view.setMargins
 import androidx.core.view.setPadding
+import androidx.core.widget.TextViewCompat
 import com.showtime.R
 import com.showtime.data.MyData
 import com.showtime.data.Schedule
@@ -92,12 +94,25 @@ class TableFragment(var c: Context, var semesterNum:Int) : Fragment() {
                 var cell_place =  cell.findViewById<TextView>(R.id.cell_place)
 
                 if(flag == 0){
-                    val name = schedule.name
+
+                    var name = schedule.name
+//                    for(i in 0 until schedule.name.length) {
+//                        name += schedule.name[i]
+//                        if (i % 5 == 0 && i != 0)
+//                            name += "\n"
+//                    }
+                    cell_name.text = name
+                    cell_name.ellipsize = TextUtils.TruncateAt.END
+                    cell_name.maxLines = 1
                     var place = ""
                     if(schedule.place != null){
                         place = schedule.place
+//                        for(i in 0 until schedule.place.length) {
+//                            place += schedule.place[i]
+//                            if (i % 7 == 0 && i != 0)
+//                                place += "\n"
+//                        }
                     }
-                    cell_name.text = name
                     cell_place.text = place
                     cell_name.setPadding(3, 3, 0, 0)
                     cell_place.setPadding(3, 0, 0, 0)
