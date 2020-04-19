@@ -139,6 +139,11 @@
         android:textSize="15sp"
         android:textColor="@color/dark_grey"
         />
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/background_gray"
+        android:layout_marginHorizontal="5dp"/>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -295,6 +300,22 @@
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/background_gray"
+        android:layout_marginHorizontal="5dp"/>
+    <TextView
+        android:background="@drawable/ripple_effect_btn"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:gravity="center_vertical"
+        android:paddingStart="10dp"
+        android:text="오픈소스 라이센스"
+        android:id="@+id/license"
+        android:textSize="15sp"
+        android:textColor="@color/dark_grey"
+        />
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"

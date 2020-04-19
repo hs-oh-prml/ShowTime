@@ -2,6 +2,7 @@ package com.showtime.ui.dashboard
 
 import android.content.Context.INPUT_METHOD_SERVICE
 import android.os.Bundle
+import android.text.method.ScrollingMovementMethod
 import android.util.Log
 import android.view.KeyEvent
 import android.view.LayoutInflater
@@ -39,6 +40,8 @@ class DashboardFragment : Fragment() {
 
     var isSelected = false
     lateinit var imm:InputMethodManager
+    val week = listOf("일", "월", "화", "수", "목", "금", "토")
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -109,7 +112,7 @@ class DashboardFragment : Fragment() {
             schedule_content.text = schedule_edit_text.text.toString()
             schedule_content.visibility = VISIBLE
             schedule_edit_text.visibility = GONE
-            edit_layout2.visibility = VISIBLE
+//            edit_layout2.visibility = VISIBLE
 
             var idx = calendarView.currentItem
             var adapter = CalendarAdapter(requireContext(), today, listener)
@@ -120,33 +123,14 @@ class DashboardFragment : Fragment() {
                 CustomToast(this.context!!, str).show()
             }
         }
-
-        edit_layout.setOnClickListener {
-            if(isSelected){
-                schedule_commit_btn.visibility = VISIBLE
-                edit_layout2.visibility = GONE
-                calendar_frame.visibility = GONE
-                schedule_delete_btn.visibility = INVISIBLE
-                schedule_content.visibility = GONE
-                schedule_edit_text.visibility = VISIBLE
-            }
+        schedule_content.movementMethod = object: ScrollingMovementMethod(){
         }
+
 
         schedule_content.setOnClickListener {
             if(isSelected){
                 schedule_commit_btn.visibility = VISIBLE
-                edit_layout2.visibility = GONE
-                calendar_frame.visibility = GONE
-                schedule_delete_btn.visibility = INVISIBLE
-                schedule_content.visibility = GONE
-                schedule_edit_text.visibility = VISIBLE
-            }
-        }
-
-        edit_layout2.setOnClickListener {
-            if(isSelected){
-                schedule_commit_btn.visibility = VISIBLE
-                edit_layout2.visibility = GONE
+//                edit_layout2.visibility = GONE
                 calendar_frame.visibility = GONE
                 schedule_delete_btn.visibility = INVISIBLE
                 schedule_content.visibility = GONE

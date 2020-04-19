@@ -4,13 +4,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:gravity="top"
     >
     <ImageView
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/timeTable"
-        android:scaleType="fitXY"
+        android:scaleType="fitStart"
         />
     <TextView
         xmlns:android="http://schemas.android.com/apk/res/android"
@@ -18,5 +19,6 @@
         android:layout_height="match_parent"
         android:id="@+id/empty_view"
         android:background="@color/white"
+        android:text="아직 설정된 시간표가 없습니다.[설정]->[위젯 새로고침]에서 위젯을 설정할 수 있습니다."
         />
 </LinearLayout>

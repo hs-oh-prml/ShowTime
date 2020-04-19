@@ -45,27 +45,16 @@ class HomeFragment : Fragment()    {
     fun init(){
         
         childFragmentManager.beginTransaction().replace(R.id.table, TableFragment(context!!, pref.table)).commit()
-//
-//        if(pref.getImg() == null){
+//        if(pref.getMainTable() == null){
 //            var thread = object: Thread(){
 //                override fun run() {
 //                    super.run()
-//                    sleep(2000)
+//                    sleep(1000)
 //                    screenCapture()
 //                }
 //            }
 //            thread.start()
 //        }
-    }
-    fun screenCapture(){
-
-        // Make Bitmap By Captured View
-        var bitmap = Bitmap.createBitmap(table.width, table.height, Bitmap.Config.ARGB_8888)
-        Log.v("IMAGE SIZE", "${table.width}, ${table.height}")
-        var canvas = Canvas(bitmap)
-        table.draw(canvas)
-        pref.saveImage(bitmap)
-
     }
 
     override fun onResume() {

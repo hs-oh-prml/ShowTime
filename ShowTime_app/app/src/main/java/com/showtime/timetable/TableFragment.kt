@@ -1,36 +1,49 @@
 package com.showtime.timetable
 
 
+import android.Manifest
 import android.app.Activity
+import android.content.ContentValues
 import android.content.Context
 import android.content.SharedPreferences
+import android.content.pm.PackageManager
+import android.graphics.Bitmap
+import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.drawable.Drawable
 import android.graphics.drawable.GradientDrawable
+import android.os.Build
 import android.os.Bundle
+import android.os.Environment
+import android.provider.MediaStore
 import android.text.TextUtils
 import android.util.DisplayMetrics
 import android.util.Log
-import android.view.Gravity
+import android.view.*
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import android.view.ViewGroup.LayoutParams.WRAP_CONTENT
 import android.widget.GridLayout
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.core.view.setMargins
 import androidx.core.view.setPadding
+import com.showtime.CustomToast
 import androidx.core.widget.TextViewCompat
 import com.showtime.R
 import com.showtime.data.MyData
 import com.showtime.data.Schedule
 import com.showtime.sharedpreference.PreferenceManager
 import kotlinx.android.synthetic.main.activity_add_schedule.*
+import kotlinx.android.synthetic.main.calendar_item.*
+import kotlinx.android.synthetic.main.fragment_home.*
 import kotlinx.android.synthetic.main.fragment_table.*
 import kotlinx.android.synthetic.main.fragment_table.timeTable
 import org.w3c.dom.Text
+import java.io.File
+import java.io.FileOutputStream
+import java.lang.Exception
+import java.text.SimpleDateFormat
+import java.util.*
 
 /**
  * A simple [Fragment] subclass.
@@ -63,7 +76,10 @@ class TableFragment(var c: Context, var semesterNum:Int) : Fragment() {
         }
         initView(weekList)
         refreshTable()
-
+        table_frame.setOnLongClickListener {
+            screenCapture()
+            true
+        }
     }
 
     fun refreshTable(){
@@ -73,10 +89,58 @@ class TableFragment(var c: Context, var semesterNum:Int) : Fragment() {
                 cell.setBackgroundResource(R.color.white)
             }
         }
-
         for((index, i) in  semester.schedules.withIndex()){
             addTable(i, index)
         }
+
+    }
+
+    fun screenCapture(){
+
+        // Make Bitmap By Captured View
+        var permissionCheck = ContextCompat.checkSelfPermission(context!!, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+        if(permissionCheck != PackageManager.PERMISSION_GRANTED){
+            return
+        }
+        var bitmap = Bitmap.createBitmap(table_frame.width, table_frame.height, Bitmap.Config.ARGB_8888)
+        Log.v("IMAGE SIZE", "${table_frame.width}, ${table_frame.height}")
+        var canvas = Canvas(bitmap)
+        table_frame.draw(canvas)
+//                pref.saveMainTable(bitmap)
+        var date = SimpleDateFormat("yyyyMMddHHmmss").format(Date())
+        var filename = "show_time_table_${date}.jpg"
+
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q){
+            var values = ContentValues().apply{
+                put(MediaStore.Images.Media.DISPLAY_NAME, filename)
+                put(MediaStore.Images.Media.MIME_TYPE, "image/jpg")
+                put(MediaStore.Images.Media.IS_PENDING, 1)
+            }
+            var collection = MediaStore.Images.Media.getContentUri(MediaStore.VOLUME_EXTERNAL_PRIMARY)
+            var item = c.contentResolver.insert(collection, values)!!
+            c.contentResolver.openAssetFileDescriptor(item, "w", null).use {
+                var out = FileOutputStream(it!!.fileDescriptor)
+                bitmap.compress(Bitmap.CompressFormat.JPEG, 100, out)
+                out.close()
+            }
+            values.clear()
+            values.put(MediaStore.Images.Media.IS_PENDING, 0)
+            c.contentResolver.update(item, values, null, null)
+            val msg = "시간표 이미지가 저장되었습니다."
+            CustomToast(c, msg).show()
+        }
+//                else {
+//            var storage = c.getExternalFilesDir(Environment.DIRECTORY_PICTURES)
+//            var file = File(storage, filename)
+//            try{
+//                file.createNewFile()
+//                var out = FileOutputStream(file)
+//                bitmap.compress(Bitmap.CompressFormat.JPEG, 100, out)
+//                out.close()
+//            } catch (e:Exception){
+//                e.printStackTrace()
+//            }
+//        }
     }
     fun getChild(row:Int, col:Int): View {
         var index = (timeTable.columnCount * row) + col

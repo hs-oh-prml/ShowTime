@@ -90,7 +90,6 @@ class PreferenceManager(c: Context) {
         var str = Base64.encodeToString(byteArr, Base64.DEFAULT)
         return str
     }
-
     fun saveImage(bitmap:Bitmap){
         var img = Bitmap2Str(bitmap)
         edit.putString("image",img)

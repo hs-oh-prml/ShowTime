@@ -55,7 +55,7 @@ class WidgetProvider : AppWidgetProvider() {
             var intent = Intent(context, MainActivity::class.java)
             var pi = PendingIntent.getActivity(context, 0, intent, 0)
             views.setOnClickPendingIntent(R.id.timeTable, pi)
-
+            views.setEmptyView(R.id.timeTable, R.id.empty_view)
             appWidgetManager.updateAppWidget(i, views)
             Log.d("Widget ID", i.toString())
 
