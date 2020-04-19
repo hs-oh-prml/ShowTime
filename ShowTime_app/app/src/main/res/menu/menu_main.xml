@@ -3,24 +3,21 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.example.showtime2.MainActivity">
     <item
+        android:id="@+id/action_add"
+        android:title="추가"
+        android:icon="@drawable/more_1"
+        app:showAsAction="always"
+        />
+
+    <item
         android:id="@+id/action_widget"
         android:title="위젯"
         android:icon="@drawable/ic_settings"
-        android:iconTint="@color/colorPrimary"
-        app:showAsAction="always"
-        />
-    <item
-        android:id="@+id/action_add"
-        android:title="추가"
-        android:icon="@drawable/more2"
-        android:iconTint="@color/colorPrimary"
         app:showAsAction="always"
         />
     <item
         android:id="@+id/action_settings"
         android:title="설정"
         android:icon="@drawable/list2"
-        android:iconTint="@color/colorPrimary"
         app:showAsAction="always"/>
-
 </menu>

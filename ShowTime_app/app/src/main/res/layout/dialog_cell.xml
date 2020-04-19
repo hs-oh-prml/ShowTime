@@ -6,30 +6,69 @@
     android:orientation="vertical"
     android:background="@drawable/table_border"
     android:backgroundTint="@color/white"
+
     >
     <TextView
-        android:layout_width="wrap_content"
+        android:padding="10dp"
+        android:gravity="center"
+        android:layout_gravity="center_horizontal"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:text="강의이름"
         android:id="@+id/name"
+        android:textSize="15sp"
+        android:textColor="@color/dark_grey"
+        android:background="@drawable/ripple_effect_btn"
+        android:backgroundTint="@color/light_blue"
         />
-    <TextView
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/place"
-        />
+        android:orientation="vertical"
+        android:background="@drawable/list_border"
+        android:layout_marginHorizontal="10dp"
+        android:layout_marginVertical="10dp"
+        android:padding="5dp"
+        android:gravity="center">
+        <TextView
+            android:layout_width="wrap_content"
+            android:padding="5dp"
+            android:layout_height="wrap_content"
+            android:text="장소"
+            android:id="@+id/place"
+            android:textSize="13sp"
+            android:textColor="@color/dark_grey"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+            android:text="3학점"
+            android:id="@+id/credit"
+            android:textSize="13sp"
+            android:textColor="@color/dark_grey"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+            android:text="시간"
+            android:id="@+id/time"
+            android:textSize="13sp"
+            android:textColor="@color/dark_grey"
+            />
+    </LinearLayout>
+
     <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/credit"
-        />
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/time"
-        />
-    <Button
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/delete"
+        android:text="삭제"
+        android:gravity="center"
+        android:padding="10dp"
+        android:textColor="@color/dark_grey"
+        android:background="@drawable/ripple_effect_btn"
+        android:backgroundTint="@color/light_blue"
+        android:textSize="13sp"
         />
 </LinearLayout>

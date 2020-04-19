@@ -1,5 +1,4 @@
 package com.showtime.setting
-
 import android.Manifest
 import android.content.ContentValues
 import android.content.Intent
@@ -7,22 +6,31 @@ import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import androidx.appcompat.app.AppCompatActivity
+import android.app.ActionBar
+import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Base64
 import android.util.Log
-import android.view.View.*
+import android.view.View
+import android.view.View.GONE
+import android.view.View.VISIBLE
+import android.view.ViewGroup
+import android.widget.LinearLayout
 import android.widget.NumberPicker
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
 import com.github.mikephil.charting.utils.Utils.init
+import androidx.appcompat.app.AppCompatActivity
 import com.showtime.CustomToast
 import com.showtime.R
 import com.showtime.sharedpreference.PreferenceManager
 import com.showtime.widget.WidgetSettingActivity
 import kotlinx.android.synthetic.main.activity_setting.*
 import java.io.FileOutputStream
+
 
 class SettingActivity : AppCompatActivity() {
 
@@ -369,6 +377,8 @@ class SettingActivity : AppCompatActivity() {
         setting_close.setOnClickListener {
             this.finish()
         }
+
+        makeColor()
     }
 
 
@@ -381,5 +391,33 @@ class SettingActivity : AppCompatActivity() {
     override fun finish() {
         super.finish()
         overridePendingTransition(R.anim.fade_in,R.anim.fade_out)
+    }
+
+    fun makeColor(){
+        val layout1 = findViewById<LinearLayout>(R.id.theme_layout1)
+        val layout2 = findViewById<LinearLayout>(R.id.theme_layout2)
+        val layout3 = findViewById<LinearLayout>(R.id.theme_layout3)
+
+        val t1 = this.resources.getStringArray(R.array.theme1)
+        for(i in 0..t1.size-1){
+            val view = layout1.getChildAt(i)
+            val color = t1[i]
+            view.setBackgroundColor(Color.parseColor(color))
+        }
+
+        val t2 = this.resources.getStringArray(R.array.theme2)
+        for(i in 0..t2.size-1){
+            val view = layout2.getChildAt(i)
+            val color = t2[i]
+            view.setBackgroundColor(Color.parseColor(color))
+        }
+
+        val t3 = this.resources.getStringArray(R.array.theme3)
+        for(i in 0..t3.size-1){
+            val view = layout3.getChildAt(i)
+            val color = t3[i]
+            view.setBackgroundColor(Color.parseColor(color))
+        }
+
     }
 }
