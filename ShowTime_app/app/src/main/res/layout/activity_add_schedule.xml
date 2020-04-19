@@ -49,6 +49,8 @@
             android:padding="10dp"
             android:textSize="13sp"
             android:layout_weight="1"
+            android:maxLength="20"
+            android:singleLine="true"
             />
         <CheckBox
             android:layout_width="wrap_content"
@@ -69,6 +71,8 @@
             android:gravity="center"
             android:textSize="13sp"
             android:textStyle="bold"
+            android:maxLength="1"
+            android:singleLine="true"
             />
         <TextView
             android:layout_width="wrap_content"
@@ -103,6 +107,8 @@
             android:padding="10dp"
             android:textSize="13sp"
             android:layout_weight="1"
+            android:maxLength="20"
+            android:singleLine="true"
             />
     </LinearLayout>
 

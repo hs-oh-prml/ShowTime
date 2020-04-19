@@ -61,7 +61,6 @@ class DashboardFragment : Fragment() {
 //                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
 
                 schedule_commit_btn.visibility = GONE
-                schedule_edit_btn.visibility = VISIBLE
                 schedule_content.visibility = VISIBLE
                 schedule_edit_text.visibility = GONE
                 schedule_delete_btn.visibility = GONE
@@ -103,12 +102,10 @@ class DashboardFragment : Fragment() {
             calendar_frame.visibility = VISIBLE
 
             schedule_commit_btn.visibility = GONE
-            schedule_edit_btn.visibility = VISIBLE
             pref.setDaySchedule(y, m, d, schedule_edit_text.text.toString())
             schedule_content.text = schedule_edit_text.text.toString()
             schedule_content.visibility = VISIBLE
             schedule_edit_text.visibility = GONE
-            schedule_close_btn.visibility = GONE
 
             var idx = calendarView.currentItem
             var adapter = CalendarAdapter(requireContext(), today, listener)
@@ -117,31 +114,28 @@ class DashboardFragment : Fragment() {
 
         }
 
-        schedule_edit_btn.setOnClickListener {
+        edit_layout.setOnClickListener {
             if(isSelected){
-                schedule_edit_btn.visibility = GONE
                 schedule_commit_btn.visibility = VISIBLE
 
                 calendar_frame.visibility = GONE
-
+                schedule_delete_btn.visibility = GONE
                 schedule_content.visibility = GONE
                 schedule_edit_text.visibility = VISIBLE
-                schedule_close_btn.visibility = VISIBLE
-                schedule_delete_btn.visibility = GONE
             }
         }
 
-        schedule_close_btn.setOnClickListener {
-            imm.hideSoftInputFromWindow(schedule_edit_text.windowToken, 0)
-            calendar_frame.visibility = VISIBLE
-
-            schedule_commit_btn.visibility = GONE
-            schedule_edit_btn.visibility = VISIBLE
-
-            schedule_content.visibility = VISIBLE
-            schedule_edit_text.visibility = GONE
-            schedule_close_btn.visibility = GONE
-        }
+//        schedule_close_btn.setOnClickListener {
+//            imm.hideSoftInputFromWindow(schedule_edit_text.windowToken, 0)
+//            calendar_frame.visibility = VISIBLE
+//
+//            schedule_commit_btn.visibility = GONE
+//            schedule_edit_btn.visibility = VISIBLE
+//
+//            schedule_content.visibility = VISIBLE
+//            schedule_edit_text.visibility = GONE
+//            schedule_close_btn.visibility = GONE
+//        }
 
         schedule_delete_btn.setOnClickListener {
             pref.setDaySchedule(y, m, d.toInt(),"")
