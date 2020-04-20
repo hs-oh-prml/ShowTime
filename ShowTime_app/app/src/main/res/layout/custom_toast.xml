@@ -27,7 +27,7 @@
                 android:id="@+id/header_icon"
                 android:layout_width="15dp"
                 android:layout_height="15dp"
-                android:src="@drawable/ic_home_black_24dp"
+                android:src="@drawable/test5_icon"
                 android:layout_marginEnd="3dp"/>
             <TextView
                 android:id="@+id/TextView_toast_design"

@@ -7,7 +7,6 @@ import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import androidx.appcompat.app.AppCompatActivity
 import android.app.ActionBar
-import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.provider.MediaStore
@@ -23,7 +22,6 @@ import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
 import com.github.mikephil.charting.utils.Utils.init
-import androidx.appcompat.app.AppCompatActivity
 import com.showtime.CustomToast
 import com.showtime.R
 import com.showtime.sharedpreference.PreferenceManager

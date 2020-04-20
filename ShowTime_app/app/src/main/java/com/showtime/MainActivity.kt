@@ -55,6 +55,7 @@ class MainActivity : AppCompatActivity() {
                     true
                 }
                 R.id.navigation_dashboard->{
+
                     tran.replace(R.id.nav_host_fragment, HomeFragment()).commit()
                     true
                 }
@@ -183,6 +184,12 @@ class MainActivity : AppCompatActivity() {
             .check()
 
         initToolbar()
+
+        action_widget.setOnClickListener {
+            var intent = Intent(this, SettingActivity::class.java)
+                startActivity(intent)
+                overridePendingTransition(R.anim.fade_in,R.anim.fade_out)
+        }
     }
     fun initToolbar() {
         //toolbar 커스텀 코드
@@ -210,13 +217,13 @@ class MainActivity : AppCompatActivity() {
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         return when (item.itemId) {
-            R.id.action_widget->{
-
-                var intent = Intent(this, SettingActivity::class.java)
-                startActivity(intent)
-                overridePendingTransition(R.anim.fade_in,R.anim.fade_out)
-                true
-            }
+//            R.id.action_widget->{
+//
+//                var intent = Intent(this, SettingActivity::class.java)
+//                startActivity(intent)
+//                overridePendingTransition(R.anim.fade_in,R.anim.fade_out)
+//                true
+//            }
             R.id.action_settings -> {
                 drawer_layout.openDrawer(Gravity.RIGHT)
                 true

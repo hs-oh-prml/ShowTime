@@ -9,12 +9,12 @@
         app:showAsAction="always"
         />
 
-    <item
-        android:id="@+id/action_widget"
-        android:title="위젯"
-        android:icon="@drawable/ic_settings"
-        app:showAsAction="always"
-        />
+<!--    <item-->
+<!--        android:id="@+id/action_widget"-->
+<!--        android:title="위젯"-->
+<!--        android:icon="@drawable/ic_settings"-->
+<!--        app:showAsAction="always"-->
+<!--        />-->
     <item
         android:id="@+id/action_settings"
         android:title="설정"
