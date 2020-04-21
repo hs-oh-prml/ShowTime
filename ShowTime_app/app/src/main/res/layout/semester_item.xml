@@ -27,7 +27,7 @@
             android:gravity="center_horizontal"
             android:layout_marginEnd="10dp"
             android:id="@+id/item_semester"
-            android:background="@drawable/ripple_effect">
+            android:background="@drawable/ripple_effect_gray">
             <TextView
                 android:id="@+id/semester"
                 android:layout_width="wrap_content"

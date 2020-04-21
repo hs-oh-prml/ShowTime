@@ -207,9 +207,8 @@ class TableFragment(var c: Context, var semesterNum:Int) : Fragment() {
                     cell.layoutParams = param
 
                     cell.setOnClickListener {
-                        var dialog = CellDialog(context!!,semesterNum, index)
+                        var dialog = CellDialog(context!!, pref.table, index)
                         var fm = parentFragmentManager
-
 
                         dialog.show(fm, "")
 
