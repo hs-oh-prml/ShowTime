@@ -49,6 +49,12 @@ class PreferenceManager(c: Context) {
         return pref.getString("push","")
     }
 
+    fun setIsFirstFlag(){
+        edit.putBoolean("isFirst", false).commit()
+    }
+    fun getIsFirstFlag():Boolean {
+        return pref.getBoolean("isFirst",true)
+    }
 
     fun getDaySchedule(y:Int, m:Int, d:Int):String?{
         var date = "${y}-${m}-${d}"
