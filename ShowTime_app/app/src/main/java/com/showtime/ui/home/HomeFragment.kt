@@ -37,29 +37,16 @@ class HomeFragment : Fragment()    {
         super.onCreate(savedInstanceState)
         pref = PreferenceManager(context!!)
     }
-
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         init()
     }
     fun init(){
-        
         childFragmentManager.beginTransaction().replace(R.id.table, TableFragment(context!!, pref.table)).commit()
-//        if(pref.getMainTable() == null){
-//            var thread = object: Thread(){
-//                override fun run() {
-//                    super.run()
-//                    sleep(1000)
-//                    screenCapture()
-//                }
-//            }
-//            thread.start()
-//        }
     }
 
     override fun onResume() {
         childFragmentManager.beginTransaction().replace(R.id.table, TableFragment(context!!, pref.table)).commit()
         super.onResume()
-
     }
 }

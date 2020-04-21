@@ -103,10 +103,8 @@ class TableFragment(var c: Context, var semesterNum:Int) : Fragment() {
             return
         }
         var bitmap = Bitmap.createBitmap(table_frame.width, table_frame.height, Bitmap.Config.ARGB_8888)
-        Log.v("IMAGE SIZE", "${table_frame.width}, ${table_frame.height}")
         var canvas = Canvas(bitmap)
         table_frame.draw(canvas)
-//                pref.saveMainTable(bitmap)
         var date = SimpleDateFormat("yyyyMMddHHmmss").format(Date())
         var filename = "show_time_table_${date}.jpg"
 
@@ -128,19 +126,31 @@ class TableFragment(var c: Context, var semesterNum:Int) : Fragment() {
             c.contentResolver.update(item, values, null, null)
             val msg = "시간표 이미지가 저장되었습니다."
             CustomToast(c, msg).show()
+        } else {
+            val dir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM).toString() +
+                    File.separator +
+                    "showtime"
+            val file = File(dir)
+            if (!file.exists()) {
+                file.mkdirs()
+            }
+
+            val imgFile = File(file, filename)
+            val os = FileOutputStream(imgFile)
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, os)
+            os.flush()
+            os.close()
+            val values = ContentValues()
+            with(values) {
+                put(MediaStore.Images.Media.TITLE, filename)
+                put(MediaStore.Images.Media.DATA, imgFile.absolutePath)
+                put(MediaStore.Images.Media.MIME_TYPE, "image/jpeg")
+            }
+            context!!.contentResolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values)
+            val msg = "시간표 이미지가 저장되었습니다."
+            CustomToast(c, msg).show()
+
         }
-//                else {
-//            var storage = c.getExternalFilesDir(Environment.DIRECTORY_PICTURES)
-//            var file = File(storage, filename)
-//            try{
-//                file.createNewFile()
-//                var out = FileOutputStream(file)
-//                bitmap.compress(Bitmap.CompressFormat.JPEG, 100, out)
-//                out.close()
-//            } catch (e:Exception){
-//                e.printStackTrace()
-//            }
-//        }
     }
     fun getChild(row:Int, col:Int): View {
         var index = (timeTable.columnCount * row) + col
@@ -178,8 +188,8 @@ class TableFragment(var c: Context, var semesterNum:Int) : Fragment() {
 //                        }
                     }
                     cell_place.text = place
-                    cell_name.setPadding(3, 3, 0, 0)
-                    cell_place.setPadding(3, 0, 0, 0)
+                    cell_name.setPadding(3, 3, 3, 0)
+                    cell_place.setPadding(3, 0, 3, 0)
 
                     val shape = GradientDrawable()
                     shape.setColor(Color.parseColor(color[index % color.size]))

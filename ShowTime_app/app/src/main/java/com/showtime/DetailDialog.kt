@@ -70,14 +70,9 @@ class DetailDialog(
     fun init(){
 
 //        //다이얼로그 밖의 화면은 흐리게 만들어줌
-//        val layoutParams = WindowManager.LayoutParams()
-//        layoutParams.flags = WindowManager.LayoutParams.FLAG_DIM_BEHIND
-//        layoutParams.dimAmount = 0.8f
-
         pref = PreferenceManager(c)
         info = pref.myData.semester[tableNum]
         data = info.schedules
-        Log.d("Detail Data", data.toString())
         var layoutManager = LinearLayoutManager(c, RecyclerView.VERTICAL, false)
         listener = object: DetailAdapter.DetailListener {
             override fun refresh() {

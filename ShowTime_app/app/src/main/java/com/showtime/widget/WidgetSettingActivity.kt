@@ -109,6 +109,14 @@ class WidgetSettingActivity : FragmentActivity() {
         var canvas = Canvas(bitmap)
         timeTable.draw(canvas)
         pref.saveImage(bitmap)
+
+        // Widget Update
+        var intent = Intent(this, WidgetProvider::class.java)
+        intent.setAction(AppWidgetManager.ACTION_APPWIDGET_UPDATE)
+        var ids= AppWidgetManager.getInstance(this)
+            .getAppWidgetIds(ComponentName(this, WidgetProvider::class.java))
+        intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, ids)
+        sendBroadcast(intent)
     }
 
     fun str2Bitmap(encodedStr:String): Bitmap {

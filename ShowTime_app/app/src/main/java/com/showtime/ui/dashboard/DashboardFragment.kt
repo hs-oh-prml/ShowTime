@@ -112,7 +112,6 @@ class DashboardFragment : Fragment() {
             schedule_content.text = schedule_edit_text.text.toString()
             schedule_content.visibility = VISIBLE
             schedule_edit_text.visibility = GONE
-//            edit_layout2.visibility = VISIBLE
 
             var idx = calendarView.currentItem
             var adapter = CalendarAdapter(requireContext(), today, listener)
@@ -137,18 +136,6 @@ class DashboardFragment : Fragment() {
                 schedule_edit_text.visibility = VISIBLE
             }
         }
-
-//        schedule_close_btn.setOnClickListener {
-//            imm.hideSoftInputFromWindow(schedule_edit_text.windowToken, 0)
-//            calendar_frame.visibility = VISIBLE
-//
-//            schedule_commit_btn.visibility = GONE
-//            schedule_edit_btn.visibility = VISIBLE
-//
-//            schedule_content.visibility = VISIBLE
-//            schedule_edit_text.visibility = GONE
-//            schedule_close_btn.visibility = GONE
-//        }
 
         schedule_delete_btn.setOnClickListener {
             pref.setDaySchedule(y, m, d.toInt(),"")

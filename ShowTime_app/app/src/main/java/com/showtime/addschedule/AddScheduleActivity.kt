@@ -195,8 +195,8 @@ class AddScheduleActivity : AppCompatActivity(){
                 var cell = timeTable.getChildAt((timeTable.rowCount * i.week) + j)
                 var cell_name = cell.findViewById<TextView>(R.id.cell_name)
                 var cell_place =  cell.findViewById<TextView>(R.id.cell_place)
-                cell_name.setPadding(3, 3, 0, 0)
-                cell_place.setPadding(3, 0, 0, 0)
+                cell_name.setPadding(3, 3, 3, 0)
+                cell_place.setPadding(3, 0, 3, 0)
                 statusMap[j][i.week] = -2   // -2 이미 시간표가 있는 경우
 
                 if(flag == 0){

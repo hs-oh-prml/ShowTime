@@ -3,16 +3,6 @@
     <font
         android:fontStyle="normal"
         android:fontWeight="400"
-        android:font="@font/permanentmarker" />
-
-    <font
-        android:fontStyle="normal"
-        android:fontWeight="400"
-        android:font="@font/patrickhandregular" />
-
-    <font
-        android:fontStyle="normal"
-        android:fontWeight="400"
         android:font="@font/juliussansone" />
 </font-family>
 

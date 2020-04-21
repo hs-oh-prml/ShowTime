@@ -132,13 +132,6 @@ class CalendarAdapter(
                         }
                     }
                     if(year == today.get(Calendar.YEAR) && month == (today.get(Calendar.MONTH) + 1) && count-1 == today.get(Calendar.DATE)){
-//                        val shape: GradientDrawable = GradientDrawable()
-//                        shape.setColor(ContextCompat.getColor(context, R.color.white))
-//                        shape.shape = GradientDrawable.RECTANGLE
-//                        shape.cornerRadius = 15.0f
-//                        shape.setStroke(1,ContextCompat.getColor(context, R.color.blue))
-//                        schedule_item_layout.background = shape
-                        //schedule_item_layout.setBackgroundColor(ContextCompat.getColor(context, R.color.red))
                         isToday.visibility = VISIBLE
                         listener.onClick(today.get(Calendar.MONTH) + 1, today.get(Calendar.YEAR), today.get(Calendar.DATE), week[today.get(Calendar.DAY_OF_WEEK) - 1], child)
                     }
@@ -150,7 +143,6 @@ class CalendarAdapter(
                         date.setTextColor((ContextCompat.getColor(context, R.color.black)))
                     }
 
-                    //child.isScheduled.visibility = VISIBLE
                     holder.calendar.addView(child)
                 }
 
@@ -184,15 +176,11 @@ class CalendarAdapter(
                                         prev_date.setTextColor((ContextCompat.getColor(context, R.color.black)))
                                     }
                                 }
-                                //i.setBackgroundColor(ContextCompat.getColor(context, R.color.colorPrimary))
                                 val shape: GradientDrawable = GradientDrawable()
                                 shape.setColor(ContextCompat.getColor(context, R.color.table_border))
                                 shape.shape = GradientDrawable.OVAL
-                                //shape.cornerRadius = 15.0f
                                 shape.setStroke(1,ContextCompat.getColor(context, R.color.table_border))
                                 i_date.background = shape
-                                //i.background = shape
-                                //i_date.setTextColor(ContextCompat.getColor(context, R.color.white))
                                 clickDate = index
                             }
                             listener.onClick(month, year, clickDate, week[index % 7], it)
@@ -208,12 +196,10 @@ class CalendarAdapter(
         var title: TextView
         var title2: TextView
         var calendar: GridLayout
-//        var calendar_item:LinearLayout
         init{
             title = itemView.findViewById(R.id.title)
             calendar = itemView.findViewById(R.id.calendar_grid)
             title2 = itemView.findViewById(R.id.title2)
-//            calendar_item = itemView.findViewById(R.id.calendar_item_layout)
         }
     }
 

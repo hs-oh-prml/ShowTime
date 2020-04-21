@@ -11,19 +11,26 @@
         android:id="@+id/cell_name"
         android:textStyle="bold"
         android:textColor="@color/white"
-        android:textSize="10dp"
-        android:ellipsize="marquee"
+        android:textSize="10sp"
         android:includeFontPadding="false"
         android:lineSpacingExtra="0dp"
+        android:singleLine="false"
+        android:maxLength="8"
+        android:maxLines="3"
+        android:ellipsize="marquee"
         />
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/cell_place"
-        android:textSize="9dp"
+        android:textSize="9sp"
         android:textColor="@color/white"
-        android:ellipsize="marquee"
         android:includeFontPadding="false"
         android:lineSpacingExtra="0dp"
+        android:singleLine="false"
+        android:maxLength="8"
+        android:maxLines="3"
+        android:ellipsize="marquee"
+
         />
 </LinearLayout>

@@ -4,21 +4,57 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:gravity="top"
+    android:id="@+id/widget_frame"
+    android:gravity="center_vertical"
+    android:background="@color/white"
     >
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginVertical="10dp"
+        >
+        <ImageView
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:id="@+id/logo_table"
+            android:src="@drawable/test5_icon"
+            />
+        <TextView
+            android:layout_marginLeft="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="ShowTime"
+            android:textColor="@color/colorPrimary"
+            android:fontFamily="@font/juliussansone"
+            android:textSize="21sp"
+            />
+    </LinearLayout>
     <ImageView
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/timeTable"
-        android:scaleType="fitStart"
+        android:scaleType="fitXY"
+        android:visibility="gone"
+        />
+    <ImageView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:id="@+id/logo"
+        android:src="@drawable/test5_icon"
+        android:layout_gravity="center_horizontal"
         />
     <TextView
-        xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:id="@+id/empty_view"
         android:background="@color/white"
-        android:text="아직 설정된 시간표가 없습니다.[설정]->[위젯 새로고침]에서 위젯을 설정할 수 있습니다."
+        android:padding="15dp"
+        android:gravity="center"
+        android:textSize="16dp"
+        android:text="아직 설정된 시간표가 없습니다.\n[설정]->[위젯 새로고침]에서 위젯을 설정할 수 있습니다."
         />
 </LinearLayout>

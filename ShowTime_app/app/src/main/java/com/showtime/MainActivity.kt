@@ -5,6 +5,7 @@ import android.app.AlarmManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.util.DisplayMetrics
 import android.util.Log
@@ -84,7 +85,7 @@ class MainActivity : AppCompatActivity() {
 
 //        val navController = findNavController(R.id.nav_host_fragment)
 //        bottom_navigation.setupWithNavController(navController)
-
+        permissionCheck()
         init()
         if(pref.getAlarmFlag() == "true"){
             notificationInit()
@@ -144,7 +145,7 @@ class MainActivity : AppCompatActivity() {
         manager.setRepeating(
             AlarmManager.RTC_WAKEUP,
             calendar.getTimeInMillis(),
-             24 * 60 * 60 * 1000,
+             AlarmManager.INTERVAL_DAY,
             pi);
     }
 
@@ -156,54 +157,48 @@ class MainActivity : AppCompatActivity() {
                 var f = supportFragmentManager.findFragmentById(R.id.nav_host_fragment)
                 tran = supportFragmentManager.beginTransaction()
                 tran.detach(f!!).attach(f).commit()
-//                if(f is HomeFragment){
-//                    tran.detach(f).attach(HomeFragment()).commit()
-//                detach(f!!).attach(f).commit()
-//                }
             }
         }
         initRecyclerView()
 
-        // Permission Check
-        var permissionLitener = object: PermissionListener {
-            override fun onPermissionGranted() {
-//                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-                Toast.makeText(applicationContext, "권한 허가", Toast.LENGTH_SHORT).show()
-            }
-
-            override fun onPermissionDenied(deniedPermissions: MutableList<String>?) {
-//                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-                Toast.makeText(applicationContext, "권한 거부", Toast.LENGTH_SHORT).show()
-            }
-        }
-        TedPermission.with(this)
-            .setPermissionListener(permissionLitener)
-            .setRationaleMessage("저장 공간 접근 권한이 필요합니다.")
-            .setDeniedMessage("[설정] > [권한]에서 권한을 허용할 수 있습니다.")
-            .setPermissions(Manifest.permission.WRITE_EXTERNAL_STORAGE)
-            .check()
-
         initToolbar()
 
-        action_widget.setOnClickListener {
+        setting_btn.setOnClickListener {
             var intent = Intent(this, SettingActivity::class.java)
                 startActivity(intent)
                 overridePendingTransition(R.anim.fade_in,R.anim.fade_out)
         }
     }
+    fun permissionCheck(){
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
+            Log.d("BUILD_VERSION_SDK_INT", Build.VERSION.SDK_INT.toString())
+            // Permission Check
+            var permissionLitsener = object: PermissionListener {
+                override fun onPermissionGranted() {
+//                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+                    CustomToast(applicationContext, "권한 허가").show()
+                }
+
+                override fun onPermissionDenied(deniedPermissions: MutableList<String>?) {
+//                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+                    CustomToast(applicationContext, "권한 거부").show()
+                }
+            }
+            TedPermission.with(this)
+                .setPermissionListener(permissionLitsener)
+                .setRationaleMessage("저장 공간 접근 권한이 필요합니다.")
+                .setDeniedMessage("[설정] > [권한]에서 권한을 허용할 수 있습니다.")
+                .setPermissions(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                .check()
+        } else {
+            Log.d("BUILD_VERSION_SDK_INT", Build.VERSION.SDK_INT.toString())
+        }
+    }
+
     fun initToolbar() {
         //toolbar 커스텀 코드
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayShowTitleEnabled(false)
-
-        // Get the ActionBar here to configure the way it behaves.
-//        val actionBar = supportActionBar
-//        actionBar!!.setDisplayShowCustomEnabled(true) //커스터마이징 하기 위해 필요
-//        actionBar.setDisplayShowTitleEnabled(false)
-//
-//        actionBar.setDisplayHomeAsUpEnabled(true) // 뒤로가기 버튼, 디폴트로 true만 해도 백버튼이 생김
-//        actionBar.setHomeAsUpIndicator(R.drawable.back_arrow_white) //뒤로가기 버튼을 본인이 만든 아이콘으로 하기 위해 필요
-//        toolbar.bringToFront()
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -217,13 +212,6 @@ class MainActivity : AppCompatActivity() {
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         return when (item.itemId) {
-//            R.id.action_widget->{
-//
-//                var intent = Intent(this, SettingActivity::class.java)
-//                startActivity(intent)
-//                overridePendingTransition(R.anim.fade_in,R.anim.fade_out)
-//                true
-//            }
             R.id.action_settings -> {
                 drawer_layout.openDrawer(Gravity.RIGHT)
                 true
@@ -247,6 +235,5 @@ class MainActivity : AppCompatActivity() {
             super.onBackPressed()
         }
     }
-
 }
 

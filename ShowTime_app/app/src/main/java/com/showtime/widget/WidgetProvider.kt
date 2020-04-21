@@ -15,6 +15,8 @@ import android.util.DisplayMetrics
 import android.util.Log
 import android.view.Gravity
 import android.view.View
+import android.view.View.GONE
+import android.view.View.VISIBLE
 import android.widget.GridLayout
 import android.widget.GridView
 import android.widget.RemoteViews
@@ -46,16 +48,22 @@ class WidgetProvider : AppWidgetProvider() {
             val views = RemoteViews(context.packageName, R.layout.table_widget)
             var encodedStr = PreferenceManager(context).getImg()
             var img = str2Bitmap(encodedStr!!)
-            if(img == null){
-
+            if(img == null) {
+                views.setViewVisibility(R.id.empty_view, VISIBLE)
+                views.setViewVisibility(R.id.logo, VISIBLE)
+                views.setViewVisibility(R.id.timeTable, GONE)
+                views.setViewVisibility(R.id.logo_table, GONE)
             } else {
+                views.setViewVisibility(R.id.logo, GONE)
+                views.setViewVisibility(R.id.empty_view, GONE)
+                views.setViewVisibility(R.id.timeTable, VISIBLE)
+                views.setViewVisibility(R.id.logo_table, VISIBLE)
                 views.setImageViewBitmap(R.id.timeTable, img)
             }
 
             var intent = Intent(context, MainActivity::class.java)
             var pi = PendingIntent.getActivity(context, 0, intent, 0)
-            views.setOnClickPendingIntent(R.id.timeTable, pi)
-            views.setEmptyView(R.id.timeTable, R.id.empty_view)
+            views.setOnClickPendingIntent(R.id.widget_frame, pi)
             appWidgetManager.updateAppWidget(i, views)
             Log.d("Widget ID", i.toString())
 
