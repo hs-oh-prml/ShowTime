@@ -26,6 +26,7 @@ import com.github.mikephil.charting.formatter.ValueFormatter
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
+import com.showtime.GraphAxisValueFormatter
 import com.showtime.R
 import com.showtime.data.MyData
 import com.showtime.sharedpreference.PreferenceManager
@@ -90,7 +91,6 @@ class NotificationsFragment : Fragment() {
             override fun spinnerChanged() {
 //                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
                 initData()
-
             }
         }
         adapter = ViewPagerAdapter(requireContext(), myData.semester, listener)
@@ -168,9 +168,23 @@ class NotificationsFragment : Fragment() {
         lineChart.invalidate()
         lineChart.clear()
         val values = ArrayList<Entry>()
+        //val x_value = ArrayList<>
+        var index = 0
+        val x_list = ArrayList<String>()
         for(i in 0 until scoreList.size){
             if(!scoreList[i].isNaN()){
-                values.add(Entry(i.toFloat(),scoreList[i]))
+                values.add(Entry(index.toFloat(),scoreList[i]))
+                index++
+                when(i){
+                    0->x_list.add("1-1")
+                    1->x_list.add("1-2")
+                    2->x_list.add("2-1")
+                    3->x_list.add("2-2")
+                    4->x_list.add("3-1")
+                    5->x_list.add("3-2")
+                    6->x_list.add("4-1")
+                    7->x_list.add("4-2")
+                }
             }
         }
 
@@ -178,6 +192,7 @@ class NotificationsFragment : Fragment() {
         val lineDataSet = LineDataSet(values,"학점")
         lineDataSet.setColor(ContextCompat.getColor(this.context!!, R.color.colorPrimary))
         lineDataSet.setCircleColor(ContextCompat.getColor(this.context!!, R.color.colorPrimary))
+        lineDataSet.valueTextSize = 9f
 //        lineDataSet.circleHoleColor = ContextCompat.getColor(this.context!!, R.color.colorPrimary)
 
         val lineData = LineData()
@@ -188,28 +203,16 @@ class NotificationsFragment : Fragment() {
 
         val xAxis = lineChart.xAxis
         xAxis.position = XAxis.XAxisPosition.BOTTOM
-        xAxis.setLabelCount(values.size,false)
-        Log.d("CHART_VALUE", scoreList.toString())
-        Log.d("CHART_VALUE", values.toString())
-        Log.d("CHART_VALUE", values.size.toString())
-        xAxis.axisMinimum = 0f
-        xAxis.mAxisMaximum = values.size.toFloat()
-        xAxis.valueFormatter = object: ValueFormatter(){
-            override fun getFormattedValue(value: Float): String {
-                Log.d("CAHRT_X", value.toString())
-                return when(value){
-                    0f->"1 - 1"
-                    1f->"1 - 2"
-                    2f->"2 - 1"
-                    3f->"2 - 2"
-                    4f->"3 - 1"
-                    5f->"3 - 2"
-                    6f->"4 - 1"
-                    7f->"4 - 2"
-                    else->""
-                }
-            }
+        if(values.size > 1){
+            xAxis.axisMinimum = 0f
+            xAxis.mAxisMaximum = values.size.toFloat()-1
+            xAxis.setLabelCount(values.size,true)
+        }else{
+            xAxis.setLabelCount(values.size,false)
         }
+
+        xAxis.valueFormatter = GraphAxisValueFormatter(x_list)
+
         xAxis.setDrawGridLines(false)
         xAxis.setDrawAxisLine(false)
         xAxis.textColor = ContextCompat.getColor(this.context!!, R.color.middle_gray)
@@ -223,6 +226,7 @@ class NotificationsFragment : Fragment() {
         yAxisRight.labelCount = 4
         yAxisRight.axisMinimum = 0.0f
         yAxisRight.axisMaximum = 4.5f
+
         //yAxisRight.gridLineWidth =
         yAxisRight.setDrawLabels(true)
         yAxisRight.setDrawAxisLine(false)
