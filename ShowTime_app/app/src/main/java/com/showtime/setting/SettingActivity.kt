@@ -437,17 +437,17 @@ class SettingActivity : AppCompatActivity() {
             when(i){
                 R.id.theme1->{
                     pref.setTheme(R.array.theme1)
-                    val str = "테마1 로 변경되었습니다."
+                    val str = theme1.text.toString()+"으로 변경되었습니다."
                     CustomToast(this, str).show()
                 }
                 R.id.theme2->{
                     pref.setTheme(R.array.theme2)
-                    val str = "테마2 로 변경되었습니다."
+                    val str = theme2.text.toString()+"으로 변경되었습니다."
                     CustomToast(this, str).show()
                 }
                 else->{
                     pref.setTheme(R.array.theme3)
-                    val str = "테마3 로 변경되었습니다."
+                    val str = theme3.text.toString()+"으로 변경되었습니다."
                     CustomToast(this, str).show()
                 }
             }
@@ -457,7 +457,6 @@ class SettingActivity : AppCompatActivity() {
             val builder = AlertDialog.Builder(this)
             builder.setTitle("라이센스 정보")
             builder.setMessage(licenseStr)
-
             builder.setNeutralButton("닫기") { _, _ ->
             }
             val dialog:AlertDialog = builder.create()
@@ -467,6 +466,10 @@ class SettingActivity : AppCompatActivity() {
         //뒤로가기
         setting_close.setOnClickListener {
             this.finish()
+        }
+        //앱 사용설명서
+        guide.setOnClickListener {
+
         }
 
         makeColor()

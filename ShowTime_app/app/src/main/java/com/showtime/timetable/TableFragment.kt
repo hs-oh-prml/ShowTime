@@ -5,6 +5,7 @@ import android.Manifest
 import android.app.Activity
 import android.content.ContentValues
 import android.content.Context
+import android.content.Context.VIBRATOR_SERVICE
 import android.content.SharedPreferences
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
@@ -12,9 +13,7 @@ import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.drawable.Drawable
 import android.graphics.drawable.GradientDrawable
-import android.os.Build
-import android.os.Bundle
-import android.os.Environment
+import android.os.*
 import android.provider.MediaStore
 import android.text.TextUtils
 import android.util.DisplayMetrics
@@ -25,6 +24,7 @@ import android.view.ViewGroup.LayoutParams.WRAP_CONTENT
 import android.widget.GridLayout
 import android.widget.TextView
 import androidx.core.content.ContextCompat
+import androidx.core.content.ContextCompat.getSystemService
 import androidx.core.view.setMargins
 import androidx.core.view.setPadding
 import com.showtime.CustomToast
@@ -78,6 +78,7 @@ class TableFragment(var c: Context, var semesterNum:Int) : Fragment() {
         refreshTable()
         table_frame.setOnLongClickListener {
             screenCapture()
+            vibrate(100)
             true
         }
     }
@@ -193,6 +194,7 @@ class TableFragment(var c: Context, var semesterNum:Int) : Fragment() {
 
                     val shape = GradientDrawable()
                     shape.setColor(Color.parseColor(color[index % color.size]))
+                    println("color : "+(index % color.size))
                     shape.shape = GradientDrawable.RECTANGLE
                     shape.cornerRadius = 15.0f
                     cell.background = shape
@@ -295,6 +297,16 @@ class TableFragment(var c: Context, var semesterNum:Int) : Fragment() {
         var theme = pref.getTheme()
         color = this.resources.getStringArray(theme)
         refreshTable()
+    }
+
+    fun vibrate(length:Long){
+        val vibrate = activity?.getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
+
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
+            vibrate.vibrate(VibrationEffect.createOneShot(length, VibrationEffect.DEFAULT_AMPLITUDE))
+        }else{
+            vibrate.vibrate(length) // deprecated in api 26
+        }
     }
 }
 

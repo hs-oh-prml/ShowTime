@@ -1,23 +1,25 @@
 <resources>
 
     <string-array name="theme1">
-        <item>#F6CECE</item>
-        <item>#F6E3CE</item>
-        <item>#F5ECCE</item>
-        <item>#E3F6CE</item>
-        <item>#CEF6E3</item>
-        <item>#faeeb7</item>
-        <item>#CEF6F5</item>
+        <item>#e7b4a8</item>
+        <item>#edc5a6</item>
+        <item>#e1988e</item>
+        <item>#c97b6f</item>
+        <item>#dda9b4</item>
+        <item>#d08f91</item>
+        <item>#dea6a4</item>
+        <item>#e09b84</item>
     </string-array>
 
     <string-array name="theme2">
         <item>#8799bd</item>
         <item>#7cbac3</item>
-        <item>#c5b0a8</item>
         <item>#7ea6c0</item>
         <item>#819396</item>
         <item>#a0cacb</item>
         <item>#a5c3d3</item>
+        <item>#9ca7bd</item>
+        <item>#c5b0a8</item>
     </string-array>
 
     <string-array name="theme3">
@@ -28,6 +30,7 @@
         <item>#f3d0bb</item>
         <item>#b0ded8</item>
         <item>#bae5d0</item>
+        <item>#c7ecfa</item>
     </string-array>
 
     <string-array name="score">

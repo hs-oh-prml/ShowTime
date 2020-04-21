@@ -160,27 +160,27 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="테마1"
+                android:text="Cherry Blossom"
                 android:id="@+id/theme1"
-                android:textSize="11sp"
+                android:textSize="10sp"
                 android:textColor="@color/dark_grey"
                 android:paddingStart="10dp"/>
             <RadioButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="테마2"
+                android:text="Blue Ocean"
                 android:id="@+id/theme2"
-                android:textSize="11sp"
+                android:textSize="10sp"
                 android:textColor="@color/dark_grey"
                 android:paddingStart="10dp"/>
             <RadioButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="테마3"
+                android:text="Cotton Candy"
                 android:id="@+id/theme3"
-                android:textSize="11sp"
+                android:textSize="10sp"
                 android:textColor="@color/dark_grey"
                 android:paddingStart="10dp"/>
         </RadioGroup>
@@ -223,6 +223,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"/>
+                <View
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"/>
             </LinearLayout>
             <LinearLayout
                 android:layout_width="0dp"
@@ -231,6 +235,10 @@
                 android:layout_margin="10dp"
                 android:orientation="horizontal"
                 android:id="@+id/theme_layout2">
+                <View
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"/>
                 <View
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -296,10 +304,25 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"/>
+                <View
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"/>
 
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>
+    <TextView
+        android:background="@drawable/ripple_effect_btn"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:gravity="center_vertical"
+        android:paddingStart="10dp"
+        android:text="앱 사용설명서"
+        android:id="@+id/guide"
+        android:textSize="15sp"
+        android:textColor="@color/dark_grey"
+        />
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
