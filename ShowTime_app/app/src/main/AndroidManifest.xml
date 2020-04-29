@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.showtime">
+    package="com.showtimetable">
 
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.VIBRATE" />
@@ -12,19 +12,19 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".tutorial.TutorialActivity"></activity>
-        <activity android:name=".SplashActivity">
+        <activity android:name="com.showtimetable.tutorial.TutorialActivity"></activity>
+        <activity android:name="com.showtimetable.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".setting.SettingActivity" />
-        <activity android:name=".widget.WidgetSettingActivity" />
+        <activity android:name="com.showtimetable.setting.SettingActivity" />
+        <activity android:name="com.showtimetable.widget.WidgetSettingActivity" />
 
-        <receiver android:name=".setting.NotificationReceiver" />
-        <receiver android:name=".widget.WidgetProvider">
+        <receiver android:name="com.showtimetable.setting.NotificationReceiver" />
+        <receiver android:name="com.showtimetable.widget.WidgetProvider">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
             </intent-filter>
@@ -33,15 +33,11 @@
                 android:name="android.appwidget.provider"
                 android:resource="@xml/table_widget_info" />
         </receiver>
-
         <activity
-            android:name=".DetailDialog"
+            android:name="com.showtimetable.addschedule.AddScheduleActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".addschedule.AddScheduleActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".MainActivity"
+            android:name="com.showtimetable.MainActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait" />
     </application>
