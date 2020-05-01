@@ -13,11 +13,14 @@ import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.FragmentTransaction
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.gun0912.tedpermission.PermissionListener
 import com.gun0912.tedpermission.TedPermission
 import com.showtimetable.addschedule.AddScheduleActivity
+import com.showtimetable.data.Schedule
+import com.showtimetable.data.TimeCell
 import com.showtimetable.setting.NotificationReceiver
 import com.showtimetable.setting.SettingActivity
 import com.showtimetable.sharedpreference.PreferenceManager
@@ -26,6 +29,9 @@ import com.showtimetable.ui.dashboard.DashboardFragment
 import com.showtimetable.ui.home.HomeFragment
 import com.showtimetable.ui.notifications.NotificationsFragment
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.activity_widget_setting.view.*
+import kotlinx.android.synthetic.main.fragment_home.*
+import kotlinx.android.synthetic.main.fragment_table.*
 import kotlinx.android.synthetic.main.main_content.*
 import java.util.*
 
@@ -34,6 +40,9 @@ class MainActivity : AppCompatActivity() {
     lateinit var pref: PreferenceManager
     lateinit var listener: SemesterListAdapter.SemesterListener
     lateinit var tran:FragmentTransaction
+    val FINISH_TIME = 2000
+    var backPressedTime = 0L
+    lateinit var backToast:CustomToast
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -66,7 +75,9 @@ class MainActivity : AppCompatActivity() {
         }
 
         permissionCheck()
+
         init()
+
         if(pref.getAlarmFlag() == "true"){
             notificationInit()
         }
@@ -75,6 +86,13 @@ class MainActivity : AppCompatActivity() {
             pref.setIsFirstFlag()
             var intent = Intent(this, TutorialActivity::class.java)
             startActivity(intent)
+            //inae
+//            var timeList = ArrayList<TimeCell>()
+//            timeList.add(TimeCell(1,3,0,""))
+//            var name = "과목을추가하세요"
+//            pref.myData.semester[0].schedules.add(Schedule(false, name, "Show Time", timeList, 0, "A+"))
+//            pref.savePref()
+
         }
     }
 
@@ -91,6 +109,8 @@ class MainActivity : AppCompatActivity() {
         )
         recycler_view.layoutManager = layoutManager
         recycler_view.adapter = adapter
+
+
     }
 
     override fun onResume() {
@@ -156,7 +176,11 @@ class MainActivity : AppCompatActivity() {
                 startActivity(intent)
                 overridePendingTransition(R.anim.fade_in,R.anim.fade_out)
         }
+
+
+
     }
+
     fun permissionCheck(){
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
             Log.d("BUILD_VERSION_SDK_INT", Build.VERSION.SDK_INT.toString())
@@ -164,12 +188,12 @@ class MainActivity : AppCompatActivity() {
             var permissionLitsener = object: PermissionListener {
                 override fun onPermissionGranted() {
 //                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-                    CustomToast(applicationContext, "권한 허가").show()
+                    //CustomToast(applicationContext, "권한 허가").show()
                 }
 
                 override fun onPermissionDenied(deniedPermissions: MutableList<String>?) {
 //                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-                    CustomToast(applicationContext, "권한 거부").show()
+                    //CustomToast(applicationContext, "권한 거부").show()
                 }
             }
             TedPermission.with(this)
@@ -219,8 +243,17 @@ class MainActivity : AppCompatActivity() {
     override fun onBackPressed() { //뒤로가기 처리
         if(drawer_layout.isDrawerOpen(Gravity.RIGHT)){
             drawer_layout.closeDrawers()
-        } else{
-            super.onBackPressed()
+        }
+        else{
+            if(System.currentTimeMillis() > backPressedTime+2000){
+                backPressedTime = System.currentTimeMillis()
+                val str = "\'뒤로가기\'를 한번 더 누르면 종료 됩니다."
+                backToast = CustomToast(this, str)
+                backToast.show()
+                return;
+            }else {
+                finish()
+            }
         }
     }
 }

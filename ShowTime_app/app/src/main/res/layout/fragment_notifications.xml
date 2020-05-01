@@ -16,12 +16,15 @@
         app:tabTextColor="@color/table_text_color"
         app:tabSelectedTextColor="@color/dark_grey"
         />
-
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardCornerRadius="15dp"
+        android:layout_margin="10dp">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:background="@drawable/list_border"
         android:layout_margin="10dp"
         android:paddingStart="15dp"
         android:paddingEnd="15dp"
@@ -89,8 +92,13 @@
             android:layout_height="130dp"
             android:clickable="false" />
     </LinearLayout>
+    </androidx.cardview.widget.CardView>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/very_light_gray"
+        />
     <androidx.viewpager2.widget.ViewPager2
-        android:background="@drawable/list_border"
         android:layout_marginStart="10dp"
         android:layout_marginBottom="10dp"
         android:layout_marginEnd="10dp"

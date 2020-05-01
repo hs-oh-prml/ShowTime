@@ -42,6 +42,7 @@ class HomeFragment : Fragment()    {
         init()
     }
     fun init(){
+
         childFragmentManager.beginTransaction().replace(R.id.table, TableFragment(context!!, pref.table)).commit()
     }
 

@@ -1,8 +1,12 @@
 package com.showtimetable
 
 import android.content.Context
+import android.graphics.Color
+import android.graphics.drawable.Drawable
+import android.graphics.drawable.GradientDrawable
 import android.util.Log
 import android.view.LayoutInflater
+import android.view.MotionEvent
 import android.view.View
 import android.view.View.INVISIBLE
 import android.view.View.VISIBLE
@@ -10,6 +14,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.RecyclerView
 import com.showtimetable.data.MyData
@@ -54,6 +59,7 @@ class SemesterListAdapter (
         holder.is_selected_btn.setOnClickListener {
             pref.setTableNum(position)
             listener.refresh()
+
         }
         var total_credit = 0
         var lect_num = 0

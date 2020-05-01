@@ -19,12 +19,16 @@ import android.text.TextUtils
 import android.util.DisplayMetrics
 import android.util.Log
 import android.view.*
+import android.view.ViewGroup.LayoutParams.MATCH_PARENT
 import androidx.fragment.app.Fragment
 import android.view.ViewGroup.LayoutParams.WRAP_CONTENT
+import android.widget.FrameLayout
 import android.widget.GridLayout
+import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.cardview.widget.CardView
 import androidx.core.content.ContextCompat
-import androidx.core.content.ContextCompat.getSystemService
+import androidx.core.view.marginBottom
 import androidx.core.view.setMargins
 import androidx.core.view.setPadding
 import com.showtimetable.CustomToast
@@ -44,6 +48,7 @@ import java.io.FileOutputStream
 import java.lang.Exception
 import java.text.SimpleDateFormat
 import java.util.*
+import androidx.core.content.ContextCompat.getSystemService as getSystemService1
 
 /**
  * A simple [Fragment] subclass.
@@ -54,6 +59,8 @@ class TableFragment(var c: Context, var semesterNum:Int) : Fragment() {
     lateinit var color: Array<String>
     lateinit var weekList:List<String>
     lateinit var pref:PreferenceManager
+    var dwidth=0
+    var dheight=0
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -78,9 +85,10 @@ class TableFragment(var c: Context, var semesterNum:Int) : Fragment() {
         refreshTable()
         table_frame.setOnLongClickListener {
             screenCapture()
-            vibrate(100)
+            vibrate(200)
             true
         }
+
     }
 
     fun refreshTable(){
@@ -177,8 +185,6 @@ class TableFragment(var c: Context, var semesterNum:Int) : Fragment() {
 //                            name += "\n"
 //                    }
                     cell_name.text = name
-                    cell_name.ellipsize = TextUtils.TruncateAt.END
-                    cell_name.maxLines = 1
                     var place = ""
                     if(schedule.place != null){
                         place = schedule.place
@@ -189,6 +195,7 @@ class TableFragment(var c: Context, var semesterNum:Int) : Fragment() {
 //                        }
                     }
                     cell_place.text = place
+                    cell_place.width = (dwidth / 21) * 4 - 10
                     cell_name.setPadding(3, 3, 3, 0)
                     cell_place.setPadding(3, 0, 3, 0)
 
@@ -223,18 +230,31 @@ class TableFragment(var c: Context, var semesterNum:Int) : Fragment() {
     }
 
     fun initView(weekList: List<String>){
+        //inae
+        var table_params = LinearLayout.LayoutParams(
+            WRAP_CONTENT,
+            MATCH_PARENT)
+        table_params.setMargins(30)
+        table_frame.layoutParams = table_params
+
+        //table_params.
+        //table_frame.layoutParams = table_params
+        //table_frame.setPadding(20)
+        //hi.setPadding(10)
+
         timeTable.columnCount = weekList.size + 1
         timeTable.rowCount = 23
 
         var disp = DisplayMetrics()
-        var dwidth = disp.widthPixels
-        var dheight = disp.heightPixels
+        this.activity?.windowManager?.defaultDisplay?.getMetrics(disp)
+        dwidth = disp.widthPixels - 60
+        dheight = disp.heightPixels
 
         for(j in 0 until timeTable.columnCount){
             for(i in 0 until timeTable.rowCount){
 
                 var params = GridLayout.LayoutParams()
-                params.setMargins(1)
+                //params.setMargins(1)
                 var child: View
                 var colSpan = GridLayout.spec(j, GridLayout.FILL)
                 var rowSpan = GridLayout.spec(i, GridLayout.FILL)
@@ -247,16 +267,16 @@ class TableFragment(var c: Context, var semesterNum:Int) : Fragment() {
                     child.setTextColor(ContextCompat.getColor(context!!, R.color.white))
                     child.textSize = 10f
 
-                } else if(i == 0 && j != 0){
+                } else if(i == 0 && j != 0){ // 월화수목금
 
-                    var colSpan = GridLayout.spec(j, GridLayout.FILL, 1f)
+
+                    var colSpan = GridLayout.spec(j, GridLayout.FILL)
                     params.columnSpec = colSpan
                     child = TextView(context)
                     child.gravity = Gravity.CENTER
                     child.textSize = 9f
                     child.text = weekList[j - 1]
-
-                } else if(i != 0 && j == 0){
+                } else if(i != 0 && j == 0){ //시간 9~7
 
                     child = TextView(context)
                     child.gravity = Gravity.TOP or Gravity.RIGHT
@@ -268,14 +288,17 @@ class TableFragment(var c: Context, var semesterNum:Int) : Fragment() {
                             child .text = (9 + i / 2).toString()
                         }
                     }
-                } else {
+                    params.width = dwidth / 21 //크기 21중 1만큼 차지
+                } else { // 가운데 칸들
                     var inflater = LayoutInflater.from(context)
                     child = inflater.inflate(R.layout.table_item, timeTable, false)
-                    params.width = (dwidth * (1/5) * 0.7).toInt()
-                    params.height = (dheight * (1/24) * 0.8).toInt()
+//                    params.width = (dwidth * (1/5) * 0.7).toInt()
+//                    params.height = (dheight * (1/24) * 0.8).toInt()
+                    params.width = (dwidth / 21) * 4
+                    params.height = 50
                 }
                 if(i != 0){
-                    var rowSpan = GridLayout.spec(i, GridLayout.FILL, 1f)
+                    var rowSpan = GridLayout.spec(i, GridLayout.FILL,1f)
                     params.rowSpec = rowSpan
                 }
                 if(i % 2 == 1){
@@ -288,6 +311,7 @@ class TableFragment(var c: Context, var semesterNum:Int) : Fragment() {
                 timeTable.addView(child)
             }
         }
+        setSemesterText()
     }
 
     override fun onResume() {
@@ -307,5 +331,21 @@ class TableFragment(var c: Context, var semesterNum:Int) : Fragment() {
             vibrate.vibrate(length) // deprecated in api 26
         }
     }
+
+    fun setSemesterText(){
+        semester_textView.text = when(pref.table){
+            0->"1학년  1학기"
+            1->"1학년  2학기"
+            2->"2학년  1학기"
+            3->"2학년  2학기"
+            4->"3학년  1학기"
+            5->"3학년  2학기"
+            6->"4학년  1학기"
+            7->"4학년  2학기"
+            else->null
+        }
+    }
+
+
 }
 

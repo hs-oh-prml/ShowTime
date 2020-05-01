@@ -85,25 +85,32 @@ class SettingActivity : AppCompatActivity() {
                 alarm_detail.visibility = GONE
             }
         }
+        set_push_alarm.setOnClickListener {
+            if(alarm_detail.visibility == VISIBLE){
+                alarm_detail.visibility = GONE
+            } else {
+                if(push_switch.isChecked)
+                    alarm_detail.visibility = VISIBLE
+                else
+                    alarm_detail.visibility = GONE
+            }
+        }
+
         //위젯설정
         setWidget.setOnClickListener {
             var intent = Intent(this, WidgetSettingActivity::class.java)
             startActivity(intent)
         }
 
-        set_push_alarm.setOnClickListener {
-            if(alarm_detail.visibility == VISIBLE){
-                alarm_detail.visibility = GONE
-            } else {
-                alarm_detail.visibility = VISIBLE
-            }
-        }
+
         save_d_day.setOnClickListener {
             var d_day = d_day_alarm.value - BIAS
             var d_hour = hour_alarm.value
             Log.d("D_DAY_HOUR", "${d_day} ${d_hour}")
             pref.setAlarmTime(d_day, d_hour)
             alarm_detail.visibility = GONE
+            val str = d_day.toString()+", "+d_hour.toString()+" 으로 설정되었습니다."
+            CustomToast(this, str).show()
 
         }
 

@@ -9,13 +9,16 @@ import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.*
 import androidx.fragment.app.DialogFragment
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.showtimetable.addschedule.AddScheduleActivity
 import com.showtimetable.data.MyData
 import com.showtimetable.data.Schedule
 import com.showtimetable.sharedpreference.PreferenceManager
+import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.dialog_detail.*
+import kotlinx.android.synthetic.main.dialog_detail.recycler_view
 
 
 // 학기 클릭시 상세 정보 팝업
@@ -81,6 +84,9 @@ class DetailDialog(
         adapter = DetailAdapter(c, data, tableNum, listener)
         recycler_view.layoutManager = layoutManager
         recycler_view.adapter = adapter
+
+
+
 
         title.text = info.semester
         var _credit = 0

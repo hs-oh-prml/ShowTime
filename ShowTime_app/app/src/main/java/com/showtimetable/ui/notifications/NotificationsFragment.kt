@@ -31,6 +31,7 @@ import com.showtimetable.R
 import com.showtimetable.data.MyData
 import com.showtimetable.sharedpreference.PreferenceManager
 import kotlinx.android.synthetic.main.fragment_notifications.*
+import kotlinx.android.synthetic.main.semester_list_item.*
 
 /**
  * A simple [Fragment] subclass as the default destination in the navigation.
@@ -83,7 +84,10 @@ class NotificationsFragment : Fragment() {
             }
         }
         gdp /= score_num.toFloat()
-        total_score.text = "%.2f/4.5".format(gdp)
+        if(score_num > 0)
+            total_score.text = "%.2f/4.5".format(gdp)
+        else
+            total_score.text = "0.0/4.5"
     }
     fun init(){
         // Init View Pager

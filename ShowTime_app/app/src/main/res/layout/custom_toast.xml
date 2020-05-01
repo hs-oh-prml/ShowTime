@@ -3,14 +3,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/toast_design_root"
-    android:layout_marginBottom="15dp"
     android:background="@drawable/toast_bg"
     >
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:elevation="10dp"
-        android:layout_margin="10dp"
+        android:layout_marginVertical="5dp"
+        android:layout_marginHorizontal="10dp"
         android:orientation="vertical"
         android:gravity="center"
         android:background="@drawable/table_border"
@@ -25,8 +24,8 @@
             android:layout_marginBottom="5dp">
             <ImageView
                 android:id="@+id/header_icon"
-                android:layout_width="15dp"
-                android:layout_height="15dp"
+                android:layout_width="13dp"
+                android:layout_height="13dp"
                 android:src="@drawable/logo"
                 android:layout_marginEnd="3dp"/>
             <TextView

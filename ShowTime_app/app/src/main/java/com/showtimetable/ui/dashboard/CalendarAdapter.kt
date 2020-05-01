@@ -52,7 +52,6 @@ class CalendarAdapter(
         return ViewHolder(v)
     }
     override fun getItemCount(): Int {
-//        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
         return Integer.MAX_VALUE
     }
     override fun onViewAttachedToWindow(holder: ViewHolder) {
@@ -66,7 +65,6 @@ class CalendarAdapter(
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-//        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
 
         var gap = position - CURRENT
         var cal = today.clone() as Calendar
@@ -75,7 +73,12 @@ class CalendarAdapter(
 
         var month = cal.get(Calendar.MONTH) + 1
         var year = cal.get(Calendar.YEAR)
-        holder.title.text = "${month}"
+        //inae
+        if(month < 10)
+            holder.title.setText("0"+month.toString())
+        else
+            holder.title.setText(month.toString())
+
         holder.title2.text = "${year}"
 
         var count = 1
@@ -130,18 +133,22 @@ class CalendarAdapter(
                         if(str != "" && str != null){
                             isScheduled.visibility = VISIBLE
                         }
+
+                        if(year == today.get(Calendar.YEAR) && month == (today.get(Calendar.MONTH) + 1) && count-1 == today.get(Calendar.DATE)){
+                            isToday.visibility = VISIBLE
+                            listener.onClick(today.get(Calendar.MONTH) + 1, today.get(Calendar.YEAR), today.get(Calendar.DATE), week[today.get(Calendar.DAY_OF_WEEK) - 1], child)
+                        }
+
+                        if(j == 0){
+                            date.setTextColor((ContextCompat.getColor(context, R.color.red)))
+                        }else if(j == 6){
+                            date.setTextColor((ContextCompat.getColor(context, R.color.blue)))
+                        } else {
+                            date.setTextColor((ContextCompat.getColor(context, R.color.black)))
+                        }
                     }
-                    if(year == today.get(Calendar.YEAR) && month == (today.get(Calendar.MONTH) + 1) && count-1 == today.get(Calendar.DATE)){
-                        isToday.visibility = VISIBLE
-                        listener.onClick(today.get(Calendar.MONTH) + 1, today.get(Calendar.YEAR), today.get(Calendar.DATE), week[today.get(Calendar.DAY_OF_WEEK) - 1], child)
-                    }
-                    if(j == 0){
-                        date.setTextColor((ContextCompat.getColor(context, R.color.red)))
-                    }else if(j == 6){
-                        date.setTextColor((ContextCompat.getColor(context, R.color.blue)))
-                    } else {
-                        date.setTextColor((ContextCompat.getColor(context, R.color.black)))
-                    }
+
+
 
                     holder.calendar.addView(child)
                 }
@@ -179,7 +186,7 @@ class CalendarAdapter(
                                 val shape: GradientDrawable = GradientDrawable()
                                 shape.setColor(ContextCompat.getColor(context, R.color.table_border))
                                 shape.shape = GradientDrawable.OVAL
-                                shape.setStroke(1,ContextCompat.getColor(context, R.color.table_border))
+                                shape.setStroke(2,ContextCompat.getColor(context, R.color.table_border))
                                 i_date.background = shape
                                 clickDate = index
                             }

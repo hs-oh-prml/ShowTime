@@ -31,10 +31,10 @@
                     >
                     <ImageView
                         android:id="@+id/header_icon"
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
+                        android:layout_width="35dp"
+                        android:layout_height="35dp"
                         android:src="@drawable/logo"
-                        android:layout_marginBottom="8dp"/>
+                        android:layout_marginBottom="10dp"/>
 
                     <View
                         android:layout_width="wrap_content"
@@ -43,8 +43,9 @@
                         />
                     <ImageView
                         android:id="@+id/setting_btn"
-                        android:layout_width="28dp"
-                        android:layout_height="28dp"
+                        android:layout_width="35dp"
+                        android:layout_height="35dp"
+                        android:padding="5dp"
                         android:background="@drawable/ripple_effect_circle"
                         android:src="@drawable/ic_settings"
                         />

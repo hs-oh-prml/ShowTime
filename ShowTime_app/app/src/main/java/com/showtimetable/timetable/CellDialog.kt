@@ -9,6 +9,7 @@ import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.util.Log
 import android.view.*
+import android.view.View.GONE
 import androidx.fragment.app.DialogFragment
 import com.showtimetable.DetailAdapter
 import com.showtimetable.DetailDialog
@@ -72,9 +73,12 @@ class CellDialog(
         info = pref.myData.semester[tableNum]
         data = info.schedules[index]
         name.text = data.name
-        place.text = data.place
+        if(data.place == "")
+            place.visibility = GONE
+        else
+            place.text = "장소 : ${data.place}"
         if(data.isLecture){
-            credit.text = "${data.credit}학점"
+            credit.text = "학점 : ${data.credit}학점"
         }
         var time_ = ""
         for(i in data.time){
@@ -86,7 +90,7 @@ class CellDialog(
             if(i.end % 2 == 1){
                 eHalfTime = "30"
             }
-            time_ += weekList[i.week - 1] + "${((i.start - 1)  / 2) + 9}:${sHalfTime}-${i.end / 2 + 9}:${eHalfTime} "
+            time_ += weekList[i.week - 1] + " ${((i.start - 1)  / 2) + 9}:${sHalfTime} - ${i.end / 2 + 9}:${eHalfTime} "
         }
         time.text = time_
         Log.d("cell", data.toString())

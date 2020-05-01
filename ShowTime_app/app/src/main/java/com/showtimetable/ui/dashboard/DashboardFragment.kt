@@ -40,6 +40,8 @@ class DashboardFragment : Fragment() {
 
     var isSelected = false
     lateinit var imm:InputMethodManager
+    lateinit var ChangeContent:String
+
     val week = listOf("일", "월", "화", "수", "목", "금", "토")
 
     override fun onCreateView(
@@ -69,7 +71,7 @@ class DashboardFragment : Fragment() {
                 schedule_edit_text.visibility = GONE
                 schedule_delete_btn.visibility = INVISIBLE
 
-                var date = v.findViewById<TextView>(R.id.date).text.toString()
+                var date:String = v.findViewById<TextView>(R.id.date).text.toString()
                 y = year
                 m = month
                 d = date.toInt()
@@ -117,7 +119,7 @@ class DashboardFragment : Fragment() {
             var adapter = CalendarAdapter(requireContext(), today, listener)
             calendarView.adapter = adapter
             calendarView.setCurrentItem(idx ,false)
-            if(schedule_edit_text.text != null && schedule_edit_text.text.toString() != ""){
+            if(schedule_edit_text.text != null && schedule_edit_text.text.toString() != "" && ChangeContent != schedule_edit_text.text.toString()){
                 val str = m.toString() + "월 "+ d + "일" + " 일정이 추가되었습니다."
                 CustomToast(this.context!!, str).show()
             }
@@ -135,6 +137,7 @@ class DashboardFragment : Fragment() {
                 schedule_content.visibility = GONE
                 schedule_edit_text.visibility = VISIBLE
             }
+            ChangeContent = schedule_content.text.toString()
         }
 
         schedule_delete_btn.setOnClickListener {

@@ -73,29 +73,6 @@ class AddScheduleActivity : AppCompatActivity(){
         initView(weekList)
         refreshTable()
 
-//        radioGroup.setOnCheckedChangeListener(object: RadioGroup.OnCheckedChangeListener{
-//            override fun onCheckedChanged(p0: RadioGroup?, p1: Int) {
-////                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-////                Log.v("Radio Check", p1.toString())
-//                timeTable.removeAllViews()
-//                weekList = listOf("월", "화", "수", "목", "금")
-//                initView(weekList)
-////                when(p1){
-////                    R.id.fiveDay->{
-////                        weekList = listOf("월", "화", "수", "목", "금")
-////                        initView(weekList)
-////                    }
-////                    R.id.sixDay->{
-////                        weekList = listOf("월", "화", "수", "목", "금", "토")
-////                        initView(weekList)
-////                    }
-////                    R.id.sevenDay-> {
-////                        weekList = listOf("월", "화", "수", "목", "금", "토", "일")
-////                        initView(weekList)
-////                    }
-////                }
-//            }
-//        })
         isLecture.setOnCheckedChangeListener { compoundButton, b ->
             if(isLecture.isChecked){
                 credit.visibility = VISIBLE
@@ -113,7 +90,8 @@ class AddScheduleActivity : AppCompatActivity(){
 
             //과목 이름 안썼을때
             if(name.text.isEmpty()){
-                Toast.makeText(this,"과목 이름을 입력하세요",Toast.LENGTH_SHORT).show()
+                val str = "과목 이름을 입력하세요"
+                CustomToast(this,str).show()
                 return@setOnClickListener
             }
 
@@ -305,7 +283,8 @@ class AddScheduleActivity : AppCompatActivity(){
                             statusMap[i][j] = 0
 
                         } else if(statusMap[i][j] == -2){
-                            Toast.makeText(this, "겹치는 시간표가 존재합니다.", Toast.LENGTH_SHORT).show()
+                            val str = "겹치는 시간표가 존재합니다."
+                            CustomToast(this,str).show()
                         }
                         else {
                             it.setBackgroundColor(ContextCompat.getColor(this, R.color.white))
