@@ -128,17 +128,17 @@ class SettingActivity : AppCompatActivity() {
             when(i){
                 R.id.theme1->{
                     pref.setTheme(R.array.theme1)
-                    val str = theme1.text.toString()+"으로 변경되었습니다."
+                    val str = "테마가 ["+theme1.text.toString()+"] 으로 변경되었습니다."
                     CustomToast(this, str).show()
                 }
                 R.id.theme2->{
                     pref.setTheme(R.array.theme2)
-                    val str = theme2.text.toString()+"으로 변경되었습니다."
+                    val str = "테마가 ["+theme2.text.toString()+"] 으로 변경되었습니다."
                     CustomToast(this, str).show()
                 }
                 else->{
                     pref.setTheme(R.array.theme3)
-                    val str = theme3.text.toString()+"으로 변경되었습니다."
+                    val str = "테마가 ["+theme3.text.toString()+"] 으로 변경되었습니다."
                     CustomToast(this, str).show()
                 }
             }

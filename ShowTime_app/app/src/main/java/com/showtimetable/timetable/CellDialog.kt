@@ -11,10 +11,7 @@ import android.util.Log
 import android.view.*
 import android.view.View.GONE
 import androidx.fragment.app.DialogFragment
-import com.showtimetable.DetailAdapter
-import com.showtimetable.DetailDialog
-import com.showtimetable.MainActivity
-import com.showtimetable.R
+import com.showtimetable.*
 import com.showtimetable.data.MyData
 import com.showtimetable.data.Schedule
 import com.showtimetable.sharedpreference.PreferenceManager
@@ -96,12 +93,14 @@ class CellDialog(
         Log.d("cell", data.toString())
 
         delete.setOnClickListener {
+            val str = pref.myData.semester[tableNum].schedules[index].name.toString()
             pref.myData.semester[tableNum].schedules.removeAt(index)
             pref.savePref()
             dismiss()
             var intent = Intent(context, MainActivity::class.java)
             activity!!.finish()
             startActivity(intent)
+            CustomToast(this.context!!,"["+name+"] 이 삭제되었습니다.").show()
         }
     }
 

@@ -1,15 +1,17 @@
 package com.showtimetable.ui.dashboard
 
+import android.animation.ValueAnimator
 import android.content.Context.INPUT_METHOD_SERVICE
 import android.os.Bundle
 import android.text.method.ScrollingMovementMethod
 import android.util.Log
-import android.view.KeyEvent
-import android.view.LayoutInflater
-import android.view.View
+import android.view.*
 import android.view.View.*
-import android.view.ViewGroup
+import android.view.ViewGroup.LayoutParams.MATCH_PARENT
+import android.view.ViewGroup.LayoutParams.WRAP_CONTENT
 import android.view.inputmethod.InputMethodManager
+import android.widget.LinearLayout
+import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.core.view.children
@@ -43,6 +45,9 @@ class DashboardFragment : Fragment() {
     lateinit var ChangeContent:String
 
     val week = listOf("일", "월", "화", "수", "목", "금", "토")
+
+    var touch_old=0f
+    var touch_new=0f
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -98,12 +103,12 @@ class DashboardFragment : Fragment() {
         calendarView.adapter = adapter
         calendarView.setCurrentItem((Integer.MAX_VALUE) / 2, false)
 
-        prev.setOnClickListener {
-            calendarView.setCurrentItem(calendarView.currentItem - 1, true)
-        }
-        next.setOnClickListener {
-            calendarView.setCurrentItem(calendarView.currentItem + 1, true)
-        }
+//        prev.setOnClickListener {
+//            calendarView.setCurrentItem(calendarView.currentItem - 1, true)
+//        }
+//        next.setOnClickListener {
+//            calendarView.setCurrentItem(calendarView.currentItem + 1, true)
+//        }
 
         schedule_commit_btn.setOnClickListener {
             imm.hideSoftInputFromWindow(schedule_edit_text.windowToken, 0)
@@ -131,7 +136,7 @@ class DashboardFragment : Fragment() {
         schedule_content.setOnClickListener {
             if(isSelected){
                 schedule_commit_btn.visibility = VISIBLE
-//                edit_layout2.visibility = GONE
+                edit_layout2.visibility = GONE
                 calendar_frame.visibility = GONE
                 schedule_delete_btn.visibility = INVISIBLE
                 schedule_content.visibility = GONE
@@ -157,6 +162,66 @@ class DashboardFragment : Fragment() {
             CustomToast(this.context!!, str).show()
 
         }
+
+//        changeModeBar.setOnClickListener {
+//            var frame_params = LinearLayout.LayoutParams(
+//                MATCH_PARENT,
+//                WRAP_CONTENT,
+//                6f
+//            )
+//            var bottom_params = LinearLayout.LayoutParams(
+//                MATCH_PARENT,
+//                WRAP_CONTENT,
+//                1f
+//            )
+//            calendar_frame.layoutParams = frame_params
+//            calendar_bottom.layoutParams = bottom_params
+//        }
+
+//        changeModeBar.setOnClickListener {
+//            val anim = ValueAnimator.ofInt(calendar_frame.measuredHeight, -100)
+//            anim.addUpdateListener(object:ValueAnimator.AnimatorUpdateListener{
+//                override fun onAnimationUpdate(p0: ValueAnimator?) {
+//                    val value = p0?.getAnimatedValue().toString().toInt()
+//                    var params = calendar_frame.layoutParams
+//                    params.height = value
+//                    calendar_frame.layoutParams = params
+//                }
+//
+//            })
+//            anim.setDuration(2000)
+//            anim.start()
+//        }
+
+//        calendarView.setOnTouchListener(object:OnTouchListener{
+//            override fun onTouch(p0: View?, p1: MotionEvent?): Boolean {
+//                if(p1?.action == MotionEvent.ACTION_DOWN){ // 눌렀을때
+//                    touch_old = p1?.rawY
+//                    println("touch old : "+p1?.rawY)
+//                }else if(p1?.action == MotionEvent.ACTION_MOVE){ // 이동할때
+//                    touch_new = p1?.rawY
+//                    if(touch_old < touch_new){
+//                        //inae
+//                        var frame_params = LinearLayout.LayoutParams(
+//                            MATCH_PARENT,
+//                            WRAP_CONTENT,
+//                            3f
+//                        )
+//                        var bottom_params = LinearLayout.LayoutParams(
+//                            MATCH_PARENT,
+//                            WRAP_CONTENT,
+//                            2f
+//                        )
+//                        calendar_frame.layoutParams = frame_params
+//                        calendar_bottom.layoutParams = bottom_params
+//
+//                        //table_params.setMargins(30)
+//                    }
+//                }
+//                return true
+//            }
+//
+//        })
     }
 
 }

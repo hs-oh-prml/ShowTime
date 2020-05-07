@@ -16,10 +16,7 @@ import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.view.ViewGroup
 import android.view.ViewGroup.LayoutParams.WRAP_CONTENT
-import android.widget.GridLayout
-import android.widget.RadioGroup
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
 import androidx.core.content.ContextCompat
 import androidx.core.view.children
 import androidx.core.view.setMargins
@@ -44,6 +41,8 @@ class AddScheduleActivity : AppCompatActivity(){
 
     lateinit var color: Array<String>
     lateinit var weekList:List<String>
+    var dwidth=0
+    var dheight=0
 
     var statusMap = Array(23){Array(6) { -1 } }
     var tableNum = 0
@@ -185,6 +184,7 @@ class AddScheduleActivity : AppCompatActivity(){
                     }
                     cell_name.text = name
                     cell_place.text = place
+                    cell_place.width = (dwidth / 21) * 4 - 10
 
                     val shape = GradientDrawable()
                     shape.setColor(Color.parseColor(color[index % color.size]))
@@ -207,22 +207,33 @@ class AddScheduleActivity : AppCompatActivity(){
 
         }
     }
-
     fun initView(weekList: List<String>){
+        //inae
+        var table_params = LinearLayout.LayoutParams(
+            WRAP_CONTENT,
+            ViewGroup.LayoutParams.MATCH_PARENT
+        )
+        table_params.setMargins(30)
+        table_frame2.layoutParams = table_params
 
-        var disp = DisplayMetrics()
-        var dwidth = disp.widthPixels
-        var dheight = disp.heightPixels
+        //table_params.
+        //table_frame.layoutParams = table_params
+        //table_frame.setPadding(20)
+        //hi.setPadding(10)
 
         timeTable.columnCount = weekList.size + 1
         timeTable.rowCount = 23
+
+        var disp = DisplayMetrics()
+        this.windowManager?.defaultDisplay?.getMetrics(disp)
+        dwidth = disp.widthPixels - 60
+        dheight = disp.heightPixels
+
         for(j in 0 until timeTable.columnCount){
             for(i in 0 until timeTable.rowCount){
 
                 var params = GridLayout.LayoutParams()
-                params.height = WRAP_CONTENT
-                params.width = WRAP_CONTENT
-                params.setMargins(1)
+                //params.setMargins(1)
                 var child: View
                 var colSpan = GridLayout.spec(j, GridLayout.FILL)
                 var rowSpan = GridLayout.spec(i, GridLayout.FILL)
@@ -233,20 +244,18 @@ class AddScheduleActivity : AppCompatActivity(){
 
                     child = TextView(this)
                     child.setTextColor(ContextCompat.getColor(this, R.color.white))
-                    child.textSize = 9f
-                    child.text = "T"
+                    child.textSize = 10f
 
-                } else if(i == 0 && j != 0){
+                } else if(i == 0 && j != 0){ // 월화수목금
 
-                    var colSpan = GridLayout.spec(j, GridLayout.FILL, 1f)
+
+                    var colSpan = GridLayout.spec(j, GridLayout.FILL)
                     params.columnSpec = colSpan
                     child = TextView(this)
                     child.gravity = Gravity.CENTER
                     child.textSize = 9f
-                    child.setIncludeFontPadding(false)
                     child.text = weekList[j - 1]
-
-                } else if(i != 0 && j == 0){
+                } else if(i != 0 && j == 0){ //시간 9~7
 
                     child = TextView(this)
                     child.gravity = Gravity.TOP or Gravity.RIGHT
@@ -258,12 +267,17 @@ class AddScheduleActivity : AppCompatActivity(){
                             child .text = (9 + i / 2).toString()
                         }
                     }
-                } else {
+                    params.width = dwidth / 21 //크기 21중 1만큼 차지
+                } else { // 가운데 칸들
                     var inflater = LayoutInflater.from(this)
                     child = inflater.inflate(R.layout.table_item, timeTable, false)
+//                    params.width = (dwidth * (1/5) * 0.7).toInt()
+//                    params.height = (dheight * (1/24) * 0.8).toInt()
+                    params.width = (dwidth / 21) * 4
+                    params.height = 50
                 }
                 if(i != 0){
-                    var rowSpan = GridLayout.spec(i, GridLayout.FILL, 1f)
+                    var rowSpan = GridLayout.spec(i, GridLayout.FILL,1f)
                     params.rowSpec = rowSpan
                 }
                 if(i % 2 == 1){
@@ -275,8 +289,6 @@ class AddScheduleActivity : AppCompatActivity(){
                 child.layoutParams = params
 
                 if(i != 0 && j != 0){
-                    params.width = (dwidth * (1/5) * 0.7).toInt()
-                    params.height = (dheight * (1/24) * 0.8).toInt()
                     child.setOnClickListener {
                         if(statusMap[i][j] == -1){
                             it.setBackgroundColor(ContextCompat.getColor(this, R.color.selected_item))

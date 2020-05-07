@@ -3,6 +3,7 @@ package com.showtimetable.timetable
 
 import android.Manifest
 import android.app.Activity
+import android.app.Dialog
 import android.content.ContentValues
 import android.content.Context
 import android.content.Context.VIBRATOR_SERVICE
@@ -26,7 +27,9 @@ import android.widget.FrameLayout
 import android.widget.GridLayout
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.appcompat.app.AlertDialog
 import androidx.cardview.widget.CardView
+import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.view.marginBottom
 import androidx.core.view.setMargins
@@ -84,8 +87,19 @@ class TableFragment(var c: Context, var semesterNum:Int) : Fragment() {
         initView(weekList)
         refreshTable()
         table_frame.setOnLongClickListener {
-            screenCapture()
-            vibrate(200)
+            val builder = AlertDialog.Builder(this.context!!)
+            builder.setMessage("시간표를 저장하시겠습니까?").setTitle(semester_textView.text.toString())
+            builder.setPositiveButton("예"){
+                    _,_->
+                screenCapture()
+                vibrate(150)
+            }
+            builder.setNegativeButton("아니오"){
+                _,_->
+            }
+
+            val dlg = builder.create()
+            dlg.show()
             true
         }
 

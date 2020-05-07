@@ -40,7 +40,8 @@
         android:id="@+id/score"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@drawable/list_border_small"
+        android:background="@drawable/table_border"
+        android:backgroundTint="@color/background_gray"
         android:gravity="center"/>
 
 </LinearLayout>
