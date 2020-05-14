@@ -23,4 +23,6 @@
     <color name="invisible">#00000000</color>
     <color name="very_light_gray">#f9f9f9</color>
     <color name="green_check">#4ea78b</color>
+    <color name="light_green">#c7ecd3</color>
+    <color name="dark_green">#3b6666</color>
 </resources>

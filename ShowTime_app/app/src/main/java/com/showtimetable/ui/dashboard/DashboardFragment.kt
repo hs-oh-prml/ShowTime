@@ -1,9 +1,13 @@
 package com.showtimetable.ui.dashboard
 
 import android.animation.ValueAnimator
+import android.content.Context
 import android.content.Context.INPUT_METHOD_SERVICE
+import android.graphics.PointF
+import android.graphics.Rect
 import android.os.Bundle
 import android.text.method.ScrollingMovementMethod
+import android.util.DisplayMetrics
 import android.util.Log
 import android.view.*
 import android.view.View.*
@@ -48,6 +52,11 @@ class DashboardFragment : Fragment() {
 
     var touch_old=0f
     var touch_new=0f
+    var disp_width=0
+    var disp_height=0
+    lateinit var mCenter:PointF
+    var  mRadius:Float = 0f
+    var mMaxDist:Float = 0f
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -62,47 +71,63 @@ class DashboardFragment : Fragment() {
     }
 
     fun init(){
+
+
+        //calendar_frame.layoutParams = RelativeLayout.LayoutParams(MATCH_PARENT,1000)
+
+        setDisplaySize()
         imm = context!!.getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
 
         pref = PreferenceManager(requireContext())
 
         var today = Calendar.getInstance()
         var listener = object: CalendarAdapter.calendarListener{
-            override fun onClick(month:Int, year:Int, clickDate:Int, weekDay:String, v:View) {
+
+
+            override fun onClick(month:Int, year:Int, clickDate:Int, weekDay:String, v:View,check:Boolean) {
 //                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
 
-                schedule_commit_btn.visibility = GONE
-                schedule_content.visibility = VISIBLE
-                schedule_edit_text.visibility = GONE
-                schedule_delete_btn.visibility = INVISIBLE
+                if(!check){
+//
+                    schedule_commit_btn.visibility = GONE
+                    schedule_edit_text.visibility = GONE
+                    schedule_delete_btn.visibility = INVISIBLE
+                    schedule_content.visibility = VISIBLE
+                    calendar_bottom.visibility = VISIBLE
+                    arrow_image.setBackground(ContextCompat.getDrawable(requireContext(),R.drawable.down_arrow))
+                    changeModeBar.setBackgroundColor(resources.getColor(R.color.light_blue))
 
-                var date:String = v.findViewById<TextView>(R.id.date).text.toString()
-                y = year
-                m = month
-                d = date.toInt()
-                isSelected = true
+                    var date:String = v.findViewById<TextView>(R.id.date).text.toString()
+                    y = year
+                    m = month
+                    d = date.toInt()
+                    isSelected = true
 
-                if(clickDate != -1){
-                    selected_date.text = "${d}. " + weekDay
-                    var str = pref.getDaySchedule(year, month, date.toInt())
-                    //println("content : "+str)
-                    if(str != null && str != ""){
-                        schedule_content.text = str
-                        schedule_edit_text.setText(str)
-                        schedule_delete_btn.visibility = VISIBLE
-                    }
-                    else{
-                        schedule_content.text = null
-                        schedule_edit_text.setText(null)
+                    if(clickDate != -1){
+                        selected_date.text = "${d}. " + weekDay
+                        var str = pref.getDaySchedule(year, month, date.toInt())
+                        //println("content : "+str)
+                        if(str != null && str != ""){
+                            schedule_content.text = str
+                            schedule_edit_text.setText(str)
+                            schedule_delete_btn.visibility = VISIBLE
+                        }
+                        else{
+                            schedule_content.text = null
+                            schedule_edit_text.setText(null)
+                        }
                     }
                 }
+
+
             }
         }
 
-        var adapter = CalendarAdapter(requireContext(), today, listener)
+        var adapter = CalendarAdapter(requireContext(), today, listener, false)
+        //hi
         calendarView.adapter = adapter
         calendarView.setCurrentItem((Integer.MAX_VALUE) / 2, false)
-
+            //
 //        prev.setOnClickListener {
 //            calendarView.setCurrentItem(calendarView.currentItem - 1, true)
 //        }
@@ -119,9 +144,13 @@ class DashboardFragment : Fragment() {
             schedule_content.text = schedule_edit_text.text.toString()
             schedule_content.visibility = VISIBLE
             schedule_edit_text.visibility = GONE
+            changeModeBar.visibility = VISIBLE
+            write_schedule.visibility = GONE
+            selected_date.visibility = VISIBLE
 
+//hi
             var idx = calendarView.currentItem
-            var adapter = CalendarAdapter(requireContext(), today, listener)
+            var adapter = CalendarAdapter(requireContext(), today, listener,false)
             calendarView.adapter = adapter
             calendarView.setCurrentItem(idx ,false)
             if(schedule_edit_text.text != null && schedule_edit_text.text.toString() != "" && ChangeContent != schedule_edit_text.text.toString()){
@@ -135,12 +164,16 @@ class DashboardFragment : Fragment() {
 
         schedule_content.setOnClickListener {
             if(isSelected){
+                schedule_date.text = selected_date.text.toString()
                 schedule_commit_btn.visibility = VISIBLE
-                edit_layout2.visibility = GONE
                 calendar_frame.visibility = GONE
-                schedule_delete_btn.visibility = INVISIBLE
+                schedule_delete_btn.visibility = GONE
+                selected_date.visibility = GONE
                 schedule_content.visibility = GONE
                 schedule_edit_text.visibility = VISIBLE
+                changeModeBar.visibility = GONE
+                write_schedule.visibility = VISIBLE
+
             }
             ChangeContent = schedule_content.text.toString()
         }
@@ -150,78 +183,64 @@ class DashboardFragment : Fragment() {
             schedule_delete_btn.visibility = INVISIBLE
 
             var idx = calendarView.currentItem
-            var adapter = CalendarAdapter(requireContext(), today, listener)
+            var adapter = CalendarAdapter(requireContext(), today, listener,false)
             calendarView.adapter = adapter
             calendarView.setCurrentItem(idx ,false)
 
             schedule_content.text = ""
             schedule_edit_text.setText("")
             schedule_delete_btn.visibility = VISIBLE
+            changeModeBar.visibility = VISIBLE
 
             val str = m.toString() + "월 "+ d + "일" + " 일정이 삭제되었습니다."
             CustomToast(this.context!!, str).show()
 
         }
 
-//        changeModeBar.setOnClickListener {
-//            var frame_params = LinearLayout.LayoutParams(
-//                MATCH_PARENT,
-//                WRAP_CONTENT,
-//                6f
-//            )
-//            var bottom_params = LinearLayout.LayoutParams(
-//                MATCH_PARENT,
-//                WRAP_CONTENT,
-//                1f
-//            )
-//            calendar_frame.layoutParams = frame_params
-//            calendar_bottom.layoutParams = bottom_params
-//        }
+        close_write.setOnClickListener {
+            calendar_frame.visibility = VISIBLE
+            schedule_commit_btn.visibility = GONE
+            schedule_content.visibility = VISIBLE
+            schedule_edit_text.visibility = GONE
+            changeModeBar.visibility = VISIBLE
+            write_schedule.visibility = GONE
+            selected_date.visibility = VISIBLE
+        }
 
-//        changeModeBar.setOnClickListener {
-//            val anim = ValueAnimator.ofInt(calendar_frame.measuredHeight, -100)
-//            anim.addUpdateListener(object:ValueAnimator.AnimatorUpdateListener{
-//                override fun onAnimationUpdate(p0: ValueAnimator?) {
-//                    val value = p0?.getAnimatedValue().toString().toInt()
-//                    var params = calendar_frame.layoutParams
-//                    params.height = value
-//                    calendar_frame.layoutParams = params
-//                }
-//
-//            })
-//            anim.setDuration(2000)
-//            anim.start()
-//        }
+        changeModeBar.setOnClickListener {
+            if(calendar_bottom.visibility == GONE){
+                //내용세부화
+                var idx = calendarView.currentItem
+                var adapter = CalendarAdapter(requireContext(), today, listener,false)
+                calendarView.adapter = adapter
+                calendarView.setCurrentItem(idx ,false)
 
-//        calendarView.setOnTouchListener(object:OnTouchListener{
-//            override fun onTouch(p0: View?, p1: MotionEvent?): Boolean {
-//                if(p1?.action == MotionEvent.ACTION_DOWN){ // 눌렀을때
-//                    touch_old = p1?.rawY
-//                    println("touch old : "+p1?.rawY)
-//                }else if(p1?.action == MotionEvent.ACTION_MOVE){ // 이동할때
-//                    touch_new = p1?.rawY
-//                    if(touch_old < touch_new){
-//                        //inae
-//                        var frame_params = LinearLayout.LayoutParams(
-//                            MATCH_PARENT,
-//                            WRAP_CONTENT,
-//                            3f
-//                        )
-//                        var bottom_params = LinearLayout.LayoutParams(
-//                            MATCH_PARENT,
-//                            WRAP_CONTENT,
-//                            2f
-//                        )
-//                        calendar_frame.layoutParams = frame_params
-//                        calendar_bottom.layoutParams = bottom_params
-//
-//                        //table_params.setMargins(30)
-//                    }
-//                }
-//                return true
-//            }
-//
-//        })
+                arrow_image.setBackground(ContextCompat.getDrawable(this.context!!,R.drawable.down_arrow))
+                changeModeBar.setBackgroundColor(resources.getColor(R.color.light_blue))
+                calendar_bottom.visibility = VISIBLE
+            }
+            else{
+                //동그라미만
+                var idx = calendarView.currentItem
+                var adapter = CalendarAdapter(requireContext(), today, listener,true)
+                calendarView.adapter = adapter
+                calendarView.setCurrentItem(idx ,false)
+
+                calendar_bottom.visibility = GONE
+                arrow_image.setBackground(ContextCompat.getDrawable(this.context!!,R.drawable.up_arrow))
+                changeModeBar.setBackgroundColor(resources.getColor(R.color.white))
+            }
+
+        }
+
+    }
+
+    fun setDisplaySize(){
+        var disp = DisplayMetrics()
+        this.activity?.windowManager?.defaultDisplay?.getMetrics(disp)
+        disp_width = disp.widthPixels
+        disp_height = disp.heightPixels
+        println("disp height "+disp_height)
     }
 
 }

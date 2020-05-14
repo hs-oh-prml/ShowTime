@@ -3,13 +3,12 @@ package com.showtimetable.ui.dashboard
 import android.content.Context
 import android.graphics.Color
 import android.graphics.drawable.GradientDrawable
+import android.text.TextUtils
 import android.util.Log
-import android.view.Gravity
-import android.view.LayoutInflater
-import android.view.View
+import android.view.*
 import android.view.View.INVISIBLE
 import android.view.View.VISIBLE
-import android.view.ViewGroup
+import android.view.ViewGroup.LayoutParams.MATCH_PARENT
 import android.view.ViewGroup.LayoutParams.WRAP_CONTENT
 import android.widget.GridLayout
 import android.widget.ImageView
@@ -19,22 +18,27 @@ import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.core.content.ContextCompat
 import androidx.core.view.children
 import androidx.core.view.marginBottom
+import androidx.core.view.marginTop
+import androidx.core.view.setMargins
 import androidx.recyclerview.widget.RecyclerView
 import com.showtimetable.R
+import com.showtimetable.R.color.green_check
 import com.showtimetable.sharedpreference.PreferenceManager
 import kotlinx.android.synthetic.main.calendar_item.view.*
 import kotlinx.android.synthetic.main.fragment_dashboard.*
 import org.w3c.dom.Text
 import java.util.*
+import android.view.ViewGroup.LayoutParams as LayoutParams1
 
 class CalendarAdapter(
     var context: Context,
     var today: Calendar,
-    var listener:calendarListener
+    var listener:calendarListener,
+    var check:Boolean
 ): RecyclerView.Adapter<CalendarAdapter.ViewHolder>() {
 
     interface calendarListener{
-        fun onClick(month:Int, year:Int, clickDate:Int, weekDay:String,  v:View)
+        fun onClick(month:Int, year:Int, clickDate:Int, weekDay:String,  v:View,check:Boolean)
     }
 
     var pref: PreferenceManager = PreferenceManager(context)
@@ -116,8 +120,11 @@ class CalendarAdapter(
                     params.width = 0
                     child.layoutParams = params
                     var isToday = child.findViewById<ImageView>(R.id.isToday)
-                    var isScheduled = child.findViewById<View>(R.id.isScheduled)
+                    //var isScheduled = child.findViewById<View>(R.id.isScheduled)
                     var date = child.findViewById<TextView>(R.id.date)
+                    var scheduleList = child.findViewById<LinearLayout>(R.id.schedule_list)
+                    var overSchedule = child.findViewById<TextView>(R.id.over_schedule)
+
                     date.textSize = 10f
                     if(count <= cal.getActualMaximum(Calendar.DAY_OF_MONTH)) {
                         if (i == 1) {
@@ -131,12 +138,58 @@ class CalendarAdapter(
                         }
                         var str = pref.getDaySchedule(year, month, count - 1)
                         if(str != "" && str != null){
-                            isScheduled.visibility = VISIBLE
+                            if(check == false){
+                                //isScheduled.visibility = VISIBLE
+                                scheduleList.orientation = LinearLayout.HORIZONTAL
+                                for(i in 1..3) {
+                                    var haveSchedule = View(this.context)
+                                    var param = LinearLayout.LayoutParams(20, 20)
+                                    param.setMargins(3,0,3,0)
+                                    haveSchedule.layoutParams = param
+                                    val shape = GradientDrawable()
+                                    shape.setColor(
+                                        ContextCompat.getColor(
+                                            context,
+                                            R.color.light_green
+                                        )
+                                    )
+                                    shape.shape = GradientDrawable.OVAL
+                                    shape.setStroke(0, R.color.light_green)
+                                    haveSchedule.background = shape
+                                    scheduleList.addView(haveSchedule)
+                                }
+                            }else{
+                                scheduleList.orientation = LinearLayout.VERTICAL
+                                for(i in 1..3){
+                                    var s_text = TextView(this.context)
+                                    s_text.text = str
+                                    s_text.setTextColor(ContextCompat.getColor(context, R.color.dark_green))
+                                    s_text.textSize = 8f
+                                    s_text.ellipsize =TextUtils.TruncateAt.MARQUEE
+                                    s_text.isSelected = true
+                                    s_text.isSingleLine = true
+                                    var param = LinearLayout.LayoutParams(MATCH_PARENT, WRAP_CONTENT)
+                                    param.setMargins(8,0,8,8)
+                                    s_text.layoutParams = param
+                                    val shape = GradientDrawable()
+                                    shape.setColor(ContextCompat.getColor(context, R.color.light_green))
+                                    shape.shape = GradientDrawable.RECTANGLE
+                                    shape.cornerRadius = 10.0f
+                                    s_text.background = shape
+                                    scheduleList.addView(s_text)
+                                }
+
+                                // 개수가 3개이상이면
+                                var num = 2 // 3개 이외 개수
+                                overSchedule.text = "+"+num.toString()
+                                overSchedule.textSize = 8f
+                                overSchedule.visibility = VISIBLE
+                            }
                         }
 
                         if(year == today.get(Calendar.YEAR) && month == (today.get(Calendar.MONTH) + 1) && count-1 == today.get(Calendar.DATE)){
                             isToday.visibility = VISIBLE
-                            listener.onClick(today.get(Calendar.MONTH) + 1, today.get(Calendar.YEAR), today.get(Calendar.DATE), week[today.get(Calendar.DAY_OF_WEEK) - 1], child)
+                            listener.onClick(today.get(Calendar.MONTH) + 1, today.get(Calendar.YEAR), today.get(Calendar.DATE), week[today.get(Calendar.DAY_OF_WEEK) - 1], child,check)
                         }
 
                         if(j == 0){
@@ -190,7 +243,7 @@ class CalendarAdapter(
                                 i_date.background = shape
                                 clickDate = index
                             }
-                            listener.onClick(month, year, clickDate, week[index % 7], it)
+                            listener.onClick(month, year, clickDate, week[index % 7], it,false)
                         }
                     }
                 }
@@ -203,10 +256,13 @@ class CalendarAdapter(
         var title: TextView
         var title2: TextView
         var calendar: GridLayout
+        //var schedule_list:LinearLayout
+
         init{
             title = itemView.findViewById(R.id.title)
             calendar = itemView.findViewById(R.id.calendar_grid)
             title2 = itemView.findViewById(R.id.title2)
+            //schedule_list = itemView.findViewById(R.id.schedule_list)
         }
     }
 

@@ -13,20 +13,25 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:gravity="right"
+        android:gravity="center"
         android:layout_margin="10dp">
         <ImageView
             android:layout_width="25dp"
             android:layout_height="25dp"
             android:src="@drawable/ic_close_black_24dp"
             android:id="@+id/close_schedule"/>
-        <View
+        <TextView
             android:layout_width="match_parent"
-            android:layout_height="1dp"
+            android:layout_height="wrap_content"
+            android:textColor="@color/dark_grey"
+            android:gravity="center"
+            android:id="@+id/semester_title"
+            android:textSize="14sp"
             android:layout_weight="1"/>
         <ImageView
             android:layout_width="25dp"
             android:layout_height="25dp"
+            android:padding="10dp"
             android:background="@drawable/ic_check_black_24dp"
             android:backgroundTint="@color/colorPrimary"
             android:id="@+id/submit"/>

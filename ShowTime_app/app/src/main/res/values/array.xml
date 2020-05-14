@@ -46,6 +46,7 @@
         <item>P</item>
         <item>NP</item>
     </string-array>
+
     <string-array name="semester">
         <item>1학년 1학기</item>
         <item>1학년 2학기</item>
@@ -55,5 +56,21 @@
         <item>3학년 2학기</item>
         <item>4학년 1학기</item>
         <item>4학년 2학기</item>
+    </string-array>
+
+    <string-array name="schedule_backgroundColor">
+        <item>#dbc7fb</item>
+        <item>#c7ecd3</item>
+        <item>#c3dafc</item>
+        <item>#f7d1dc</item>
+        <item>#f8ec9b</item>
+    </string-array>
+
+    <string-array name="schedule_textColor">
+        <item>#4c2c84</item>
+        <item>#3b6666</item>
+        <item>#2c3788</item>
+        <item>#7d1d2f</item>
+        <item>#7e5f22</item>
     </string-array>
 </resources>

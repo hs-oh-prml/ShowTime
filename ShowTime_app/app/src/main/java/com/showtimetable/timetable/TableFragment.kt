@@ -77,7 +77,10 @@ class TableFragment(var c: Context, var semesterNum:Int) : Fragment() {
         pref =  PreferenceManager(c)
         semester = pref.myData.semester[pref.table]
         var theme = pref.getTheme()
-        color = this.resources.getStringArray(theme)
+        //inae
+//        color = this.resources.getStringArray(theme)
+        color = this.resources.getStringArray(R.array.theme1)
+
         when(semester.dayMode){
             5->weekList = listOf("월", "화", "수", "목", "금")
             6->weekList = listOf("월", "화", "수", "목", "금","토")
@@ -214,8 +217,8 @@ class TableFragment(var c: Context, var semesterNum:Int) : Fragment() {
                     cell_place.setPadding(3, 0, 3, 0)
 
                     val shape = GradientDrawable()
+                    println("color : "+color[(index % color.size)]+", index : "+(index % color.size))
                     shape.setColor(Color.parseColor(color[index % color.size]))
-                    println("color : "+(index % color.size))
                     shape.shape = GradientDrawable.RECTANGLE
                     shape.cornerRadius = 15.0f
                     cell.background = shape
