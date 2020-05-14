@@ -3,7 +3,7 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:gravity="center"
+    android:gravity="center_horizontal"
     android:id="@+id/calendar_item_layout"
     >
     <ImageView
@@ -22,11 +22,24 @@
         android:gravity="center"
         android:id="@+id/date"
         />
-    <View
-        android:layout_width="4dp"
-        android:layout_height="4dp"
-        android:background="@drawable/circle_layout"
-        android:backgroundTint="@color/green_check"
-        android:id="@+id/isScheduled"
-        android:visibility="invisible" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/schedule_list"
+        android:orientation="vertical"
+        android:gravity="center_horizontal"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/over_schedule"
+        android:textColor="@color/dark_middle_gray"
+        android:text="+12"
+        android:visibility="gone"/>
+<!--    <View-->
+<!--        android:layout_width="4dp"-->
+<!--        android:layout_height="4dp"-->
+<!--        android:background="@drawable/circle_layout"-->
+<!--        android:backgroundTint="@color/green_check"-->
+<!--        android:id="@+id/isScheduled"-->
+<!--        android:visibility="invisible" />-->
 </LinearLayout>
