@@ -7,9 +7,7 @@ import android.util.Base64
 import android.util.Log
 import com.google.gson.Gson
 import com.showtimetable.R
-import com.showtimetable.data.MyData
-import com.showtimetable.data.Schedule
-import com.showtimetable.data.TimeCell
+import com.showtimetable.data.*
 import java.io.ByteArrayOutputStream
 
 class PreferenceManager(c: Context) {
@@ -63,14 +61,44 @@ class PreferenceManager(c: Context) {
         return pref.getBoolean("isFirst",true)
     }
 
-    fun getDaySchedule(y:Int, m:Int, d:Int):String?{
-        var date = "${y}-${m}-${d}"
-        return pref.getString(date, "")
+    fun getDaySchedule(y:Int, m:Int, d:Int):CalendarData?{
+        val date = "${y}-${m}-${d}"
+        val gson = Gson()
+        val json = pref.getString(date, "")
+        if(json != ""){
+            return gson.fromJson(json, CalendarData::class.java)
+        } else {
+            return null
+        }
+    }
+    fun deleteDaySchedule(y:Int, m:Int, d:Int, index:Int){
+        val date = "${y}-${m}-${d}"
+        val gson = Gson()
+        val json = pref.getString(date, "")
+        val data: CalendarData
+        if(json != ""){
+            data = gson.fromJson(json, CalendarData::class.java)
+            data.calendarItemList.removeAt(index)
+            val str = gson.toJson(data)
+            edit.putString(date, str).commit()
+        }
     }
 
-    fun setDaySchedule(y:Int, m:Int, d:Int, content:String){
-        var date = "${y}-${m}-${d}"
-        edit.putString(date, content).commit()
+    fun addDaySchedule(y:Int, m:Int, d:Int, content:String, color:String){
+        val date = "${y}-${m}-${d}"
+        val gson = Gson()
+        val json = pref.getString(date, "")
+        val data: CalendarData
+        if(json != ""){
+            data = gson.fromJson(json, CalendarData::class.java)
+            data.calendarItemList.add(CalendarData.CalendarItem(color, content))
+        } else {
+            val list = ArrayList<CalendarData.CalendarItem>()
+            data = CalendarData(list)
+        }
+        val str = gson.toJson(data)
+        edit.putString(date, str).commit()
+
     }
 
 

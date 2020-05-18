@@ -83,7 +83,6 @@ class DashboardFragment : Fragment() {
         var today = Calendar.getInstance()
         var listener = object: CalendarAdapter.calendarListener{
 
-
             override fun onClick(month:Int, year:Int, clickDate:Int, weekDay:String, v:View,check:Boolean) {
 //                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
 
@@ -105,7 +104,16 @@ class DashboardFragment : Fragment() {
 
                     if(clickDate != -1){
                         selected_date.text = "${d}. " + weekDay
-                        var str = pref.getDaySchedule(year, month, date.toInt())
+
+                        // c_data: 같은 날의 일정 리스트
+                        // CalendarData클래스의 CalendarItem 클래스 리스트
+                        // CalendarItem: String Color, String Content
+                        var c_data = pref.getDaySchedule(year, month, date.toInt())?.calendarItemList
+                        var str = ""
+                        if(c_data != null){
+
+                        }
+
                         //println("content : "+str)
                         if(str != null && str != ""){
                             schedule_content.text = str
@@ -140,7 +148,19 @@ class DashboardFragment : Fragment() {
             calendar_frame.visibility = VISIBLE
 
             schedule_commit_btn.visibility = GONE
-            pref.setDaySchedule(y, m, d, schedule_edit_text.text.toString())
+
+            var color = ""
+            when(color_group.checkedRadioButtonId){
+                R.id.color1-> color = "#dbc7fb"
+                R.id.color1-> color = "#c7ecd3"
+                R.id.color1-> color = "#c3dafc"
+                R.id.color1-> color = "#f7d1dc"
+                R.id.color1-> color = "#f8ec9b"
+                else -> color = "#dbc7fb"
+            }
+
+            pref.addDaySchedule(y, m, d, schedule_edit_text.text.toString(), color)
+
             schedule_content.text = schedule_edit_text.text.toString()
             schedule_content.visibility = VISIBLE
             schedule_edit_text.visibility = GONE
@@ -179,7 +199,7 @@ class DashboardFragment : Fragment() {
         }
 
         schedule_delete_btn.setOnClickListener {
-            pref.setDaySchedule(y, m, d.toInt(),"")
+            pref.deleteDaySchedule(y, m, d.toInt(), 0)
             schedule_delete_btn.visibility = INVISIBLE
 
             var idx = calendarView.currentItem

@@ -4,7 +4,6 @@
     package="com.showtimetable"
     android:targetSandboxVersion="2"
     >
-
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="com.android.vending.BILLING" />
@@ -16,21 +15,18 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".setting.ThemeActivity"></activity>
+        <activity android:name=".setting.ThemeActivity"/>
         <activity android:name=".tutorial.TutorialActivity" />
         <activity android:name=".SplashActivity">
-        >
-        <meta-data
-            android:name="com.google.android.gms.ads.APPLICATION_ID"
-            android:value="@string/admob_app_id"/>
-        <activity android:name="com.showtimetable.tutorial.TutorialActivity"/>
-        <activity android:name="com.showtimetable.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <meta-data
+            android:name="com.google.android.gms.ads.APPLICATION_ID"
+            android:value="@string/admob_app_id"/>
         <activity android:name=".setting.SettingActivity" />
         <activity android:name=".widget.WidgetSettingActivity" />
 
