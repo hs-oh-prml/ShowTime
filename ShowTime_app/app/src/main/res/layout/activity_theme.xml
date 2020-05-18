@@ -39,6 +39,7 @@
                     android:id="@+id/theme1"
                     android:textSize="10sp"
                     android:textColor="@color/dark_grey"
+                    android:button="@drawable/radio_button_check"
                     android:paddingStart="10dp"/>
                 <RadioButton
                     android:layout_width="wrap_content"
@@ -48,6 +49,7 @@
                     android:id="@+id/theme2"
                     android:textSize="10sp"
                     android:textColor="@color/dark_grey"
+                    android:button="@drawable/radio_button_check"
                     android:paddingStart="10dp"/>
                 <RadioButton
                     android:layout_width="wrap_content"
@@ -56,6 +58,7 @@
                     android:text="Cotton Candy"
                     android:id="@+id/theme3"
                     android:textSize="10sp"
+                    android:button="@drawable/radio_button_check"
                     android:textColor="@color/dark_grey"
                     android:paddingStart="10dp"/>
             </RadioGroup>
@@ -214,7 +217,8 @@
                     android:id="@+id/background1"
                     android:textSize="10sp"
                     android:textColor="@color/dark_grey"
-                    android:paddingStart="10dp"/>
+                    android:paddingStart="10dp"
+                    android:button="@drawable/radio_button_check"/>
                 <RadioButton
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -223,7 +227,8 @@
                     android:id="@+id/background2"
                     android:textSize="10sp"
                     android:textColor="@color/dark_grey"
-                    android:paddingStart="10dp"/>
+                    android:paddingStart="10dp"
+                    android:button="@drawable/radio_button_check"/>
                 <RadioButton
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -232,7 +237,8 @@
                     android:id="@+id/background3"
                     android:textSize="10sp"
                     android:textColor="@color/dark_grey"
-                    android:paddingStart="10dp"/>
+                    android:paddingStart="10dp"
+                    android:button="@drawable/radio_button_check"/>
             </RadioGroup>
             <LinearLayout
                 android:layout_width="match_parent"
@@ -259,7 +265,67 @@
 
             </LinearLayout>
         </LinearLayout>
-
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/list_border"
+            android:layout_marginBottom="10dp"
+            android:padding="5dp"
+            android:orientation="vertical">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="글자 색상"
+                android:textSize="12sp"
+                android:textColor="@color/dark_grey"
+                android:padding="5dp"/>
+            <RadioGroup
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/fontcolor_group"
+                android:orientation="horizontal">
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Black"
+                    android:id="@+id/fontcolor1"
+                    android:textSize="10sp"
+                    android:textColor="@color/black"
+                    android:paddingStart="10dp"
+                    android:button="@drawable/radio_button_check"/>
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Dark Gray"
+                    android:id="@+id/fontcolor2"
+                    android:textSize="10sp"
+                    android:textColor="@color/dark_grey"
+                    android:paddingStart="10dp"
+                    android:button="@drawable/radio_button_check"/>
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Dark Blue"
+                    android:id="@+id/fontcolor3"
+                    android:textSize="10sp"
+                    android:textColor="@color/colorPrimary"
+                    android:paddingStart="10dp"
+                    android:button="@drawable/radio_button_check"/>
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Dark Pink"
+                    android:id="@+id/fontcolor4"
+                    android:textSize="10sp"
+                    android:textColor="@color/dark_pink"
+                    android:paddingStart="10dp"
+                    android:button="@drawable/radio_button_check"/>
+            </RadioGroup>
+        </LinearLayout>
 
 
     </LinearLayout>
