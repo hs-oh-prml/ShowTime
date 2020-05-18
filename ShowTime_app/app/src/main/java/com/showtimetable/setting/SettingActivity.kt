@@ -1,6 +1,5 @@
 package com.showtimetable.setting
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
@@ -8,6 +7,13 @@ import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.widget.LinearLayout
 import android.widget.NumberPicker
+import android.widget.RadioButton
+import androidx.appcompat.app.AppCompatActivity
+import com.anjlab.android.iab.v3.BillingProcessor
+import com.anjlab.android.iab.v3.TransactionDetails
+import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.InterstitialAd
+import com.google.android.gms.ads.MobileAds
 import com.showtimetable.CustomToast
 import com.showtimetable.R
 import com.showtimetable.sharedpreference.PreferenceManager
@@ -16,24 +22,78 @@ import com.showtimetable.widget.WidgetSettingActivity
 import kotlinx.android.synthetic.main.activity_setting.*
 import java.io.ByteArrayOutputStream
 import java.io.IOException
-import java.lang.Exception
 
 
-class SettingActivity : AppCompatActivity() {
+class SettingActivity : AppCompatActivity(),
+    BillingProcessor.IBillingHandler
+{
+    override fun onBillingInitialized() {
+//        TODO("Not yet implemented")
+        pref.setNoADFlag(bp.isPurchased("remove_ad"))
+    }
 
+    override fun onPurchaseHistoryRestored() {
+//        TODO("Not yet implemented")
+        pref.setNoADFlag(bp.isPurchased("remove_ad"))
+    }
+
+    override fun onProductPurchased(productId: String, details: TransactionDetails?) {
+//        TODO("Not yet implemented")
+        if(productId == "remove_ad"){
+            pref.setNoADFlag(true)
+        }
+    }
+
+    override fun onBillingError(errorCode: Int, error: Throwable?) {
+//        TODO("Not yet implemented")
+    }
+
+    lateinit var bp: BillingProcessor
+    lateinit var mInterstitialAd:InterstitialAd
     lateinit var pref: PreferenceManager
     val BIAS = 5
 
     var licenseStr = ""
+    var GOOGLEPLAYLICENSEKEY = ""
+
+    override fun onDestroy() {
+        if(bp != null){
+            bp.release()
+        }
+        super.onDestroy()
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        if(!bp.handleActivityResult(requestCode, resultCode, data)){
+            super.onActivityResult(requestCode, resultCode, data)
+        }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_setting)
+        pref = PreferenceManager(this)
+
+        // Init AD
+        val is_no_AD = pref.getNoADFlag()
+        if(!is_no_AD){
+            MobileAds.initialize(this) {}
+            mInterstitialAd = InterstitialAd(this)
+            mInterstitialAd.adUnitId = resources.getString(R.string.test_whole_ad_unit_id)
+            mInterstitialAd.loadAd(AdRequest.Builder().build())
+        }
+
+        //  init billing
+        GOOGLEPLAYLICENSEKEY = resources.getString(R.string.google_play_license_key)
+        bp = BillingProcessor(this, GOOGLEPLAYLICENSEKEY, this);
+        bp.initialize();
+
         initLicense()
         init()
     }
 
     fun initLicense(){
-        var input_stream = resources.openRawResource(R.raw.license)
+        var input_stream = resources.openRawResource(R.raw.opensourcelicense)
         var baos = ByteArrayOutputStream()
         try {
             var i = input_stream.read()
@@ -49,8 +109,22 @@ class SettingActivity : AppCompatActivity() {
     }
 
     fun init(){
-
-        pref = PreferenceManager(this)
+        val currentTheme: RadioButton
+        when(pref.getTheme()){
+            R.array.theme1->{
+                currentTheme = findViewById(R.id.theme1)
+            }
+            R.array.theme2->{
+                currentTheme = findViewById(R.id.theme2)
+            }
+            R.array.theme3->{
+                currentTheme = findViewById(R.id.theme3)
+            }
+            else ->{
+                currentTheme = findViewById(R.id.theme1)
+            }
+        }
+        currentTheme.isChecked = true
         push_switch.isChecked = pref.getAlarmFlag() == "true"
 
         d_day_alarm.minValue = 0
@@ -125,6 +199,13 @@ class SettingActivity : AppCompatActivity() {
         //테마선택시
         theme_group.setOnCheckedChangeListener { radioGroup, i ->
 
+            val is_no_AD = pref.getNoADFlag()
+            if(!is_no_AD){
+                mInterstitialAd.show()
+            } else {
+                Log.d("TAG", "The interstitial wasn't loaded yet.")
+            }
+
             when(i){
                 R.id.theme1->{
                     pref.setTheme(R.array.theme1)
@@ -146,7 +227,7 @@ class SettingActivity : AppCompatActivity() {
 
         license.setOnClickListener {
             val builder = android.app.AlertDialog.Builder(this)
-            builder.setTitle("라이센스 정보")
+            builder.setTitle("오픈소스 라이센스 정보")
             builder.setMessage(licenseStr)
             builder.setNeutralButton("닫기") { _, _ ->
             }
@@ -162,6 +243,15 @@ class SettingActivity : AppCompatActivity() {
         guide.setOnClickListener {
             var intent = Intent(this, TutorialActivity::class.java)
             startActivity(intent)
+        }
+        remove_ad.setOnClickListener {
+            if (pref.getNoADFlag()) {
+                val str = "이미 구입하였습니다."
+                CustomToast(this, str).show()
+
+            } else {
+                bp.purchase(this, "remove_ad");
+            }
         }
 
         makeColor()
