@@ -4,6 +4,15 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical">
+    <com.google.android.gms.ads.AdView
+        xmlns:ads="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/adView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        ads:adSize="BANNER"
+        ads:adUnitId="@string/test_banner_ad_unit_id"
+        />
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -18,6 +27,7 @@
         android:background="@drawable/table_border"
         android:textColor="@color/dark_middle_gray"
         android:backgroundTint="@color/very_light_gray"
+        android:layout_marginTop="10dp"
         />
 <!--    <LinearLayout-->
 <!--        android:layout_width="match_parent"-->

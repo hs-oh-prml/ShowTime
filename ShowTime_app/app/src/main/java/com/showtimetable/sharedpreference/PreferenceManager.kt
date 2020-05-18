@@ -42,6 +42,13 @@ class PreferenceManager(c: Context) {
         }
     }
 
+    // True or False
+    fun setNoADFlag(flag:Boolean){
+        edit.putBoolean("no_ad", flag).commit()
+    }
+    fun getNoADFlag():Boolean {
+        return pref.getBoolean("no_ad", false)
+    }
     fun setAlarmFlag(flag:String){
         edit.putString("push", flag).commit()
     }
