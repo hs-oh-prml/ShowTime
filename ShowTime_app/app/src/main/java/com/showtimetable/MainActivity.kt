@@ -51,6 +51,8 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+
+
         bottom_navigation.inflateMenu(R.menu.bottom_nav_menu)
         bottom_navigation.selectedItemId = R.id.navigation_dashboard
         tran = supportFragmentManager.beginTransaction()
