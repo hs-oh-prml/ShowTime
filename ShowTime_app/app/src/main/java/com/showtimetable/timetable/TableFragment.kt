@@ -20,6 +20,7 @@ import android.text.TextUtils
 import android.util.DisplayMetrics
 import android.util.Log
 import android.view.*
+import android.view.View.GONE
 import android.view.ViewGroup.LayoutParams.MATCH_PARENT
 import androidx.fragment.app.Fragment
 import android.view.ViewGroup.LayoutParams.WRAP_CONTENT
@@ -36,6 +37,8 @@ import androidx.core.view.setMargins
 import androidx.core.view.setPadding
 import com.showtimetable.CustomToast
 import androidx.core.widget.TextViewCompat
+import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.MobileAds
 import com.showtimetable.R
 import com.showtimetable.data.MyData
 import com.showtimetable.data.Schedule
@@ -73,8 +76,18 @@ class TableFragment(var c: Context, var semesterNum:Int) : Fragment() {
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
+
         super.onActivityCreated(savedInstanceState)
         pref =  PreferenceManager(c)
+        val is_no_AD = pref.getNoADFlag()
+        if(!is_no_AD){
+            MobileAds.initialize(context) {}
+            val adRequest = AdRequest.Builder().build()
+            adView.loadAd(adRequest)
+        } else {
+            adView.visibility = GONE
+        }
+
         semester = pref.myData.semester[pref.table]
         var theme = pref.getTheme()
         //inae
