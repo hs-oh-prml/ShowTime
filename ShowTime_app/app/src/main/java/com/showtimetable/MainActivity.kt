@@ -16,9 +16,6 @@ import androidx.fragment.app.FragmentTransaction
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.google.android.gms.ads.AdRequest
-import com.google.android.gms.ads.InterstitialAd
-import com.google.android.gms.ads.MobileAds
 import com.gun0912.tedpermission.PermissionListener
 import com.gun0912.tedpermission.TedPermission
 import com.showtimetable.addschedule.AddScheduleActivity

@@ -1,13 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.showtimetable"
-    android:targetSandboxVersion="2"
-    >
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.showtimetable">
 
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.VIBRATE" />
-    <uses-permission android:name="com.android.vending.BILLING" />
 
     <application
         android:allowBackup="true"
@@ -15,12 +11,8 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme"
-        >
-        <meta-data
-            android:name="com.google.android.gms.ads.APPLICATION_ID"
-            android:value="@string/admob_app_id"/>
-        <activity android:name="com.showtimetable.tutorial.TutorialActivity"/>
+        android:theme="@style/AppTheme">
+        <activity android:name="com.showtimetable.tutorial.TutorialActivity"></activity>
         <activity android:name="com.showtimetable.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -47,8 +39,7 @@
         <activity
             android:name="com.showtimetable.MainActivity"
             android:label="@string/app_name"
-            android:screenOrientation="portrait"
-            />
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>
