@@ -12,6 +12,8 @@
     <color name="red">#EA3E44</color>
     <color name="light_red">#ff9c9c</color>
     <color name="blue">#496EDE</color>
+    <color name="light_pink">#fbf8f8</color>
+    <color name="mint">#f8fffd</color>
 
     <color name="table_border">#EEEDED</color>
     <color name="table_text_color">#989898</color>

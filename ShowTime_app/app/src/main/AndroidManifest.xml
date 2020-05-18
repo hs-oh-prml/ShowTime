@@ -12,19 +12,20 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name="com.showtimetable.tutorial.TutorialActivity"></activity>
-        <activity android:name="com.showtimetable.SplashActivity">
+        <activity android:name=".setting.ThemeActivity"></activity>
+        <activity android:name=".tutorial.TutorialActivity" />
+        <activity android:name=".SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="com.showtimetable.setting.SettingActivity" />
-        <activity android:name="com.showtimetable.widget.WidgetSettingActivity" />
+        <activity android:name=".setting.SettingActivity" />
+        <activity android:name=".widget.WidgetSettingActivity" />
 
-        <receiver android:name="com.showtimetable.setting.NotificationReceiver" />
-        <receiver android:name="com.showtimetable.widget.WidgetProvider">
+        <receiver android:name=".setting.NotificationReceiver" />
+        <receiver android:name=".widget.WidgetProvider">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
             </intent-filter>
@@ -33,11 +34,12 @@
                 android:name="android.appwidget.provider"
                 android:resource="@xml/table_widget_info" />
         </receiver>
+
         <activity
-            android:name="com.showtimetable.addschedule.AddScheduleActivity"
+            android:name=".addschedule.AddScheduleActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.showtimetable.MainActivity"
+            android:name=".MainActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait" />
     </application>

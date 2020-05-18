@@ -100,7 +100,7 @@ class CellDialog(
             var intent = Intent(context, MainActivity::class.java)
             activity!!.finish()
             startActivity(intent)
-            CustomToast(this.context!!,"["+name+"] 이 삭제되었습니다.").show()
+            CustomToast(this.context!!,"["+name.text.toString()+"] 이 삭제되었습니다.").show()
         }
     }
 

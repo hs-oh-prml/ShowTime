@@ -68,7 +68,15 @@ class PreferenceManager(c: Context) {
 
 
     fun getTheme():Int{
-        return pref.getInt("theme", R.array.theme1)
+        var theme = pref.getInt("theme", R.array.theme1)
+        when(theme){
+            R.array.theme1, R.array.theme2, R.array.theme3 ->{
+                return theme
+            }
+            else->{
+                return R.array.theme1
+            }
+        }
     }
 
     fun setTheme(theme:Int){

@@ -112,7 +112,7 @@ class TableFragment(var c: Context, var semesterNum:Int) : Fragment() {
         for(i in 1..22){
             for(j in 1..weekList.size){
                 var cell = getChild(i, j)
-                cell.setBackgroundResource(R.color.white)
+                cell.setBackgroundResource(R.color.light_blue)
             }
         }
         for((index, i) in  semester.schedules.withIndex()){
@@ -233,7 +233,6 @@ class TableFragment(var c: Context, var semesterNum:Int) : Fragment() {
                     cell.setOnClickListener {
                         var dialog = CellDialog(context!!, pref.table, index)
                         var fm = parentFragmentManager
-
                         dialog.show(fm, "")
 
                     }
@@ -323,7 +322,7 @@ class TableFragment(var c: Context, var semesterNum:Int) : Fragment() {
                 } else {
                     params.setMargins(1,0,1,1)
                 }
-                child.setBackgroundResource(R.color.white)
+                child.setBackgroundResource(R.color.light_blue)
                 child.layoutParams = params
                 timeTable.addView(child)
             }
