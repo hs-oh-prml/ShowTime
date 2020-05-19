@@ -48,6 +48,7 @@ import kotlinx.android.synthetic.main.calendar_item.*
 import kotlinx.android.synthetic.main.fragment_home.*
 import kotlinx.android.synthetic.main.fragment_table.*
 import kotlinx.android.synthetic.main.fragment_table.timeTable
+import kotlinx.android.synthetic.main.table_item.view.*
 import org.w3c.dom.Text
 import java.io.File
 import java.io.FileOutputStream
@@ -79,6 +80,8 @@ class TableFragment(var c: Context, var semesterNum:Int) : Fragment() {
 
         super.onActivityCreated(savedInstanceState)
         pref =  PreferenceManager(c)
+//        setTodaySchedule()
+        timeTable.setBackgroundResource(pref.getTableBorder())
         val is_no_AD = pref.getNoADFlag()
         if(!is_no_AD){
             MobileAds.initialize(context) {}
@@ -125,7 +128,7 @@ class TableFragment(var c: Context, var semesterNum:Int) : Fragment() {
         for(i in 1..22){
             for(j in 1..weekList.size){
                 var cell = getChild(i, j)
-                cell.setBackgroundResource(R.color.light_blue)
+                cell.setBackgroundResource(pref.getTableBackgroundColor())
             }
         }
         for((index, i) in  semester.schedules.withIndex()){
@@ -228,6 +231,8 @@ class TableFragment(var c: Context, var semesterNum:Int) : Fragment() {
                     cell_place.width = (dwidth / 21) * 4 - 10
                     cell_name.setPadding(3, 3, 3, 0)
                     cell_place.setPadding(3, 0, 3, 0)
+                    cell_name.setTextColor(ContextCompat.getColor(context!!, pref.getTableFontColor()))
+                    cell_place.setTextColor(ContextCompat.getColor(context!!, pref.getTableFontColor()))
 
                     val shape = GradientDrawable()
                     println("color : "+color[(index % color.size)]+", index : "+(index % color.size))
@@ -260,6 +265,7 @@ class TableFragment(var c: Context, var semesterNum:Int) : Fragment() {
 
     fun initView(weekList: List<String>){
         //inae
+
         var table_params = LinearLayout.LayoutParams(
             WRAP_CONTENT,
             MATCH_PARENT)
@@ -293,7 +299,7 @@ class TableFragment(var c: Context, var semesterNum:Int) : Fragment() {
                 if(i == 0 && j == 0){
 
                     child = TextView(context)
-                    child.setTextColor(ContextCompat.getColor(context!!, R.color.white))
+                    child.setTextColor(ContextCompat.getColor(context!!, pref.getTableFontColor()))
                     child.textSize = 10f
 
                 } else if(i == 0 && j != 0){ // 월화수목금
@@ -335,7 +341,7 @@ class TableFragment(var c: Context, var semesterNum:Int) : Fragment() {
                 } else {
                     params.setMargins(1,0,1,1)
                 }
-                child.setBackgroundResource(R.color.light_blue)
+                child.setBackgroundResource(pref.getTableBackgroundColor())
                 child.layoutParams = params
                 timeTable.addView(child)
             }
@@ -374,6 +380,8 @@ class TableFragment(var c: Context, var semesterNum:Int) : Fragment() {
             else->null
         }
     }
+
+
 
 
 }

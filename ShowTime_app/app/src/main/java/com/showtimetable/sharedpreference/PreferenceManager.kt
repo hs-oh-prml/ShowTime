@@ -137,6 +137,34 @@ class PreferenceManager(c: Context) {
         table = t
     }
 
+    fun setTableBackgroundColor(background:Int){
+        edit.putInt("backgroundColor",background).commit()
+    }
+
+    fun getTableBackgroundColor():Int{
+        return pref.getInt("backgroundColor", R.color.white)
+    }
+
+    fun setTableFontColor(fontcolor:Int){
+        edit.putInt("fontColor",fontcolor).commit()
+    }
+
+    fun getTableFontColor():Int{
+        return pref.getInt("fontColor",R.color.white)
+    }
+
+    fun getTableBorder():Int{
+        return pref.getInt("tableBorderColor",R.color.table_border)
+    }
+
+    fun setTableBorder(color:Int){
+        edit.putInt("tableBorderColor",color).commit()
+    }
+
+
+
+
+
     fun Bitmap2Str(bitmap: Bitmap): String {
         var baos = ByteArrayOutputStream()
         bitmap.compress(Bitmap.CompressFormat.PNG, 100, baos)
@@ -159,5 +187,6 @@ class PreferenceManager(c: Context) {
         var json = gson.toJson(myData)
         edit.putString("myData", json).commit()
     }
+
 
 }
