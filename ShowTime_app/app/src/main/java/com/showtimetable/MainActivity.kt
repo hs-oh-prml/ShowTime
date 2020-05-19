@@ -140,8 +140,8 @@ class MainActivity : AppCompatActivity() {
         var y= hasSchedule.get(Calendar.YEAR)
         var m= hasSchedule.get(Calendar.MONTH) + 1
         var d = hasSchedule.get(Calendar.DATE)
-        var str = pref.getDaySchedule(y, m, d)
-        if(str == null || str == ""){
+        var c_data =  pref.getDaySchedule(y, m, d)
+        if(c_data == null){
             return
         }
 

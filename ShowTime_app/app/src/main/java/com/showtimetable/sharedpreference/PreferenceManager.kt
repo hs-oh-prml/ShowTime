@@ -61,14 +61,17 @@ class PreferenceManager(c: Context) {
         return pref.getBoolean("isFirst",true)
     }
 
-    fun getDaySchedule(y:Int, m:Int, d:Int):CalendarData?{
+    fun getDaySchedule(y:Int, m:Int, d:Int):CalendarData{
         val date = "${y}-${m}-${d}"
         val gson = Gson()
         val json = pref.getString(date, "")
         if(json != ""){
             return gson.fromJson(json, CalendarData::class.java)
         } else {
-            return null
+            val list = ArrayList<CalendarData.CalendarItem>()
+            val data = CalendarData(list)
+
+            return data
         }
     }
     fun deleteDaySchedule(y:Int, m:Int, d:Int, index:Int){
@@ -94,9 +97,11 @@ class PreferenceManager(c: Context) {
             data.calendarItemList.add(CalendarData.CalendarItem(color, content))
         } else {
             val list = ArrayList<CalendarData.CalendarItem>()
+            list.add(CalendarData.CalendarItem(color, content))
             data = CalendarData(list)
         }
         val str = gson.toJson(data)
+        Log.d("SCHEDULE_INFO", str)
         edit.putString(date, str).commit()
 
     }

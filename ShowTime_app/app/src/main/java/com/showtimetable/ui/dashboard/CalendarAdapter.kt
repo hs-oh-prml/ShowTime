@@ -38,7 +38,7 @@ class CalendarAdapter(
 ): RecyclerView.Adapter<CalendarAdapter.ViewHolder>() {
 
     interface calendarListener{
-        fun onClick(month:Int, year:Int, clickDate:Int, weekDay:String,  v:View,check:Boolean)
+        fun onClick(month:Int, year:Int, clickDate:Int, weekDay:String,  v:View, check:Boolean)
     }
 
     var pref: PreferenceManager = PreferenceManager(context)
@@ -107,6 +107,7 @@ class CalendarAdapter(
                     textView.layoutParams = params
 
                     holder.calendar.addView(textView)
+
                 } else {
 
                     var inflater = LayoutInflater.from(context)
@@ -123,6 +124,7 @@ class CalendarAdapter(
                     //var isScheduled = child.findViewById<View>(R.id.isScheduled)
                     var date = child.findViewById<TextView>(R.id.date)
                     var scheduleList = child.findViewById<LinearLayout>(R.id.schedule_list)
+
                     var overSchedule = child.findViewById<TextView>(R.id.over_schedule)
 
                     date.textSize = 10f
@@ -136,60 +138,65 @@ class CalendarAdapter(
                             date.text = "${count}"
                             count++
                         }
-                        var str = pref.getDaySchedule(year, month, count - 1)
-                        if(str != "" && str != null){
-                            if(check == false){
-                                //isScheduled.visibility = VISIBLE
-                                scheduleList.orientation = LinearLayout.HORIZONTAL
-                                for(i in 1..3) {
-                                    var haveSchedule = View(this.context)
-                                    var param = LinearLayout.LayoutParams(20, 20)
-                                    param.setMargins(3,0,3,0)
-                                    haveSchedule.layoutParams = param
-                                    val shape = GradientDrawable()
-                                    shape.setColor(
-                                        ContextCompat.getColor(
-                                            context,
-                                            R.color.light_green
-                                        )
-                                    )
-                                    shape.shape = GradientDrawable.OVAL
-                                    shape.setStroke(0, R.color.light_green)
-                                    haveSchedule.background = shape
-                                    scheduleList.addView(haveSchedule)
-                                }
-                            }else{
-                                scheduleList.orientation = LinearLayout.VERTICAL
-                                for(i in 1..3){
-                                    var s_text = TextView(this.context)
-                                    s_text.text = str
-                                    s_text.setTextColor(ContextCompat.getColor(context, R.color.dark_green))
-                                    s_text.textSize = 8f
-                                    s_text.ellipsize =TextUtils.TruncateAt.MARQUEE
-                                    s_text.isSelected = true
-                                    s_text.isSingleLine = true
-                                    var param = LinearLayout.LayoutParams(MATCH_PARENT, WRAP_CONTENT)
-                                    param.setMargins(8,0,8,8)
-                                    s_text.layoutParams = param
-                                    val shape = GradientDrawable()
-                                    shape.setColor(ContextCompat.getColor(context, R.color.light_green))
-                                    shape.shape = GradientDrawable.RECTANGLE
-                                    shape.cornerRadius = 10.0f
-                                    s_text.background = shape
-                                    scheduleList.addView(s_text)
-                                }
+                        var c_data = pref.getDaySchedule(year, month, count - 1).calendarItemList
 
-                                // 개수가 3개이상이면
-                                var num = 2 // 3개 이외 개수
-                                overSchedule.text = "+"+num.toString()
-                                overSchedule.textSize = 8f
-                                overSchedule.visibility = VISIBLE
+                        if(!check){
+                            //isScheduled.visibility = VISIBLE
+                            scheduleList.orientation = LinearLayout.HORIZONTAL
+                            for((idx, item) in c_data.withIndex()) {
+                                var haveSchedule = View(this.context)
+                                var param = LinearLayout.LayoutParams(20, 20)
+                                param.setMargins(3,0,3,0)
+                                haveSchedule.layoutParams = param
+                                val shape = GradientDrawable()
+                                shape.setColor(Color.parseColor(item.color))
+                                shape.shape = GradientDrawable.OVAL
+                                shape.setStroke(0, Color.parseColor(item.color))
+                                haveSchedule.background = shape
+                                scheduleList.addView(haveSchedule)
+                                if(idx > 3){
+                                    // 개수가 5개이상이면
+                                    break
+                                }
+                            }
+                        }else{
+                            scheduleList.orientation = LinearLayout.VERTICAL
+//                            Log.d("c_data_size", c_data.size.toString())
+                            for((idx, item) in c_data.withIndex()){
+                                var s_text = TextView(this.context)
+                                s_text.text = item.content
+                                s_text.setTextColor(ContextCompat.getColor(context, R.color.dark_green))
+                                s_text.textSize = 8f
+                                s_text.ellipsize =TextUtils.TruncateAt.MARQUEE
+                                s_text.isSelected = true
+                                s_text.isSingleLine = true
+                                var param = LinearLayout.LayoutParams(MATCH_PARENT, WRAP_CONTENT)
+                                param.setMargins(8,0,8,8)
+                                s_text.layoutParams = param
+                                val shape = GradientDrawable()
+//                                    shape.setColor(ContextCompat.getColor(context, R.color.light_green))
+//                                Log.d("ITEM_INFO", item.toString())
+                                shape.setColor(Color.parseColor(item.color))
+                                shape.shape = GradientDrawable.RECTANGLE
+                                shape.cornerRadius = 10.0f
+                                s_text.background = shape
+                                scheduleList.addView(s_text)
+//                                Log.d("c_data", idx.toString())
+                                if(idx > 1){
+
+                                    // 개수가 3개이상이면
+                                    var num = c_data.size - 3 // 3개 이외 개수
+                                    overSchedule.text = "+"+num.toString()
+                                    overSchedule.textSize = 8f
+                                    overSchedule.visibility = VISIBLE
+                                    break
+                                }
                             }
                         }
 
                         if(year == today.get(Calendar.YEAR) && month == (today.get(Calendar.MONTH) + 1) && count-1 == today.get(Calendar.DATE)){
                             isToday.visibility = VISIBLE
-                            listener.onClick(today.get(Calendar.MONTH) + 1, today.get(Calendar.YEAR), today.get(Calendar.DATE), week[today.get(Calendar.DAY_OF_WEEK) - 1], child,check)
+                            listener.onClick(today.get(Calendar.MONTH) + 1, today.get(Calendar.YEAR), today.get(Calendar.DATE), week[today.get(Calendar.DAY_OF_WEEK) - 1], child, check)
                         }
 
                         if(j == 0){
@@ -256,11 +263,13 @@ class CalendarAdapter(
         var title: TextView
         var title2: TextView
         var calendar: GridLayout
+
         //var schedule_list:LinearLayout
 
         init{
             title = itemView.findViewById(R.id.title)
             calendar = itemView.findViewById(R.id.calendar_grid)
+
             title2 = itemView.findViewById(R.id.title2)
             //schedule_list = itemView.findViewById(R.id.schedule_list)
         }

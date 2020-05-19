@@ -21,7 +21,6 @@ android:animateLayoutChanges="true"
         android:id="@+id/calendar_frame"
         android:orientation="horizontal"
         android:animateLayoutChanges="true"
-
         >
         <androidx.viewpager2.widget.ViewPager2
             android:layout_width="match_parent"
@@ -76,6 +75,14 @@ android:animateLayoutChanges="true"
                 android:layout_gravity="top"
                 android:layout_margin="3dp"
                 />
+            <TextView
+                android:gravity="center_vertical"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="추가"
+                android:id="@+id/add_date_schedule"
+                />
+
             <LinearLayout
                 android:layout_width="35dp"
                 android:layout_height="35dp"
@@ -86,13 +93,24 @@ android:animateLayoutChanges="true"
                 android:visibility="invisible">
                 <ImageView
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="9dp"
                     android:background="@drawable/trash2"
-                    android:backgroundTint="@color/colorPrimary"/>
+                    android:backgroundTint="@color/colorPrimary" />
             </LinearLayout>
         </LinearLayout>
+
         <TextView
             android:id="@+id/schedule_content"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="3dp"
+            android:layout_marginTop="5dp"
+            android:scrollbars="vertical"
+            android:textColor="@color/table_text_color"
+            android:textSize="12sp"
+            android:visibility="gone" />
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/schedule_recycler_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginStart="3dp"

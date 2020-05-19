@@ -32,7 +32,13 @@ class NotificationReceiver():BroadcastReceiver() {
         var y= hasSchedule.get(Calendar.YEAR)
         var m= hasSchedule.get(Calendar.MONTH) + 1
         var d = hasSchedule.get(Calendar.DATE)
-        var str = pref.getDaySchedule(y, m, d)
+        var c_data =  pref.getDaySchedule(y, m, d)
+
+
+        var str = ""
+        for(i in c_data!!.calendarItemList){
+            str += (i.content + " ")
+        }
 
 
         var noti_intent = Intent(context, MainActivity::class.java)
