@@ -10,7 +10,34 @@
     >
     <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
         android:id="@+id/table"
         />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:layout_marginHorizontal="15dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="10dp">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="오늘의 일정"
+            android:textStyle="bold"
+            android:layout_marginEnd="12dp"
+            android:textSize="12sp"
+            android:textColor="@color/dark_grey"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="12sp"
+            android:text="일정내용입니다일정내용입니다ffafaeffew댜러;ㅐㅓ재럳쟈ㅐ러다ㅣ러ㅣㄷ저랴ㅐㄷ절더리저대러ㅐ럳자러ㅐㄷㅈㄹㄷ랴더ㅐㄹ하이하이하이"
+            android:id="@+id/today_schedule"
+            android:ellipsize="marquee"
+            android:singleLine="true" />
+    </LinearLayout>
 </LinearLayout>

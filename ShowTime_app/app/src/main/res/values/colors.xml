@@ -27,4 +27,9 @@
     <color name="green_check">#4ea78b</color>
     <color name="light_green">#c7ecd3</color>
     <color name="dark_green">#3b6666</color>
+
+    <color name="table_blue">#d2ddea</color>
+    <color name="table_pink">#eedee4</color>
+    <color name="table_mint">#deeeeb</color>
+
 </resources>

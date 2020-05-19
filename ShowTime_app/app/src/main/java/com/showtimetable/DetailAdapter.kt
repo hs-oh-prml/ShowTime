@@ -1,6 +1,7 @@
 package com.showtimetable
 
 import android.app.Activity
+import android.app.AlertDialog
 import android.content.Context
 import android.view.*
 import android.view.View.VISIBLE
@@ -40,34 +41,26 @@ class DetailAdapter(
             holder.credit.text = "${data.credit}학점"
         }
         holder.delete.setOnClickListener {
-            var pref = PreferenceManager(context)
-            pref.myData.semester[tableNum].schedules.removeAt(position)
-            pref.savePref()
-            listener.refresh()
+            val builder = AlertDialog.Builder(this.context!!)
+            builder.setMessage("과목을 삭제하시겠습니까?").setTitle(holder.name.text.toString())
+            builder.setPositiveButton("예"){
+                    _,_->
+                var pref = PreferenceManager(context)
+                pref.myData.semester[tableNum].schedules.removeAt(position)
+                pref.savePref()
+                listener.refresh()
 
-            val str = holder.name.text.toString() + "이(가) 삭제되었습니다."
-            CustomToast(context, str).show()
+                val str = holder.name.text.toString() + "이(가) 삭제되었습니다."
+                CustomToast(context, str).show()
+            }
+            builder.setNegativeButton("아니오"){
+                    _,_->
+            }
+
+            val dlg = builder.create()
+            dlg.show()
+
         }
-//        holder.name.setOnTouchListener(object : View.OnTouchListener{
-//            override fun onTouch(view: View?, event: MotionEvent?): Boolean {
-//
-//                if(event?.action == MotionEvent.ACTION_DOWN){
-//                    println("down : "+event.x)
-//                    old_x = event.x
-//                }else if(event?.action == MotionEvent.ACTION_MOVE){
-//                    new_x = event.x
-//                    println("up : "+event.x)
-//                    if(old_x > new_x){
-//                        holder.delete.visibility = VISIBLE
-//                        new_x = 0f
-//                        old_x = 0f
-//                    }
-//                }
-//
-//                return true
-//            }
-//
-//        })
     }
 
 

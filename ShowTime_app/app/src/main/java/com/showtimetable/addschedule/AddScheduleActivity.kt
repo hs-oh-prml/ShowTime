@@ -12,8 +12,7 @@ import android.util.Log
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
-import android.view.View.GONE
-import android.view.View.VISIBLE
+import android.view.View.*
 import android.view.ViewGroup
 import android.view.ViewGroup.LayoutParams.WRAP_CONTENT
 import android.widget.*
@@ -56,6 +55,7 @@ class AddScheduleActivity : AppCompatActivity(){
     }
     fun init(){
         pref = PreferenceManager(this)
+        timeTable.setBackgroundResource(pref.getTableBorder())
         var intent = getIntent()
         tableNum = intent.getIntExtra("tableNum", 0)
         setSemesterTitle(tableNum)
@@ -165,7 +165,7 @@ class AddScheduleActivity : AppCompatActivity(){
         for(i in 1..22){
             for(j in 1..weekList.size){
                 var cell = getChild(i, j)
-                cell.setBackgroundResource(R.color.white)
+                cell.setBackgroundResource(pref.getTableBackgroundColor())
             }
         }
 
@@ -224,6 +224,7 @@ class AddScheduleActivity : AppCompatActivity(){
     }
     fun initView(weekList: List<String>){
         //inae
+        //today_schedule.visibility = INVISIBLE
         var table_params = LinearLayout.LayoutParams(
             WRAP_CONTENT,
             ViewGroup.LayoutParams.MATCH_PARENT
@@ -258,7 +259,7 @@ class AddScheduleActivity : AppCompatActivity(){
                 if(i == 0 && j == 0){
 
                     child = TextView(this)
-                    child.setTextColor(ContextCompat.getColor(this, R.color.white))
+                    child.setTextColor(ContextCompat.getColor(this,pref.getTableFontColor()))
                     child.textSize = 10f
 
                 } else if(i == 0 && j != 0){ // 월화수목금
@@ -300,7 +301,7 @@ class AddScheduleActivity : AppCompatActivity(){
                 } else {
                     params.setMargins(1,0,1,1)
                 }
-                child.setBackgroundResource(R.color.white)
+                child.setBackgroundResource(pref.getTableBackgroundColor())
                 child.layoutParams = params
 
                 if(i != 0 && j != 0){
@@ -314,7 +315,7 @@ class AddScheduleActivity : AppCompatActivity(){
                             CustomToast(this,str).show()
                         }
                         else {
-                            it.setBackgroundColor(ContextCompat.getColor(this, R.color.white))
+                            it.setBackgroundColor(ContextCompat.getColor(this, pref.getTableBackgroundColor()))
                             statusMap[i][j] = -1
                         }
                     }

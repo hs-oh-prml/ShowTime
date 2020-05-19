@@ -109,22 +109,7 @@ class SettingActivity : AppCompatActivity(),
     }
 
     fun init(){
-        val currentTheme: RadioButton
-        when(pref.getTheme()){
-            R.array.theme1->{
-                currentTheme = findViewById(R.id.theme1)
-            }
-            R.array.theme2->{
-                currentTheme = findViewById(R.id.theme2)
-            }
-            R.array.theme3->{
-                currentTheme = findViewById(R.id.theme3)
-            }
-            else ->{
-                currentTheme = findViewById(R.id.theme1)
-            }
-        }
-        currentTheme.isChecked = true
+
         push_switch.isChecked = pref.getAlarmFlag() == "true"
 
         d_day_alarm.minValue = 0
@@ -190,40 +175,37 @@ class SettingActivity : AppCompatActivity(),
 
         //테마변경
         setColorTheme.setOnClickListener {
-            if(theme_detail.visibility == GONE){
-                theme_detail.visibility = VISIBLE
-            }else{
-                theme_detail.visibility = GONE
-            }
+            val intent = Intent(this, ThemeActivity::class.java)
+            startActivity(intent)
         }
         //테마선택시
-        theme_group.setOnCheckedChangeListener { radioGroup, i ->
-
-            val is_no_AD = pref.getNoADFlag()
-            if(!is_no_AD){
-                mInterstitialAd.show()
-            } else {
-                Log.d("TAG", "The interstitial wasn't loaded yet.")
-            }
-
-            when(i){
-                R.id.theme1->{
-                    pref.setTheme(R.array.theme1)
-                    val str = "테마가 ["+theme1.text.toString()+"] 으로 변경되었습니다."
-                    CustomToast(this, str).show()
-                }
-                R.id.theme2->{
-                    pref.setTheme(R.array.theme2)
-                    val str = "테마가 ["+theme2.text.toString()+"] 으로 변경되었습니다."
-                    CustomToast(this, str).show()
-                }
-                else->{
-                    pref.setTheme(R.array.theme3)
-                    val str = "테마가 ["+theme3.text.toString()+"] 으로 변경되었습니다."
-                    CustomToast(this, str).show()
-                }
-            }
-        }
+//        theme_group.setOnCheckedChangeListener { radioGroup, i ->
+//
+//            val is_no_AD = pref.getNoADFlag()
+//            if(!is_no_AD){
+//                mInterstitialAd.show()
+//            } else {
+//                Log.d("TAG", "The interstitial wasn't loaded yet.")
+//            }
+//
+//            when(i){
+//                R.id.theme1->{
+//                    pref.setTheme(R.array.theme1)
+//                    val str = "테마가 ["+theme1.text.toString()+"] 으로 변경되었습니다."
+//                    CustomToast(this, str).show()
+//                }
+//                R.id.theme2->{
+//                    pref.setTheme(R.array.theme2)
+//                    val str = "테마가 ["+theme2.text.toString()+"] 으로 변경되었습니다."
+//                    CustomToast(this, str).show()
+//                }
+//                else->{
+//                    pref.setTheme(R.array.theme3)
+//                    val str = "테마가 ["+theme3.text.toString()+"] 으로 변경되었습니다."
+//                    CustomToast(this, str).show()
+//                }
+//            }
+//        }
 
         license.setOnClickListener {
             val builder = android.app.AlertDialog.Builder(this)
@@ -254,7 +236,7 @@ class SettingActivity : AppCompatActivity(),
             }
         }
 
-        makeColor()
+//        makeColor()
     }
 
     override fun finish() {
@@ -262,31 +244,5 @@ class SettingActivity : AppCompatActivity(),
         overridePendingTransition(R.anim.fade_in,R.anim.fade_out)
     }
 
-    fun makeColor(){
-        val layout1 = findViewById<LinearLayout>(R.id.theme_layout1)
-        val layout2 = findViewById<LinearLayout>(R.id.theme_layout2)
-        val layout3 = findViewById<LinearLayout>(R.id.theme_layout3)
 
-        val t1 = this.resources.getStringArray(R.array.theme1)
-        for(i in 0..t1.size-1){
-            val view = layout1.getChildAt(i)
-            val color = t1[i]
-            view.setBackgroundColor(Color.parseColor(color))
-        }
-
-        val t2 = this.resources.getStringArray(R.array.theme2)
-        for(i in 0..t2.size-1){
-            val view = layout2.getChildAt(i)
-            val color = t2[i]
-            view.setBackgroundColor(Color.parseColor(color))
-        }
-
-        val t3 = this.resources.getStringArray(R.array.theme3)
-        for(i in 0..t3.size-1){
-            val view = layout3.getChildAt(i)
-            val color = t3[i]
-            view.setBackgroundColor(Color.parseColor(color))
-        }
-
-    }
 }

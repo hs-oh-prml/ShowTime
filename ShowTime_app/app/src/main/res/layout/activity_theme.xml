@@ -6,26 +6,43 @@
     android:layout_height="match_parent"
     android:background="@color/white"
     android:padding="10dp"
+    android:orientation="vertical"
     tools:context=".setting.ThemeActivity">
-    <LinearLayout
+    <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:gravity="center"
+        android:textSize="15sp"
+        android:textStyle="bold"
+        android:text="테마 변경"
+        android:textColor="@color/black"
+        android:paddingTop="10dp"
+        android:paddingBottom="20dp"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:orientation="vertical"
-        android:id="@+id/theme_detail">
+        android:id="@+id/theme_detail"
+        >
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/list_border"
-            android:layout_marginBottom="10dp"
-            android:padding="5dp"
+            android:layout_marginBottom="20dp"
+            android:padding="10dp"
             android:orientation="vertical">
+
             <TextView
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:gravity="center"
+                android:padding="5dp"
+                android:layout_marginBottom="5dp"
                 android:text="시간표 색상"
-                android:textSize="12sp"
                 android:textColor="@color/dark_grey"
-                android:padding="5dp"/>
+                android:textSize="12sp"
+                android:textStyle="bold" />
+
             <RadioGroup
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -35,9 +52,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Cherry Blossom"
+                    android:text="Blossom"
                     android:id="@+id/theme1"
-                    android:textSize="10sp"
+                    android:textSize="12sp"
                     android:textColor="@color/dark_grey"
                     android:button="@drawable/radio_button_check"
                     android:paddingStart="10dp"/>
@@ -45,9 +62,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Blue Ocean"
+                    android:text="Ocean"
                     android:id="@+id/theme2"
-                    android:textSize="10sp"
+                    android:textSize="12sp"
                     android:textColor="@color/dark_grey"
                     android:button="@drawable/radio_button_check"
                     android:paddingStart="10dp"/>
@@ -55,9 +72,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Cotton Candy"
+                    android:text="Candy"
                     android:id="@+id/theme3"
-                    android:textSize="10sp"
+                    android:textSize="12sp"
                     android:button="@drawable/radio_button_check"
                     android:textColor="@color/dark_grey"
                     android:paddingStart="10dp"/>
@@ -190,95 +207,126 @@
                 </LinearLayout>
             </LinearLayout>
         </LinearLayout>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
             android:background="@drawable/list_border"
-            android:layout_marginBottom="10dp"
-            android:padding="5dp"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:padding="10dp">
+
             <TextView
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
+                android:gravity="center"
                 android:layout_height="wrap_content"
+                android:padding="5dp"
+                android:layout_marginBottom="5dp"
                 android:text="배경 색상"
-                android:textSize="12sp"
                 android:textColor="@color/dark_grey"
-                android:padding="5dp"/>
+                android:textSize="12sp"
+                android:textStyle="bold"/>
+
             <RadioGroup
+                android:id="@+id/background_group"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/background_group"
                 android:orientation="horizontal">
                 <RadioButton
+                    android:id="@+id/background0"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Pink"
+                    android:button="@drawable/radio_button_check"
+                    android:paddingStart="10dp"
+                    android:text="White"
+                    android:textColor="@color/dark_grey"
+                    android:textSize="12sp" />
+                <RadioButton
                     android:id="@+id/background1"
-                    android:textSize="10sp"
-                    android:textColor="@color/dark_grey"
-                    android:paddingStart="10dp"
-                    android:button="@drawable/radio_button_check"/>
-                <RadioButton
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Blue"
+                    android:button="@drawable/radio_button_check"
+                    android:paddingStart="10dp"
+                    android:text="Pink"
+                    android:textColor="@color/dark_grey"
+                    android:textSize="12sp" />
+
+                <RadioButton
                     android:id="@+id/background2"
-                    android:textSize="10sp"
-                    android:textColor="@color/dark_grey"
-                    android:paddingStart="10dp"
-                    android:button="@drawable/radio_button_check"/>
-                <RadioButton
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Mint"
-                    android:id="@+id/background3"
-                    android:textSize="10sp"
-                    android:textColor="@color/dark_grey"
+                    android:button="@drawable/radio_button_check"
                     android:paddingStart="10dp"
-                    android:button="@drawable/radio_button_check"/>
+                    android:text="Blue"
+                    android:textColor="@color/dark_grey"
+                    android:textSize="12sp" />
+
+                <RadioButton
+                    android:id="@+id/background3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:button="@drawable/radio_button_check"
+                    android:paddingStart="10dp"
+                    android:text="Mint"
+                    android:textColor="@color/dark_grey"
+                    android:textSize="12sp" />
             </RadioGroup>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
                 <View
                     android:layout_width="0dp"
-                    android:layout_weight="1"
-                    android:layout_margin="10dp"
                     android:layout_height="30dp"
-                    android:background="@color/light_pink"/>
+                    android:layout_margin="10dp"
+                    android:layout_weight="1"
+                    android:background="@color/white" />
                 <View
                     android:layout_width="0dp"
-                    android:layout_weight="1"
-                    android:layout_margin="10dp"
                     android:layout_height="30dp"
-                    android:background="@color/light_blue"/>
+                    android:layout_margin="10dp"
+                    android:layout_weight="1"
+                    android:background="@color/light_pink" />
+
                 <View
                     android:layout_width="0dp"
-                    android:layout_weight="1"
-                    android:layout_margin="10dp"
                     android:layout_height="30dp"
-                    android:background="@color/mint"/>
+                    android:layout_margin="10dp"
+                    android:layout_weight="1"
+                    android:background="@color/light_blue" />
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="30dp"
+                    android:layout_margin="10dp"
+                    android:layout_weight="1"
+                    android:background="@color/mint" />
 
             </LinearLayout>
         </LinearLayout>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/list_border"
             android:layout_marginBottom="10dp"
-            android:padding="5dp"
+            android:padding="10dp"
             android:orientation="vertical">
             <TextView
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
+                android:gravity="center"
                 android:layout_height="wrap_content"
                 android:text="글자 색상"
                 android:textSize="12sp"
                 android:textColor="@color/dark_grey"
-                android:padding="5dp"/>
+                android:padding="5dp"
+                android:layout_marginBottom="10dp"
+                android:textStyle="bold"/>
             <RadioGroup
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -290,7 +338,7 @@
                     android:layout_weight="1"
                     android:text="Black"
                     android:id="@+id/fontcolor1"
-                    android:textSize="10sp"
+                    android:textSize="12sp"
                     android:textColor="@color/black"
                     android:paddingStart="10dp"
                     android:button="@drawable/radio_button_check"/>
@@ -300,7 +348,7 @@
                     android:layout_weight="1"
                     android:text="Dark Gray"
                     android:id="@+id/fontcolor2"
-                    android:textSize="10sp"
+                    android:textSize="12sp"
                     android:textColor="@color/dark_grey"
                     android:paddingStart="10dp"
                     android:button="@drawable/radio_button_check"/>
@@ -310,7 +358,7 @@
                     android:layout_weight="1"
                     android:text="Dark Blue"
                     android:id="@+id/fontcolor3"
-                    android:textSize="10sp"
+                    android:textSize="12sp"
                     android:textColor="@color/colorPrimary"
                     android:paddingStart="10dp"
                     android:button="@drawable/radio_button_check"/>
@@ -320,13 +368,39 @@
                     android:layout_weight="1"
                     android:text="Dark Pink"
                     android:id="@+id/fontcolor4"
-                    android:textSize="10sp"
+                    android:textSize="12sp"
                     android:textColor="@color/dark_pink"
                     android:paddingStart="10dp"
                     android:button="@drawable/radio_button_check"/>
             </RadioGroup>
         </LinearLayout>
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:layout_marginTop="10dp">
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:id="@+id/cancelThemeBtn"
+                android:text="취소"
+                android:layout_marginEnd="30dp"
+                android:background="@drawable/ripple_effect_btn"
+                android:textColor="@color/white"
+                android:textSize="12sp"
+                />
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:id="@+id/changeThemeBtn"
+                android:text="테마 변경"
+                android:background="@drawable/ripple_effect_btn"
+                android:textColor="@color/white"
+                android:textSize="12sp"
+                />
+        </LinearLayout>
 
     </LinearLayout>
 </LinearLayout>
