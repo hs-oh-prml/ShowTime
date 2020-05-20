@@ -22,11 +22,11 @@ android:animateLayoutChanges="true"
         android:orientation="horizontal"
         android:animateLayoutChanges="true"
         >
+
         <androidx.viewpager2.widget.ViewPager2
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
             android:id="@+id/calendarView"
-            />
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
@@ -79,8 +79,11 @@ android:animateLayoutChanges="true"
                 android:gravity="center_vertical"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:text="추가"
+                android:paddingHorizontal="12dp"
                 android:id="@+id/add_date_schedule"
+                android:text="추가"
+                android:textColor="@color/white"
+                android:background="@drawable/ripple_effect_btn"
                 />
 
             <LinearLayout
@@ -90,7 +93,7 @@ android:animateLayoutChanges="true"
                 android:layout_marginEnd="10dp"
                 android:id="@+id/schedule_delete_btn"
                 android:padding="8dp"
-                android:visibility="invisible">
+                android:visibility="gone">
                 <ImageView
                     android:layout_width="match_parent"
                     android:layout_height="9dp"

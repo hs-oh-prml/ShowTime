@@ -10,8 +10,10 @@ import android.util.Log
 import android.view.*
 import android.view.View.*
 import android.view.inputmethod.InputMethodManager
+import android.widget.GridLayout
 import android.widget.TextView
 import androidx.core.content.ContextCompat
+import androidx.core.view.get
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -43,7 +45,10 @@ class DashboardFragment : Fragment() {
     lateinit var mCenter:PointF
     var  mRadius:Float = 0f
     var mMaxDist:Float = 0f
-    var mLastClickTime = 0L
+
+//    var mLastClickTime = 0L
+
+    lateinit var adapter: CalendarAdapter
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -70,52 +75,58 @@ class DashboardFragment : Fragment() {
         val listener = object: CalendarAdapter.calendarListener{
             override fun onClick(month:Int, year:Int, clickDate:Int, weekDay:String, v:View, check:Boolean) {
 //                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-                if(calendar_bottom.visibility == GONE){
-                    changeModeBar.performClick()
-//                    this.onClick(m, y, clickDate, weekDay, v, check)
-                } else {
-                    if(!check){
-                        val date:String = v.findViewById<TextView>(R.id.date).text.toString()
-                        y = year
-                        m = month
-                        d = date.toInt()
-                        isSelected = true
+                if(!check){
+                    val date:String = v.findViewById<TextView>(R.id.date).text.toString()
+                    y = year
+                    m = month
+                    d = date.toInt()
+                    isSelected = true
 
-                        if(clickDate != -1){
-                            val dateStr = "${d}. ${weekDay}"
-                            selected_date.text = dateStr
+                    if(clickDate != -1){
+                        val dateStr = "${d}. ${weekDay}"
+                        selected_date.text = dateStr
 
-                            // c_data: 같은 날의 일정 리스트
-                            // CalendarData클래스의 CalendarItem 클래스 리스트
-                            // CalendarItem: String Color, String Content
-                            var c_data = pref.getDaySchedule(year, month, date.toInt()).calendarItemList
+                        // c_data: 같은 날의 일정 리스트
+                        // CalendarData클래스의 CalendarItem 클래스 리스트
+                        // CalendarItem: String Color, String Content
+                        var c_data = pref.getDaySchedule(year, month, date.toInt()).calendarItemList
 //                        schedule_edit_text.setText(null)
 //                        c_data = ArrayList<CalendarData.CalendarItem>()
 //                        if(c_data == null){
 //                        }
-                            var listener = object : ContentListAdapter.Listener{
-                                override fun onClick(pos: Int) {
+                        var listener = object : ContentListAdapter.Listener{
+                            override fun onClick(pos: Int) {
 //                                    TODO("Not yet implemented")
 //                                schedule_edit_text.setText(c_data[pos].content)
 //                                    schedule_delete_btn.visibility = VISIBLE
-                                }
+
                             }
-                            var adapter = ContentListAdapter(requireContext(), c_data, listener)
-                            var layoutManager = LinearLayoutManager(requireContext(), RecyclerView.VERTICAL, false)
-                            schedule_recycler_view.layoutManager = layoutManager
-                            schedule_recycler_view.adapter = adapter
+
+                            override fun refresh() {
+//                                TODO("Not yet implemented")
+                                init()
+                            }
                         }
+                        var adapter = ContentListAdapter(requireContext(), c_data, listener, y, m, d)
+                        var layoutManager = LinearLayoutManager(requireContext(), RecyclerView.VERTICAL, false)
+                        schedule_recycler_view.layoutManager = layoutManager
+                        schedule_recycler_view.adapter = adapter
                     }
                 }
-
+//                if(calendar_bottom.visibility == GONE){
+//                    changeModeBar.performClick()
+////                    this.onClick(m, y, clickDate, weekDay, v, check)
+//                }
             }
         }
 
-        var adapter = CalendarAdapter(requireContext(), today, listener, false)
+        adapter = CalendarAdapter(requireContext(), today, listener, false)
         //hi
         calendarView.adapter = adapter
         calendarView.setCurrentItem((Integer.MAX_VALUE) / 2, false)
-            //
+//        calendarView.layoutTransition.setAnimateParentHierarchy(false)
+
+        //
 //        prev.setOnClickListener {
 //            calendarView.setCurrentItem(calendarView.currentItem - 1, true)
 //        }
@@ -133,12 +144,18 @@ class DashboardFragment : Fragment() {
             write_schedule.visibility = GONE
             selected_date.visibility = VISIBLE
             schedule_recycler_view.visibility = VISIBLE
+            add_date_schedule.visibility = VISIBLE
+
 
 //hi
             var idx = calendarView.currentItem
-            var adapter = CalendarAdapter(requireContext(), today, listener,false)
-            calendarView.adapter = adapter
-            calendarView.setCurrentItem(idx ,false)
+//            var adapter = CalendarAdapter(requireContext(), today, listener,false)
+//            calendarView.adapter = adapter
+//            calendarView.setCurrentItem(idx ,false)
+
+//            var c = adapter.createCalendar(idx, true)
+//            calendarView.get(idx) = c
+
             if(schedule_edit_text.text != null && schedule_edit_text.text.toString() != ""){
                 var color = ""
                 var c_str = schedule_edit_text.text.toString()
@@ -162,8 +179,14 @@ class DashboardFragment : Fragment() {
 
 //                        schedule_delete_btn.visibility = VISIBLE
                     }
+
+                    override fun refresh() {
+//                        TODO("Not yet implemented")
+//                        onStart()
+                        init()
+                    }
                 }
-                var listAdapter = ContentListAdapter(requireContext(), c_data, list_listener)
+                var listAdapter = ContentListAdapter(requireContext(), c_data, list_listener, y, m, d)
                 var layoutManager = LinearLayoutManager(requireContext(), RecyclerView.VERTICAL, false)
                 schedule_recycler_view.layoutManager = layoutManager
                 schedule_recycler_view.adapter = listAdapter
@@ -189,15 +212,23 @@ class DashboardFragment : Fragment() {
                 changeModeBar.visibility = GONE
                 write_schedule.visibility = VISIBLE
                 schedule_recycler_view.visibility = GONE
+                add_date_schedule.visibility = GONE
                 var c_data = ArrayList<CalendarData.CalendarItem>()
                 var list_listener = object : ContentListAdapter.Listener{
                     override fun onClick(pos: Int) {
 //                                    TODO("Not yet implemented")
 //                        schedule_edit_text.setText(c_data[pos].content)
 //                        schedule_delete_btn.visibility = VISIBLE
+
+                    }
+
+                    override fun refresh() {
+//                        TODO("Not yet implemented")
+//                        onStart()
+                        init()
                     }
                 }
-                var listAdapter = ContentListAdapter(requireContext(), c_data, list_listener)
+                var listAdapter = ContentListAdapter(requireContext(), c_data, list_listener, y ,m, d)
                 var layoutManager = LinearLayoutManager(requireContext(), RecyclerView.VERTICAL, false)
                 schedule_recycler_view.layoutManager = layoutManager
                 schedule_recycler_view.adapter = listAdapter
@@ -208,10 +239,11 @@ class DashboardFragment : Fragment() {
         schedule_delete_btn.setOnClickListener {
             pref.deleteDaySchedule(y, m, d.toInt(), 0)
             schedule_delete_btn.visibility = INVISIBLE
-            var idx = calendarView.currentItem
-            var adapter = CalendarAdapter(requireContext(), today, listener,false)
-            calendarView.adapter = adapter
-            calendarView.setCurrentItem(idx ,false)
+
+//            var idx = calendarView.currentItem
+//            var adapter = CalendarAdapter(requireContext(), today, listener,false)
+//            calendarView.adapter = adapter
+//            calendarView.setCurrentItem(idx ,false)
 
             schedule_content.text = ""
             schedule_edit_text.text.clear()
@@ -224,6 +256,7 @@ class DashboardFragment : Fragment() {
         }
 
         close_write.setOnClickListener {
+            imm.hideSoftInputFromWindow(schedule_edit_text.windowToken, 0)
             calendar_frame.visibility = VISIBLE
             schedule_commit_btn.visibility = GONE
 //            schedule_content.visibility = VISIBLE
@@ -232,18 +265,40 @@ class DashboardFragment : Fragment() {
             write_schedule.visibility = GONE
             selected_date.visibility = VISIBLE
             schedule_recycler_view.visibility = VISIBLE
+            add_date_schedule.visibility = VISIBLE
+
+            var c_data = pref.getDaySchedule(y, m, d).calendarItemList
+            var listener = object : ContentListAdapter.Listener{
+                override fun onClick(pos: Int) {
+//                                    TODO("Not yet implemented")
+//                                schedule_edit_text.setText(c_data[pos].content)
+//                                    schedule_delete_btn.visibility = VISIBLE
+
+                }
+
+                override fun refresh() {
+//                                TODO("Not yet implemented")
+                    init()
+                }
+            }
+            var adapter = ContentListAdapter(requireContext(), c_data, listener, y, m, d)
+            var layoutManager = LinearLayoutManager(requireContext(), RecyclerView.VERTICAL, false)
+            schedule_recycler_view.layoutManager = layoutManager
+            schedule_recycler_view.adapter = adapter
         }
 
         changeModeBar.setOnClickListener {
-            if (SystemClock.elapsedRealtime() - mLastClickTime < 100){
-                return@setOnClickListener;
-            }
-            mLastClickTime = SystemClock.elapsedRealtime()
+//            if (SystemClock.elapsedRealtime() - mLastClickTime < 100){
+//                return@setOnClickListener;
+//            }
+//            mLastClickTime = SystemClock.elapsedRealtime()
+
+//            listener.onClick(m, y, d)
 
             if(calendar_bottom.visibility == GONE){
                 //내용세부화
                 var idx = calendarView.currentItem
-                var adapter = CalendarAdapter(requireContext(), today, listener,false)
+                adapter = CalendarAdapter(requireContext(), today, listener,false)
                 calendarView.adapter = adapter
                 calendarView.setCurrentItem(idx ,false)
 
@@ -255,7 +310,7 @@ class DashboardFragment : Fragment() {
             else{
                 //동그라미만
                 var idx = calendarView.currentItem
-                var adapter = CalendarAdapter(requireContext(), today, listener,true)
+                adapter = CalendarAdapter(requireContext(), today, listener,true)
                 calendarView.adapter = adapter
                 calendarView.setCurrentItem(idx ,false)
                 arrow_image.setBackground(ContextCompat.getDrawable(context!!, R.drawable.up_arrow))

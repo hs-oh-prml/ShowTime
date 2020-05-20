@@ -3,8 +3,12 @@ package com.showtimetable.setting
 import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.widget.LinearLayout
 import android.widget.RadioButton
+import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.InterstitialAd
+import com.google.android.gms.ads.MobileAds
 import com.showtimetable.CustomToast
 import com.showtimetable.R
 import com.showtimetable.sharedpreference.PreferenceManager
@@ -13,6 +17,7 @@ import kotlinx.android.synthetic.main.activity_theme.*
 class ThemeActivity : AppCompatActivity() {
 
     lateinit var pref: PreferenceManager
+    lateinit var mInterstitialAd: InterstitialAd
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -22,6 +27,19 @@ class ThemeActivity : AppCompatActivity() {
 
     fun init(){
         pref = PreferenceManager(this)
+// Init AD
+        val is_no_AD = pref.getNoADFlag()
+
+        if(!is_no_AD){
+            MobileAds.initialize(this) {}
+            mInterstitialAd = InterstitialAd(this)
+            mInterstitialAd.adUnitId = resources.getString(R.string.test_whole_ad_unit_id)
+            mInterstitialAd.loadAd(AdRequest.Builder().build())
+            mInterstitialAd.show()
+
+        } else {
+            Log.d("TAG", "The interstitial wasn't loaded yet.")
+        }
 
         //시간표 무지개색상추가
         makeColor()
