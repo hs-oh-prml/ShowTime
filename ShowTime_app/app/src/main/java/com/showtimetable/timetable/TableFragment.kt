@@ -45,6 +45,7 @@ import com.showtimetable.data.Schedule
 import com.showtimetable.sharedpreference.PreferenceManager
 import kotlinx.android.synthetic.main.activity_add_schedule.*
 import kotlinx.android.synthetic.main.calendar_item.*
+import kotlinx.android.synthetic.main.fragment_dashboard.view.*
 import kotlinx.android.synthetic.main.fragment_home.*
 import kotlinx.android.synthetic.main.fragment_table.*
 import kotlinx.android.synthetic.main.fragment_table.timeTable
@@ -68,6 +69,11 @@ class TableFragment(var c: Context, var semesterNum:Int) : Fragment() {
     lateinit var pref:PreferenceManager
     var dwidth=0
     var dheight=0
+    lateinit var today: Calendar
+    var year = 0
+    var month = 0
+    var date = 0
+    var day_of_week = 0
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -79,6 +85,11 @@ class TableFragment(var c: Context, var semesterNum:Int) : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
 
         super.onActivityCreated(savedInstanceState)
+        today = Calendar.getInstance()
+        year = today.get(Calendar.YEAR)
+        month = today.get(Calendar.MONTH) + 1
+        date = today.get(Calendar.DATE)
+        day_of_week = today.get(Calendar.DAY_OF_WEEK)
         pref =  PreferenceManager(c)
 //        setTodaySchedule()
         timeTable.setBackgroundResource(pref.getTableBorder())
@@ -96,6 +107,7 @@ class TableFragment(var c: Context, var semesterNum:Int) : Fragment() {
         //inae
 //        color = this.resources.getStringArray(theme)
         color = this.resources.getStringArray(R.array.theme1)
+
 
         when(semester.dayMode){
             5->weekList = listOf("월", "화", "수", "목", "금")
@@ -264,6 +276,7 @@ class TableFragment(var c: Context, var semesterNum:Int) : Fragment() {
     }
 
     fun initView(weekList: List<String>){
+
         //inae
 
         var table_params = LinearLayout.LayoutParams(
@@ -310,7 +323,13 @@ class TableFragment(var c: Context, var semesterNum:Int) : Fragment() {
                     child = TextView(context)
                     child.gravity = Gravity.CENTER
                     child.textSize = 9f
-                    child.text = weekList[j - 1]
+                    var diff = day_of_week - 1 - j
+                    var str = "${date - diff}\n${weekList[j - 1]}"
+                    if(diff == 0){
+                        child.setTextColor(ContextCompat.getColor(context!!, R.color.colorPrimary))
+                    }
+                    child.text = str
+
                 } else if(i != 0 && j == 0){ //시간 9~7
 
                     child = TextView(context)

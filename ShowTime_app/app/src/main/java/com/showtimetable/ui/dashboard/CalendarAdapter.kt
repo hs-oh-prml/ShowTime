@@ -186,9 +186,11 @@ class CalendarAdapter(
 
                                     // 개수가 3개이상이면
                                     var num = c_data.size - 3 // 3개 이외 개수
-                                    overSchedule.text = "+"+num.toString()
-                                    overSchedule.textSize = 8f
-                                    overSchedule.visibility = VISIBLE
+                                    if(num != 0){
+                                        overSchedule.text = "+"+num.toString()
+                                        overSchedule.textSize = 8f
+                                        overSchedule.visibility = VISIBLE
+                                    }
                                     break
                                 }
                             }

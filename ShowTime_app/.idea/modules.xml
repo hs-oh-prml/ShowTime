@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/ShowTime.iml" filepath="$PROJECT_DIR$/ShowTime.iml" group="ShowTime" />
+      <module fileurl="file://$PROJECT_DIR$/app/ShowTime_app-app.iml" filepath="$PROJECT_DIR$/app/ShowTime_app-app.iml" group="ShowTime/app" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" group="ShowTime/app" />
     </modules>
   </component>

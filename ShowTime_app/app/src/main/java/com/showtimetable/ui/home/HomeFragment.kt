@@ -21,6 +21,7 @@ import java.io.File
 import java.io.FileNotFoundException
 import java.io.FileOutputStream
 import java.io.IOException
+import java.util.*
 
 class HomeFragment : Fragment()    {
     lateinit var pref:PreferenceManager
@@ -44,6 +45,17 @@ class HomeFragment : Fragment()    {
     fun init(){
 
         childFragmentManager.beginTransaction().replace(R.id.table, TableFragment(context!!, pref.table)).commit()
+        val today = Calendar.getInstance()
+        var year = today.get(Calendar.YEAR)
+        var month = today.get(Calendar.MONTH) + 1
+        var date = today.get(Calendar.DATE)
+        val data = pref.getDaySchedule(year, month, date)
+
+        var schedule_str = ""
+        for(i in data.calendarItemList){
+            schedule_str += (i.content + " ")
+        }
+        today_schedule.text = schedule_str
     }
 
     override fun onResume() {

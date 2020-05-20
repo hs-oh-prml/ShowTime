@@ -35,7 +35,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="12sp"
-            android:text="일정내용입니다일정내용입니다ffafaeffew댜러;ㅐㅓ재럳쟈ㅐ러다ㅣ러ㅣㄷ저랴ㅐㄷ절더리저대러ㅐ럳자러ㅐㄷㅈㄹㄷ랴더ㅐㄹ하이하이하이"
+            android:text=""
             android:id="@+id/today_schedule"
             android:ellipsize="marquee"
             android:singleLine="true" />
