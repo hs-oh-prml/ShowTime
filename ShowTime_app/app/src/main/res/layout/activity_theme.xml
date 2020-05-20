@@ -283,6 +283,7 @@
                 <View
                     android:layout_width="0dp"
                     android:layout_height="30dp"
+                    android:id="@+id/background_layout1"
                     android:layout_margin="10dp"
                     android:layout_weight="1"
                     android:background="@color/white" />
@@ -290,6 +291,7 @@
                     android:layout_width="0dp"
                     android:layout_height="30dp"
                     android:layout_margin="10dp"
+                    android:id="@+id/background_layout2"
                     android:layout_weight="1"
                     android:background="@color/light_pink" />
 
@@ -297,6 +299,7 @@
                     android:layout_width="0dp"
                     android:layout_height="30dp"
                     android:layout_margin="10dp"
+                    android:id="@+id/background_layout3"
                     android:layout_weight="1"
                     android:background="@color/light_blue" />
 
@@ -305,6 +308,7 @@
                     android:layout_height="30dp"
                     android:layout_margin="10dp"
                     android:layout_weight="1"
+                    android:id="@+id/background_layout4"
                     android:background="@color/mint" />
 
             </LinearLayout>

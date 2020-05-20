@@ -1,10 +1,14 @@
 package com.showtimetable.setting
 
+import android.content.DialogInterface
 import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import android.widget.LinearLayout
 import android.widget.RadioButton
+import androidx.core.view.children
+import androidx.core.view.forEach
 import com.showtimetable.CustomToast
 import com.showtimetable.R
 import com.showtimetable.sharedpreference.PreferenceManager
@@ -23,6 +27,54 @@ class ThemeActivity : AppCompatActivity() {
     fun init(){
         pref = PreferenceManager(this)
 
+        //기존 색상으로 체크 초기화
+        initCheck()
+
+        addClickListener()
+
+
+        //취소 버튼 클릭
+        cancelThemeBtn.setOnClickListener {
+            this.finish()
+        }
+
+        //테마변경 버튼 클릭
+        changeThemeBtn.setOnClickListener {
+            saveTheme()
+            this.finish()
+            CustomToast(this, "테마가 변경되었습니다.").show()
+        }
+    }
+
+    private fun addClickListener() {
+        //시간표색상
+        theme_layout1.setOnClickListener {
+            theme1.isChecked = true
+        }
+        theme_layout2.setOnClickListener {
+            theme2.isChecked = true
+        }
+        theme_layout3.setOnClickListener {
+            theme3.isChecked = true
+        }
+
+        //배경색상
+        background_layout1.setOnClickListener {
+            background0.isChecked = true
+        }
+        background_layout2.setOnClickListener {
+            background1.isChecked = true
+        }
+        background_layout3.setOnClickListener {
+            background2.isChecked = true
+        }
+        background_layout4.setOnClickListener {
+            background3.isChecked = true
+        }
+
+    }
+
+    private fun initCheck() {
         //시간표 무지개색상추가
         makeColor()
 
@@ -86,18 +138,6 @@ class ThemeActivity : AppCompatActivity() {
             }
         }
         currentFontColor.isChecked = true
-
-        //취소 버튼 클릭
-        cancelThemeBtn.setOnClickListener {
-            this.finish()
-        }
-
-        //테마변경 버튼 클릭
-        changeThemeBtn.setOnClickListener {
-            saveTheme()
-            this.finish()
-            CustomToast(this, "테마가 변경되었습니다.").show()
-        }
     }
 
     private fun saveTheme() {
@@ -105,6 +145,7 @@ class ThemeActivity : AppCompatActivity() {
         var background=-1//배경
         var font=-1//글씨
         var border=-1//테두리
+        var dayColor=-1//요일색상
 
         theme = when(theme_group.checkedRadioButtonId){
             R.id.theme1->R.array.theme1
@@ -116,22 +157,27 @@ class ThemeActivity : AppCompatActivity() {
         background = when(background_group.checkedRadioButtonId){
             R.id.background0->{
                 border = R.color.table_border
+                dayColor = R.color.table_text_color
                 R.color.white
             }
             R.id.background1->{
                 border = R.color.table_pink
+                dayColor = R.color.day_pink
                 R.color.light_pink
             }
             R.id.background2->{
                 border = R.color.table_blue
+                dayColor = R.color.colorPrimary
                 R.color.light_blue
             }
             R.id.background3->{
                 border = R.color.table_mint
+                dayColor = R.color.day_mint
                 R.color.mint
             }
             else->{
                 border = R.color.table_border
+                dayColor = R.color.table_text_color
                 R.color.white
             }
         }
@@ -148,6 +194,7 @@ class ThemeActivity : AppCompatActivity() {
         pref.setTableBackgroundColor(background)
         pref.setTableFontColor(font)
         pref.setTableBorder(border)
+        pref.setDayColor(dayColor)
     }
 
     fun makeColor(){
