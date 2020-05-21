@@ -161,9 +161,13 @@ class PreferenceManager(c: Context) {
         edit.putInt("tableBorderColor",color).commit()
     }
 
+    fun setDayColor(color:Int){
+        edit.putInt("DayColor",color).commit()
+    }
 
-
-
+    fun getDayColor():Int{
+        return pref.getInt("DayColor",R.color.table_text_color)
+    }
 
     fun Bitmap2Str(bitmap: Bitmap): String {
         var baos = ByteArrayOutputStream()

@@ -31,5 +31,6 @@
     <color name="table_blue">#d2ddea</color>
     <color name="table_pink">#eedee4</color>
     <color name="table_mint">#deeeeb</color>
-
+    <color name="day_pink">#885555</color>
+    <color name="day_mint">#55887c</color>
 </resources>

@@ -30,6 +30,7 @@ import com.showtimetable.timetable.TableFragment
 import kotlinx.android.synthetic.main.activity_add_schedule.*
 import kotlinx.android.synthetic.main.activity_add_schedule.timeTable
 import kotlinx.android.synthetic.main.fragment_table.*
+import kotlinx.android.synthetic.main.table_item.view.*
 
 class AddScheduleActivity : AppCompatActivity(){
 
@@ -287,6 +288,8 @@ class AddScheduleActivity : AppCompatActivity(){
                 } else { // 가운데 칸들
                     var inflater = LayoutInflater.from(this)
                     child = inflater.inflate(R.layout.table_item, timeTable, false)
+                    child.cell_name.setTextColor(ContextCompat.getColor(this,pref.getTableFontColor()))
+                    child.cell_place.setTextColor(ContextCompat.getColor(this,pref.getTableFontColor()))
 //                    params.width = (dwidth * (1/5) * 0.7).toInt()
 //                    params.height = (dheight * (1/24) * 0.8).toInt()
                     params.width = (dwidth / 21) * 4

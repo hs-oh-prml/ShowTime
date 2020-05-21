@@ -324,10 +324,11 @@ class TableFragment(var c: Context, var semesterNum:Int) : Fragment() {
                     child.gravity = Gravity.CENTER
                     child.textSize = 9f
                     var diff = day_of_week - 1 - j
-                    var str = "${date - diff}\n${weekList[j - 1]}"
+                    var str = "${date - diff}  ${weekList[j - 1]}"
                     if(diff == 0){
-                        child.setTextColor(ContextCompat.getColor(context!!, R.color.colorPrimary))
+                        child.setTextColor(ContextCompat.getColor(context!!, pref.getDayColor()))
                     }
+                    child.setTextColor(ContextCompat.getColor(context!!, pref.getDayColor()))
                     child.text = str
 
                 } else if(i != 0 && j == 0){ //시간 9~7
@@ -335,6 +336,7 @@ class TableFragment(var c: Context, var semesterNum:Int) : Fragment() {
                     child = TextView(context)
                     child.gravity = Gravity.TOP or Gravity.RIGHT
                     child.textSize = 9f
+                    child.setTextColor(ContextCompat.getColor(context!!, pref.getDayColor()))
                     if(i % 2 == 1){
                         if((9 + i / 2) > 12){
                             child .text = ((9 + i / 2) % 12).toString()
@@ -360,6 +362,8 @@ class TableFragment(var c: Context, var semesterNum:Int) : Fragment() {
                 } else {
                     params.setMargins(1,0,1,1)
                 }
+                if(i == 0 && j != 0)
+                    child.setPadding(0,5,0,5)
                 child.setBackgroundResource(pref.getTableBackgroundColor())
                 child.layoutParams = params
                 timeTable.addView(child)

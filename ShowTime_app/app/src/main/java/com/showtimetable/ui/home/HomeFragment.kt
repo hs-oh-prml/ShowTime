@@ -55,7 +55,10 @@ class HomeFragment : Fragment()    {
         for(i in data.calendarItemList){
             schedule_str += (i.content + " ")
         }
-        today_schedule.text = schedule_str
+        if(schedule_str.isEmpty())
+            today_schedule.text = "일정이 없어요."
+        else
+            today_schedule.text = schedule_str
     }
 
     override fun onResume() {
