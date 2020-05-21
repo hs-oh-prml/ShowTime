@@ -34,7 +34,10 @@ class CalendarAdapter(
     var context: Context,
     var today: Calendar,
     var listener:calendarListener,
-    var check:Boolean
+    var check:Boolean,
+    var cYear:Int,
+    var cMonth:Int,
+    var cDate: Int
 ): RecyclerView.Adapter<CalendarAdapter.ViewHolder>() {
 
     interface calendarListener{
@@ -103,13 +106,9 @@ class CalendarAdapter(
                     }
                     var params = GridLayout.LayoutParams()
                     params.columnSpec = GridLayout.spec(GridLayout.UNDEFINED, GridLayout.FILL, 1f)
-
                     textView.layoutParams = params
-
                     holder.calendar.addView(textView)
-
                 } else {
-
                     var inflater = LayoutInflater.from(context)
                     var child = inflater.inflate(R.layout.calendar_item, holder.calendar, false)
 
@@ -124,7 +123,6 @@ class CalendarAdapter(
                     //var isScheduled = child.findViewById<View>(R.id.isScheduled)
                     var date = child.findViewById<TextView>(R.id.date)
                     var scheduleList = child.findViewById<LinearLayout>(R.id.schedule_list)
-
                     var overSchedule = child.findViewById<TextView>(R.id.over_schedule)
 
                     date.textSize = 10f
@@ -138,8 +136,8 @@ class CalendarAdapter(
                             date.text = "${count}"
                             count++
                         }
-                        var c_data = pref.getDaySchedule(year, month, count - 1).calendarItemList
 
+                        var c_data = pref.getDaySchedule(year, month, count - 1).calendarItemList
                         if(!check){
                             //isScheduled.visibility = VISIBLE
                             scheduleList.orientation = LinearLayout.HORIZONTAL
@@ -195,12 +193,10 @@ class CalendarAdapter(
                                 }
                             }
                         }
-
                         if(year == today.get(Calendar.YEAR) && month == (today.get(Calendar.MONTH) + 1) && count-1 == today.get(Calendar.DATE)){
                             isToday.visibility = VISIBLE
                             listener.onClick(today.get(Calendar.MONTH) + 1, today.get(Calendar.YEAR), today.get(Calendar.DATE), week[today.get(Calendar.DAY_OF_WEEK) - 1], child, check)
                         }
-
                         if(j == 0){
                             date.setTextColor((ContextCompat.getColor(context, R.color.red)))
                         }else if(j == 6){
@@ -209,56 +205,64 @@ class CalendarAdapter(
                             date.setTextColor((ContextCompat.getColor(context, R.color.black)))
                         }
                     }
-
-
-
                     holder.calendar.addView(child)
                 }
-
-                for((index, i) in holder.calendar.children.withIndex()){
-                    if(index < 7){
-                        continue
-                    }
-                    i.setOnClickListener {
-                        var i_date = i.findViewById<TextView>(R.id.date)
-                        if(i_date.text.toString() != ""){
-                            if(clickDate == index){
-                                i.date.setBackgroundColor(ContextCompat.getColor(context, R.color.white))
-                                if(index % 7 == 0){
-                                    i_date.setTextColor((ContextCompat.getColor(context, R.color.red)))
-                                }else if(index % 7 == 6){
-                                    i_date.setTextColor((ContextCompat.getColor(context, R.color.blue)))
-                                } else {
-                                    i_date.setTextColor((ContextCompat.getColor(context, R.color.black)))
-                                }
-                                clickDate = -1
-                            } else {
-                                if(clickDate != -1){
-                                    var prev = holder.calendar.getChildAt(clickDate)
-                                    var prev_date = prev.findViewById<TextView>(R.id.date)
-                                    prev.date.setBackgroundColor(ContextCompat.getColor(context, R.color.white))
-                                    if(clickDate % 7 == 0){
-                                        prev_date.setTextColor((ContextCompat.getColor(context, R.color.red)))
-                                    }else if(clickDate % 7 == 6){
-                                        prev_date.setTextColor((ContextCompat.getColor(context, R.color.blue)))
-                                    } else {
-                                        prev_date.setTextColor((ContextCompat.getColor(context, R.color.black)))
-                                    }
-                                }
-                                val shape: GradientDrawable = GradientDrawable()
-                                shape.setColor(ContextCompat.getColor(context, R.color.table_border))
-                                shape.shape = GradientDrawable.OVAL
-                                shape.setStroke(2,ContextCompat.getColor(context, R.color.table_border))
-                                i_date.background = shape
-                                clickDate = index
-                            }
-                            listener.onClick(month, year, clickDate, week[index % 7], it,false)
-                        }
-                    }
-                }
-
             }
         }
+        for((index, i) in holder.calendar.children.withIndex()){
+            if(index < 7){
+                continue
+            }
+            i.setOnClickListener {
+//                Log.d("CLICK_DATE", clickDate.toString())
+                var i_date = i.findViewById<TextView>(R.id.date)
+                if(i_date.text.toString() != ""){
+                    if(clickDate == index){
+                        i.date.setBackgroundColor(ContextCompat.getColor(context, R.color.white))
+                        if(index % 7 == 0){
+                            i_date.setTextColor((ContextCompat.getColor(context, R.color.red)))
+                        }else if(index % 7 == 6){
+                            i_date.setTextColor((ContextCompat.getColor(context, R.color.blue)))
+                        } else {
+                            i_date.setTextColor((ContextCompat.getColor(context, R.color.black)))
+                        }
+                        clickDate = -1
+                    } else {
+                        if(clickDate != -1){
+                            var prev = holder.calendar.getChildAt(clickDate)
+                            var prev_date = prev.findViewById<TextView>(R.id.date)
+                            prev.date.setBackgroundColor(ContextCompat.getColor(context, R.color.white))
+//                            prev.date.setBackgroundColor(Color.parseColor("#FFFFFF"))
+
+                            if(clickDate % 7 == 0){
+                                prev_date.setTextColor((ContextCompat.getColor(context, R.color.red)))
+                            }else if(clickDate % 7 == 6){
+                                prev_date.setTextColor((ContextCompat.getColor(context, R.color.blue)))
+                            } else {
+                                prev_date.setTextColor((ContextCompat.getColor(context, R.color.black)))
+                            }
+                        }
+                        val shape: GradientDrawable = GradientDrawable()
+                        shape.setColor(ContextCompat.getColor(context, R.color.table_border))
+                        shape.shape = GradientDrawable.OVAL
+                        shape.setStroke(2,ContextCompat.getColor(context, R.color.table_border))
+                        i_date.background = shape
+                        clickDate = index
+                    }
+                    listener.onClick(month, year, clickDate, week[index % 7], it,false)
+                }
+            }
+            val i_date = i.findViewById<TextView>(R.id.date)
+            if(i_date.text.toString() == cDate.toString()
+                && year == cYear
+                && month == cMonth
+            ){
+                Log.d("CLICK_DATE", i_date.text.toString())
+                Log.d("CLICK_DATE", cDate.toString())
+                i.callOnClick()
+            }
+        }
+
     }
 
     inner class ViewHolder(itemView: View): RecyclerView.ViewHolder(itemView){

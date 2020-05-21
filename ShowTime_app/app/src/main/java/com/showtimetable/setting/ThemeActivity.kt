@@ -1,17 +1,11 @@
 package com.showtimetable.setting
 
-import android.content.DialogInterface
 import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.View
 import android.widget.LinearLayout
 import android.widget.RadioButton
-import androidx.core.view.children
-import androidx.core.view.forEach
 import android.util.Log
-import android.widget.LinearLayout
-import android.widget.RadioButton
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.InterstitialAd
 import com.google.android.gms.ads.MobileAds

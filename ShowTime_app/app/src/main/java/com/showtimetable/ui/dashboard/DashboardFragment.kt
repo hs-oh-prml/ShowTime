@@ -72,6 +72,9 @@ class DashboardFragment : Fragment() {
         pref = PreferenceManager(requireContext())
 
         val today = Calendar.getInstance()
+        y = today.get(Calendar.YEAR)
+        m = today.get(Calendar.MONTH) + 1
+        d = today.get(Calendar.DATE)
         val listener = object: CalendarAdapter.calendarListener{
             override fun onClick(month:Int, year:Int, clickDate:Int, weekDay:String, v:View, check:Boolean) {
 //                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
@@ -120,7 +123,7 @@ class DashboardFragment : Fragment() {
             }
         }
 
-        adapter = CalendarAdapter(requireContext(), today, listener, false)
+        adapter = CalendarAdapter(requireContext(), today, listener, false, y, m, d)
         //hi
         calendarView.adapter = adapter
         calendarView.setCurrentItem((Integer.MAX_VALUE) / 2, false)
@@ -149,9 +152,9 @@ class DashboardFragment : Fragment() {
 
 //hi
             var idx = calendarView.currentItem
-//            var adapter = CalendarAdapter(requireContext(), today, listener,false)
-//            calendarView.adapter = adapter
-//            calendarView.setCurrentItem(idx ,false)
+            var adapter = CalendarAdapter(requireContext(), today, listener,false, y, m, d)
+            calendarView.adapter = adapter
+            calendarView.setCurrentItem(idx ,false)
 
 //            var c = adapter.createCalendar(idx, true)
 //            calendarView.get(idx) = c
@@ -298,26 +301,22 @@ class DashboardFragment : Fragment() {
             if(calendar_bottom.visibility == GONE){
                 //내용세부화
                 var idx = calendarView.currentItem
-                adapter = CalendarAdapter(requireContext(), today, listener,false)
+                adapter = CalendarAdapter(requireContext(), today, listener,false, y, m, d)
                 calendarView.adapter = adapter
                 calendarView.setCurrentItem(idx ,false)
-
                 arrow_image.setBackground(ContextCompat.getDrawable(context!!, R.drawable.down_arrow))
                 changeModeBar.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.light_blue))
                 calendar_bottom.visibility = VISIBLE
-                Log.d("CLICK ON", calendar_bottom.visibility.toString())
             }
             else{
                 //동그라미만
                 var idx = calendarView.currentItem
-                adapter = CalendarAdapter(requireContext(), today, listener,true)
+                adapter = CalendarAdapter(requireContext(), today, listener,true, y, m, d)
                 calendarView.adapter = adapter
                 calendarView.setCurrentItem(idx ,false)
                 arrow_image.setBackground(ContextCompat.getDrawable(context!!, R.drawable.up_arrow))
                 changeModeBar.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.white))
                 calendar_bottom.visibility = GONE
-                Log.d("CLICK OFF", calendar_bottom.visibility.toString())
-
             }
 
         }
