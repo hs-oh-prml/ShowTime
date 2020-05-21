@@ -2,12 +2,25 @@
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:padding="10dp"
+    >
     <TextView
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_weight="1"
         android:text="일정내용"
         android:id="@+id/content"
-        android:background="@drawable/list_border_small"
-        android:backgroundTint="@color/background_gray"/>
+        />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingHorizontal="12dp"
+        android:paddingVertical="8dp"
+        android:text="삭제"
+        android:id="@+id/delete"
+        android:textColor="@color/white"
+        android:background="@drawable/ripple_effect_btn"
+        />
 </LinearLayout>

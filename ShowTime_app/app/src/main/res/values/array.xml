@@ -1,5 +1,10 @@
 <resources>
+    <string-array name="product">
+        <item>remove_ad</item>
+        <item>gift_coffee</item>
+        <item>gift_chicken</item>
 
+    </string-array>
     <string-array name="theme1">
         <item>#e7b4a8</item>
         <item>#edc5a6</item>

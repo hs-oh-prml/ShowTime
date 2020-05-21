@@ -47,7 +47,7 @@ class CalendarAdapter(
 
     val CURRENT = Int.MAX_VALUE / 2
 
-//    var week = listOf("SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT")
+    //    var week = listOf("SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT")
     val week = listOf("일", "월", "화", "수", "목", "금", "토")
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CalendarAdapter.ViewHolder {

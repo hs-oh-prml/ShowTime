@@ -5,15 +5,10 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View.GONE
 import android.view.View.VISIBLE
-import android.widget.LinearLayout
 import android.widget.NumberPicker
-import android.widget.RadioButton
 import androidx.appcompat.app.AppCompatActivity
 import com.anjlab.android.iab.v3.BillingProcessor
 import com.anjlab.android.iab.v3.TransactionDetails
-import com.google.android.gms.ads.AdRequest
-import com.google.android.gms.ads.InterstitialAd
-import com.google.android.gms.ads.MobileAds
 import com.showtimetable.CustomToast
 import com.showtimetable.R
 import com.showtimetable.sharedpreference.PreferenceManager
@@ -29,32 +24,38 @@ class SettingActivity : AppCompatActivity(),
 {
     override fun onBillingInitialized() {
 //        TODO("Not yet implemented")
-        pref.setNoADFlag(bp.isPurchased("remove_ad"))
+        pref.setNoADFlag((bp.isPurchased(products[0])||bp.isPurchased(products[1])||bp.isPurchased(products[2])))
     }
 
     override fun onPurchaseHistoryRestored() {
 //        TODO("Not yet implemented")
-        pref.setNoADFlag(bp.isPurchased("remove_ad"))
+        pref.setNoADFlag((bp.isPurchased(products[0])||bp.isPurchased(products[1])||bp.isPurchased(products[2])))
     }
 
     override fun onProductPurchased(productId: String, details: TransactionDetails?) {
 //        TODO("Not yet implemented")
-        if(productId == "remove_ad"){
+        if(productId == products[0]){
+            pref.setNoADFlag(true)
+        } else if (productId == products[0]){
+            pref.setNoADFlag(true)
+        } else {
             pref.setNoADFlag(true)
         }
     }
 
     override fun onBillingError(errorCode: Int, error: Throwable?) {
 //        TODO("Not yet implemented")
+        Log.d("BILLING", error.toString())
     }
 
     lateinit var bp: BillingProcessor
-    lateinit var mInterstitialAd:InterstitialAd
     lateinit var pref: PreferenceManager
     val BIAS = 5
 
     var licenseStr = ""
     var GOOGLEPLAYLICENSEKEY = ""
+
+    lateinit var products: Array<String>
 
     override fun onDestroy() {
         if(bp != null){
@@ -72,16 +73,9 @@ class SettingActivity : AppCompatActivity(),
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_setting)
-        pref = PreferenceManager(this)
+        products = resources.getStringArray(R.array.product)
 
-        // Init AD
-        val is_no_AD = pref.getNoADFlag()
-        if(!is_no_AD){
-            MobileAds.initialize(this) {}
-            mInterstitialAd = InterstitialAd(this)
-            mInterstitialAd.adUnitId = resources.getString(R.string.test_whole_ad_unit_id)
-            mInterstitialAd.loadAd(AdRequest.Builder().build())
-        }
+        pref = PreferenceManager(this)
 
         //  init billing
         GOOGLEPLAYLICENSEKEY = resources.getString(R.string.google_play_license_key)
@@ -226,16 +220,35 @@ class SettingActivity : AppCompatActivity(),
             var intent = Intent(this, TutorialActivity::class.java)
             startActivity(intent)
         }
+
         remove_ad.setOnClickListener {
             if (pref.getNoADFlag()) {
                 val str = "이미 구입하였습니다."
                 CustomToast(this, str).show()
 
             } else {
-                bp.purchase(this, "remove_ad");
+                bp.purchase(this, products[0]);
             }
         }
+        gift_coffee.setOnClickListener {
+            if (pref.getNoADFlag()) {
+                val str = "개발자에게 커피를 사주었습니다♡"
+                CustomToast(this, str).show()
+            } else {
+                bp.purchase(this, products[1]);
+            }
 
+        }
+        gift_chicken.setOnClickListener {
+            if (pref.getNoADFlag()) {
+                val str = "개발자에게 치킨를 사주었습니다♡"
+                CustomToast(this, str).show()
+
+            } else {
+                bp.purchase(this, products[2]);
+            }
+
+        }
 //        makeColor()
     }
 
