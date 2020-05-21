@@ -17,7 +17,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:paddingHorizontal="12dp"
-        android:paddingVertical="8dp"
+        android:paddingVertical="6dp"
         android:text="삭제"
         android:id="@+id/delete"
         android:textColor="@color/white"

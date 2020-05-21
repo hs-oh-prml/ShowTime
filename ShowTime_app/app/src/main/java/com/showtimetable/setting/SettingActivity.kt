@@ -9,6 +9,10 @@ import android.widget.NumberPicker
 import androidx.appcompat.app.AppCompatActivity
 import com.anjlab.android.iab.v3.BillingProcessor
 import com.anjlab.android.iab.v3.TransactionDetails
+import com.google.android.gms.ads.AdListener
+import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.InterstitialAd
+import com.google.android.gms.ads.MobileAds
 import com.showtimetable.CustomToast
 import com.showtimetable.R
 import com.showtimetable.sharedpreference.PreferenceManager
@@ -17,6 +21,7 @@ import com.showtimetable.widget.WidgetSettingActivity
 import kotlinx.android.synthetic.main.activity_setting.*
 import java.io.ByteArrayOutputStream
 import java.io.IOException
+import kotlin.random.Random
 
 
 class SettingActivity : AppCompatActivity(),
@@ -56,6 +61,7 @@ class SettingActivity : AppCompatActivity(),
     var GOOGLEPLAYLICENSEKEY = ""
 
     lateinit var products: Array<String>
+    lateinit var appreciate: Array<String>
 
     override fun onDestroy() {
         if(bp != null){
@@ -73,8 +79,9 @@ class SettingActivity : AppCompatActivity(),
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_setting)
-        products = resources.getStringArray(R.array.product)
 
+        products = resources.getStringArray(R.array.product)
+        appreciate = resources.getStringArray(R.array.appreciate)
         pref = PreferenceManager(this)
 
         //  init billing
@@ -232,7 +239,9 @@ class SettingActivity : AppCompatActivity(),
         }
         gift_coffee.setOnClickListener {
             if (pref.getNoADFlag()) {
-                val str = "개발자에게 커피를 사주었습니다♡"
+
+                val idx = (appreciate.indices).random()
+                val str = appreciate[idx]
                 CustomToast(this, str).show()
             } else {
                 bp.purchase(this, products[1]);
@@ -241,7 +250,8 @@ class SettingActivity : AppCompatActivity(),
         }
         gift_chicken.setOnClickListener {
             if (pref.getNoADFlag()) {
-                val str = "개발자에게 치킨를 사주었습니다♡"
+                val idx = (appreciate.indices).random()
+                val str = appreciate[idx]
                 CustomToast(this, str).show()
 
             } else {

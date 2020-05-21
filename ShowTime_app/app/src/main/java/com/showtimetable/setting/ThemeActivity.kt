@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.widget.LinearLayout
 import android.widget.RadioButton
 import android.util.Log
+import com.google.android.gms.ads.AdListener
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.InterstitialAd
 import com.google.android.gms.ads.MobileAds
@@ -29,14 +30,17 @@ class ThemeActivity : AppCompatActivity() {
         pref = PreferenceManager(this)
 // Init AD
         val is_no_AD = pref.getNoADFlag()
-
         if(!is_no_AD){
             MobileAds.initialize(this) {}
             mInterstitialAd = InterstitialAd(this)
             mInterstitialAd.adUnitId = resources.getString(R.string.test_whole_ad_unit_id)
             mInterstitialAd.loadAd(AdRequest.Builder().build())
-            mInterstitialAd.show()
-
+            mInterstitialAd.adListener = object: AdListener(){
+                override fun onAdLoaded() {
+                    super.onAdLoaded()
+                    mInterstitialAd.show()
+                }
+            }
         } else {
             Log.d("TAG", "The interstitial wasn't loaded yet.")
         }
