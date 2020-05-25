@@ -4,23 +4,37 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
-    android:padding="10dp"
+    android:paddingVertical="10dp"
+    android:gravity="center"
     >
+    <View
+        android:layout_width="8dp"
+        android:layout_height="8dp"
+        android:id="@+id/circle"
+        android:layout_marginEnd="8dp"/>
+    <View
+        android:layout_width="15dp"
+        android:layout_height="1dp"
+        android:background="@color/middle_gray"
+        android:layout_marginEnd="8dp"/>
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:text="일정내용"
+        android:layout_marginEnd="20dp"
+        android:textSize="12sp"
+        android:textColor="@color/dark_middle_gray"
         android:id="@+id/content"
         />
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:paddingHorizontal="12dp"
-        android:paddingVertical="6dp"
-        android:text="삭제"
-        android:id="@+id/delete"
-        android:textColor="@color/white"
-        android:background="@drawable/ripple_effect_btn"
-        />
+<!--    <TextView-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:paddingHorizontal="12dp"-->
+<!--        android:paddingVertical="6dp"-->
+<!--        android:text="삭제"-->
+<!--        android:id="@+id/delete"-->
+<!--        android:textColor="@color/white"-->
+<!--        android:background="@drawable/ripple_effect_btn"-->
+<!--        />-->
 </LinearLayout>

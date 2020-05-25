@@ -12,6 +12,7 @@ import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.graphics.Color
+import android.graphics.Typeface
 import android.graphics.drawable.Drawable
 import android.graphics.drawable.GradientDrawable
 import android.os.*
@@ -327,6 +328,7 @@ class TableFragment(var c: Context, var semesterNum:Int) : Fragment() {
                     var str = "${date - diff}  ${weekList[j - 1]}"
                     if(diff == 0){
                         child.setTextColor(ContextCompat.getColor(context!!, pref.getDayColor()))
+                        (child as TextView).setTypeface(null,Typeface.BOLD)
                     }
                     child.setTextColor(ContextCompat.getColor(context!!, pref.getDayColor()))
                     child.text = str

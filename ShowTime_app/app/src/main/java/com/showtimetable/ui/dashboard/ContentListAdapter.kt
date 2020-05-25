@@ -1,6 +1,9 @@
 package com.showtimetable.ui.dashboard
 
 import android.content.Context
+import android.content.res.ColorStateList
+import android.graphics.Color
+import android.graphics.drawable.GradientDrawable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -42,13 +45,36 @@ class ContentListAdapter(
         holder.setIsRecyclable(false)
         val data = itemList[position]
         holder.content.text = data.content
+        val shape = GradientDrawable()
+        shape.setColor(Color.parseColor(data.color))
+        shape.shape = GradientDrawable.OVAL
+        shape.setStroke(0, Color.parseColor(data.color))
+        holder.circle.background = shape
         holder.itemView.setOnClickListener {
             listener.onClick(position)
         }
-        holder.delete.setOnClickListener{
+//        holder.delete.setOnClickListener{
+//            val builder = AlertDialog.Builder(context)
+//            builder.setMessage("일정을 삭제하시겠습니까?").setTitle("일정 삭제")
+//            builder.setPositiveButton("예"){
+//                    _,_->
+//                var pref = PreferenceManager(context)
+//                pref.deleteDaySchedule(y, m, d, position)
+//                val str = "${m}월 ${d}일 일정이 삭제되었습니다."
+//                CustomToast(context, str).show()
+//                listener.refresh()
+//            }
+//            builder.setNegativeButton("아니오"){
+//                    _,_->
+//            }
+//
+//            val dlg = builder.create()
+//            dlg.show()
+//        }
+        holder.content.setOnClickListener{
             val builder = AlertDialog.Builder(context)
-            builder.setMessage("일정을 삭제하시겠습니까?").setTitle("일정 삭제")
-            builder.setPositiveButton("예"){
+            builder.setMessage(holder.content.text.toString()).setTitle("일정")
+            builder.setPositiveButton("일정 삭제"){
                     _,_->
                 var pref = PreferenceManager(context)
                 pref.deleteDaySchedule(y, m, d, position)
@@ -56,7 +82,7 @@ class ContentListAdapter(
                 CustomToast(context, str).show()
                 listener.refresh()
             }
-            builder.setNegativeButton("아니오"){
+            builder.setNegativeButton("닫기"){
                     _,_->
             }
 
@@ -67,12 +93,11 @@ class ContentListAdapter(
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         var content: TextView
-        var delete: TextView
+        var circle:View
 
         init {
             content = itemView.findViewById(R.id.content)
-            delete = itemView.findViewById(R.id.delete)
-
+            circle = itemView.findViewById(R.id.circle)
         }
 
     }
