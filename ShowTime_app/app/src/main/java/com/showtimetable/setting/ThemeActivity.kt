@@ -33,7 +33,7 @@ class ThemeActivity : AppCompatActivity() {
         if(!is_no_AD){
             MobileAds.initialize(this) {}
             mInterstitialAd = InterstitialAd(this)
-            mInterstitialAd.adUnitId = resources.getString(R.string.test_whole_ad_unit_id)
+            mInterstitialAd.adUnitId = resources.getString(R.string.whole_ad_unit_id)
             mInterstitialAd.loadAd(AdRequest.Builder().build())
             mInterstitialAd.adListener = object: AdListener(){
                 override fun onAdLoaded() {
