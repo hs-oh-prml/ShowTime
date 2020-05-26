@@ -13,6 +13,7 @@ class CustomToast(
 ) {
     var t_view:View
     var inflater:LayoutInflater
+    lateinit var toast:Toast
 
     init {
         inflater = LayoutInflater.from(context)
@@ -21,9 +22,13 @@ class CustomToast(
     }
 
     fun show(){
-        val toast = Toast(this.context)
+        toast = Toast(this.context)
         //toast.setGravity(Gravity.BOTTOM,0,15)
         toast.view = t_view
         toast.show()
+    }
+
+    fun cancel(){
+        toast.cancel()
     }
 }

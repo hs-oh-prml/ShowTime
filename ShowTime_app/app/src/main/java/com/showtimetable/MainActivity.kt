@@ -11,6 +11,7 @@ import android.util.Log
 import android.view.Gravity
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.FragmentTransaction
 import androidx.recyclerview.widget.ItemTouchHelper
@@ -257,9 +258,11 @@ class MainActivity : AppCompatActivity() {
                 backToast.show()
                 return;
             }else {
+                backToast.cancel()
                 finish()
             }
         }
     }
+
 }
 
