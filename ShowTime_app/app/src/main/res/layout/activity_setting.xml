@@ -354,6 +354,7 @@
         android:id="@+id/remove_ad"
         android:textSize="15sp"
         android:textColor="@color/dark_grey"
+        android:visibility="gone"
         />
     <View
         android:layout_width="match_parent"
@@ -366,7 +367,7 @@
         android:layout_height="50dp"
         android:gravity="center_vertical"
         android:paddingStart="10dp"
-        android:text="개발자 응원하기1(광고제거)"
+        android:text="개발자 응원하기1"
         android:id="@+id/gift_coffee"
         android:textSize="15sp"
         android:textColor="@color/dark_grey"
@@ -382,7 +383,7 @@
         android:layout_height="50dp"
         android:gravity="center_vertical"
         android:paddingStart="10dp"
-        android:text="개발자 응원하기2(광고제거)"
+        android:text="개발자 응원하기2"
         android:id="@+id/gift_chicken"
         android:textSize="15sp"
         android:textColor="@color/dark_grey"

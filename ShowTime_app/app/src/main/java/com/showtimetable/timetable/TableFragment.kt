@@ -1,23 +1,16 @@
 package com.showtimetable.timetable
 
-
 import android.Manifest
-import android.app.Activity
-import android.app.Dialog
 import android.content.ContentValues
 import android.content.Context
-import android.content.Context.VIBRATOR_SERVICE
-import android.content.SharedPreferences
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Typeface
-import android.graphics.drawable.Drawable
 import android.graphics.drawable.GradientDrawable
 import android.os.*
 import android.provider.MediaStore
-import android.text.TextUtils
 import android.util.DisplayMetrics
 import android.util.Log
 import android.view.*
@@ -25,39 +18,25 @@ import android.view.View.GONE
 import android.view.ViewGroup.LayoutParams.MATCH_PARENT
 import androidx.fragment.app.Fragment
 import android.view.ViewGroup.LayoutParams.WRAP_CONTENT
-import android.widget.FrameLayout
 import android.widget.GridLayout
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
-import androidx.cardview.widget.CardView
-import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import androidx.core.view.marginBottom
 import androidx.core.view.setMargins
-import androidx.core.view.setPadding
 import com.showtimetable.CustomToast
-import androidx.core.widget.TextViewCompat
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.MobileAds
 import com.showtimetable.R
 import com.showtimetable.data.MyData
 import com.showtimetable.data.Schedule
 import com.showtimetable.sharedpreference.PreferenceManager
-import kotlinx.android.synthetic.main.activity_add_schedule.*
-import kotlinx.android.synthetic.main.calendar_item.*
-import kotlinx.android.synthetic.main.fragment_dashboard.view.*
-import kotlinx.android.synthetic.main.fragment_home.*
 import kotlinx.android.synthetic.main.fragment_table.*
 import kotlinx.android.synthetic.main.fragment_table.timeTable
-import kotlinx.android.synthetic.main.table_item.view.*
-import org.w3c.dom.Text
 import java.io.File
 import java.io.FileOutputStream
-import java.lang.Exception
 import java.text.SimpleDateFormat
 import java.util.*
-import androidx.core.content.ContextCompat.getSystemService as getSystemService1
 
 /**
  * A simple [Fragment] subclass.
@@ -71,9 +50,6 @@ class TableFragment(var c: Context, var semesterNum:Int) : Fragment() {
     var dwidth=0
     var dheight=0
     lateinit var today: Calendar
-    var year = 0
-    var month = 0
-    var date = 0
     var day_of_week = 0
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -87,21 +63,21 @@ class TableFragment(var c: Context, var semesterNum:Int) : Fragment() {
 
         super.onActivityCreated(savedInstanceState)
         today = Calendar.getInstance()
-        year = today.get(Calendar.YEAR)
-        month = today.get(Calendar.MONTH) + 1
-        date = today.get(Calendar.DATE)
         day_of_week = today.get(Calendar.DAY_OF_WEEK)
         pref =  PreferenceManager(c)
 //        setTodaySchedule()
         timeTable.setBackgroundResource(pref.getTableBorder())
-        val is_no_AD = pref.getNoADFlag()
-        if(!is_no_AD){
-            MobileAds.initialize(context) {}
-            val adRequest = AdRequest.Builder().build()
-            adView.loadAd(adRequest)
-        } else {
-            adView.visibility = GONE
-        }
+
+//        val is_no_AD = pref.getNoADFlag()
+//        Log.d("ADFLAG", is_no_AD.toString())
+//        if(!is_no_AD){
+//            MobileAds.initialize(context) {}
+//            val adRequest = AdRequest.Builder().build()
+//            adView.loadAd(adRequest)
+//        } else {
+//            adView.visibility = GONE
+//            ads_frame.visibility = GONE
+//        }
 
         semester = pref.myData.semester[pref.table]
         var theme = pref.getTheme()
@@ -324,8 +300,13 @@ class TableFragment(var c: Context, var semesterNum:Int) : Fragment() {
                     child = TextView(context)
                     child.gravity = Gravity.CENTER
                     child.textSize = 9f
-                    var diff = day_of_week - 1 - j
-                    var str = "${date - diff}  ${weekList[j - 1]}"
+                    var diff = -(day_of_week - 1 - j)
+                    var temp_cal = Calendar.getInstance()
+//                    var temp_cal = today
+//                    temp_cal.set(2020, 4, 30)
+                    temp_cal.add(Calendar.DAY_OF_YEAR, diff)
+                    var temp_date = temp_cal.get(Calendar.DAY_OF_MONTH)
+                    var str = "${temp_date}  ${weekList[j - 1]}"
                     if(diff == 0){
                         child.setTextColor(ContextCompat.getColor(context!!, pref.getDayColor()))
                         (child as TextView).setTypeface(null,Typeface.BOLD)

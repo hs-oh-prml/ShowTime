@@ -33,18 +33,8 @@
         <item>개발자를 응원하셨습니다. 설마 이게 나오겠어?</item>
         <item>개발자를 응원하셨습니다. 사랑합니다 여러분</item>
     </string-array>
-    <string-array name="theme1">
-        <item>#e7b4a8</item>
-        <item>#edc5a6</item>
-        <item>#e1988e</item>
-        <item>#c97b6f</item>
-        <item>#dda9b4</item>
-        <item>#d08f91</item>
-        <item>#dea6a4</item>
-        <item>#e09b84</item>
-    </string-array>
 
-    <string-array name="theme2">
+    <string-array name="theme1">
         <item>#8799bd</item>
         <item>#7cbac3</item>
         <item>#7ea6c0</item>
@@ -53,6 +43,17 @@
         <item>#a5c3d3</item>
         <item>#9ca7bd</item>
         <item>#c5b0a8</item>
+    </string-array>
+
+    <string-array name="theme2">
+        <item>#e7b4a8</item>
+        <item>#edc5a6</item>
+        <item>#e1988e</item>
+        <item>#c97b6f</item>
+        <item>#dda9b4</item>
+        <item>#d08f91</item>
+        <item>#dea6a4</item>
+        <item>#e09b84</item>
     </string-array>
 
     <string-array name="theme3">

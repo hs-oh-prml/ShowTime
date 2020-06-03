@@ -31,16 +31,16 @@ class ThemeActivity : AppCompatActivity() {
 // Init AD
         val is_no_AD = pref.getNoADFlag()
         if(!is_no_AD){
-            MobileAds.initialize(this) {}
-            mInterstitialAd = InterstitialAd(this)
-            mInterstitialAd.adUnitId = resources.getString(R.string.whole_ad_unit_id)
-            mInterstitialAd.loadAd(AdRequest.Builder().build())
-            mInterstitialAd.adListener = object: AdListener(){
-                override fun onAdLoaded() {
-                    super.onAdLoaded()
-                    mInterstitialAd.show()
-                }
-            }
+//            MobileAds.initialize(this) {}
+//            mInterstitialAd = InterstitialAd(this)
+//            mInterstitialAd.adUnitId = resources.getString(R.string.whole_ad_unit_id)
+//            mInterstitialAd.loadAd(AdRequest.Builder().build())
+//            mInterstitialAd.adListener = object: AdListener(){
+//                override fun onAdLoaded() {
+//                    super.onAdLoaded()
+//                    mInterstitialAd.show()
+//                }
+//            }
         } else {
             Log.d("TAG", "The interstitial wasn't loaded yet.")
         }
@@ -138,6 +138,9 @@ class ThemeActivity : AppCompatActivity() {
         //기존 글씨 색상 체크
         val currentFontColor: RadioButton
         when(pref.getTableFontColor()){
+            R.color.white->{
+                currentFontColor = findViewById(R.id.fontcolor0)
+            }
             R.color.black->{
                 currentFontColor = findViewById(R.id.fontcolor1)
             }
@@ -148,8 +151,10 @@ class ThemeActivity : AppCompatActivity() {
                 currentFontColor = findViewById(R.id.fontcolor3)
             }
             R.color.dark_pink->{
-
                 currentFontColor = findViewById(R.id.fontcolor4)
+            }
+            R.color.light_green->{
+                currentFontColor = findViewById(R.id.fontcolor5)
             }
             else ->{
                 currentFontColor = findViewById(R.id.fontcolor1)
@@ -201,10 +206,12 @@ class ThemeActivity : AppCompatActivity() {
         }
 
         font = when(fontcolor_group.checkedRadioButtonId){
+            R.id.fontcolor0->R.color.white
             R.id.fontcolor1->R.color.black
             R.id.fontcolor2->R.color.dark_grey
             R.id.fontcolor3->R.color.colorPrimary
             R.id.fontcolor4->R.color.dark_pink
+            R.id.fontcolor5->R.color.light_green
             else->R.color.black
         }
 
