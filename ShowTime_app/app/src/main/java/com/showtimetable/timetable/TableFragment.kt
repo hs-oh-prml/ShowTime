@@ -68,16 +68,16 @@ class TableFragment(var c: Context, var semesterNum:Int) : Fragment() {
 //        setTodaySchedule()
         timeTable.setBackgroundResource(pref.getTableBorder())
 
-//        val is_no_AD = pref.getNoADFlag()
+        val is_no_AD = pref.getNoADFlag()
 //        Log.d("ADFLAG", is_no_AD.toString())
-//        if(!is_no_AD){
-//            MobileAds.initialize(context) {}
-//            val adRequest = AdRequest.Builder().build()
-//            adView.loadAd(adRequest)
-//        } else {
-//            adView.visibility = GONE
-//            ads_frame.visibility = GONE
-//        }
+        if(!is_no_AD){
+            MobileAds.initialize(context) {}
+            val adRequest = AdRequest.Builder().build()
+            adView.loadAd(adRequest)
+        } else {
+            adView.visibility = GONE
+            ads_frame.visibility = GONE
+        }
 
         semester = pref.myData.semester[pref.table]
         var theme = pref.getTheme()

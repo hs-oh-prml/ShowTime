@@ -18,7 +18,6 @@ import kotlinx.android.synthetic.main.activity_theme.*
 class ThemeActivity : AppCompatActivity() {
 
     lateinit var pref: PreferenceManager
-    lateinit var mInterstitialAd: InterstitialAd
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,22 +27,6 @@ class ThemeActivity : AppCompatActivity() {
 
     fun init(){
         pref = PreferenceManager(this)
-// Init AD
-        val is_no_AD = pref.getNoADFlag()
-        if(!is_no_AD){
-//            MobileAds.initialize(this) {}
-//            mInterstitialAd = InterstitialAd(this)
-//            mInterstitialAd.adUnitId = resources.getString(R.string.whole_ad_unit_id)
-//            mInterstitialAd.loadAd(AdRequest.Builder().build())
-//            mInterstitialAd.adListener = object: AdListener(){
-//                override fun onAdLoaded() {
-//                    super.onAdLoaded()
-//                    mInterstitialAd.show()
-//                }
-//            }
-        } else {
-            Log.d("TAG", "The interstitial wasn't loaded yet.")
-        }
 
         //기존 색상으로 체크 초기화
         initCheck()

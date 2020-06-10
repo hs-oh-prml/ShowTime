@@ -354,7 +354,6 @@
         android:id="@+id/remove_ad"
         android:textSize="15sp"
         android:textColor="@color/dark_grey"
-        android:visibility="gone"
         />
     <View
         android:layout_width="match_parent"

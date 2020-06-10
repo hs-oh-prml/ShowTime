@@ -17,6 +17,7 @@ import androidx.fragment.app.FragmentTransaction
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.gms.ads.AdListener
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.InterstitialAd
 import com.google.android.gms.ads.MobileAds
@@ -47,12 +48,30 @@ class MainActivity : AppCompatActivity() {
     val FINISH_TIME = 2000
     var backPressedTime = 0L
     lateinit var backToast:CustomToast
+    lateinit var mInterstitialAd: InterstitialAd
+
+    fun initAD(){
+        // Init AD
+        val is_no_AD = pref.getNoADFlag()
+        if(!is_no_AD){
+            MobileAds.initialize(this) {}
+            mInterstitialAd = InterstitialAd(this)
+            mInterstitialAd.adUnitId = resources.getString(R.string.whole_ad_unit_id)
+            mInterstitialAd.loadAd(AdRequest.Builder().build())
+            mInterstitialAd.adListener = object: AdListener(){
+                override fun onAdLoaded() {
+                    super.onAdLoaded()
+                    mInterstitialAd.show()
+                }
+            }
+        } else {
+            Log.d("TAG", "The interstitial wasn't loaded yet.")
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
-
 
         bottom_navigation.inflateMenu(R.menu.bottom_nav_menu)
         bottom_navigation.selectedItemId = R.id.navigation_dashboard
@@ -83,6 +102,7 @@ class MainActivity : AppCompatActivity() {
         permissionCheck()
 
         init()
+        initAD()
 
         if(pref.getAlarmFlag() == "true"){
             notificationInit()
