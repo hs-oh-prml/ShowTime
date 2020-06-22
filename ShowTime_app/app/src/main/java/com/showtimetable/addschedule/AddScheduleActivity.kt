@@ -31,6 +31,7 @@ import kotlinx.android.synthetic.main.activity_add_schedule.*
 import kotlinx.android.synthetic.main.activity_add_schedule.timeTable
 import kotlinx.android.synthetic.main.fragment_table.*
 import kotlinx.android.synthetic.main.table_item.view.*
+import java.lang.NumberFormatException
 
 class AddScheduleActivity : AppCompatActivity(){
 
@@ -109,8 +110,15 @@ class AddScheduleActivity : AppCompatActivity(){
             if(isLecture){
                 if(credit.text.isEmpty())
                     Ncredit = 3
-                else
-                    Ncredit = credit.text.toString().toInt()
+                else{
+                    try{
+                        Ncredit = credit.text.toString().toInt()
+                    } catch (e: NumberFormatException){
+                        val toast = CustomToast(this, "학점에 0 이상의 정수를 입력해주세요.")
+                        toast.show()
+                        return@setOnClickListener
+                    }
+                }
             } else{
                 Ncredit = 0
             }
