@@ -1,292 +1,272 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-xmlns:android="http://schemas.android.com/apk/res/android"
-xmlns:app="http://schemas.android.com/apk/res-auto"
-android:layout_width="match_parent"
-android:layout_height="match_parent"
-android:orientation="vertical"
-android:background="@color/white"
-android:layout_marginBottom="?attr/actionBarSize"
-android:animateLayoutChanges="true"
-    >
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginBottom="?attr/actionBarSize"
+    android:animateLayoutChanges="true"
+    android:background="@color/white"
+    android:orientation="vertical">
 
-<!--    <View-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="1dp"-->
-<!--        android:background="@color/light_blue"/>-->
     <LinearLayout
+        android:id="@+id/calendar_frame"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="1"
-        android:id="@+id/calendar_frame"
-        android:orientation="horizontal"
         android:animateLayoutChanges="true"
-        >
+        android:orientation="horizontal">
 
         <androidx.viewpager2.widget.ViewPager2
             android:id="@+id/calendarView"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
     </LinearLayout>
+
     <LinearLayout
+        android:id="@+id/changeModeBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/changeModeBar"
-        android:orientation="vertical"
-        android:gravity="center"
         android:background="@color/white"
+        android:gravity="center"
+        android:orientation="vertical"
         android:padding="5dp">
+
         <View
+            android:id="@+id/arrow_image"
             android:layout_width="25dp"
             android:layout_height="15dp"
-            android:id="@+id/arrow_image"
-            android:backgroundTint="@color/colorPrimary"
-            android:background="@drawable/down_arrow"/>
+            android:background="@drawable/down_arrow"
+            android:backgroundTint="@color/colorPrimary" />
     </LinearLayout>
+
     <LinearLayout
-    android:layout_weight="1"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:id="@+id/calendar_bottom"
-    android:background="@color/light_blue"
-    android:animateLayoutChanges="true"
-    >
-        <LinearLayout
+        android:id="@+id/calendar_bottom"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:id="@+id/edit_layout"
-        >
+        android:layout_weight="1"
+        android:animateLayoutChanges="true"
+        android:background="@color/light_blue">
+
         <LinearLayout
-            android:padding="15dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center_vertical"
-            android:id="@+id/selected_bar"
-            >
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/selected_date"
-                android:layout_weight="1"
-                android:textColor="@color/dark_grey"
-                android:textSize="14sp"
-                android:layout_margin="3dp"
-                />
-<!--            <TextView-->
-<!--                android:gravity="center_vertical"-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:paddingVertical="3dp"-->
-<!--                android:paddingHorizontal="10dp"-->
-<!--                android:id="@+id/add_date_schedule"-->
-<!--                android:text="일정 추가"-->
-<!--                android:textColor="@color/white"-->
-<!--                android:background="@drawable/ripple_effect_btn"-->
-<!--                />-->
-            <ImageView
-                android:layout_width="35dp"
-                android:layout_height="35dp"
-                android:src="@drawable/ic_add_black_24dp"
-                android:background="@drawable/ripple_effect_circle"
-                android:id="@+id/add_date_schedule"
-                />
-
-
-<!--            <LinearLayout-->
-<!--                android:layout_width="35dp"-->
-<!--                android:layout_height="35dp"-->
-<!--                android:background="@drawable/circle_border_layout"-->
-<!--                android:layout_marginEnd="10dp"-->
-<!--                android:id="@+id/schedule_delete_btn"-->
-<!--                android:padding="8dp"-->
-<!--                android:visibility="gone">-->
-<!--                <ImageView-->
-<!--                    android:layout_width="match_parent"-->
-<!--                    android:layout_height="9dp"-->
-<!--                    android:background="@drawable/trash2"-->
-<!--                    android:backgroundTint="@color/colorPrimary" />-->
-<!--            </LinearLayout>-->
-        </LinearLayout>
-
-        <TextView
-            android:id="@+id/schedule_content"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="3dp"
-            android:layout_marginTop="5dp"
-            android:scrollbars="vertical"
-            android:textColor="@color/table_text_color"
-            android:textSize="12sp"
-            android:visibility="gone" />
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/schedule_recycler_view"
+            android:id="@+id/edit_layout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginStart="3dp"
-            android:layout_marginTop="5dp"
-            android:paddingBottom="15dp"
-            android:paddingHorizontal="15dp"
-            android:textColor="@color/table_text_color"
-            android:textSize="12sp"
-            android:scrollbars="vertical"
-            />
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:orientation="vertical"
-            android:id="@+id/write_schedule"
-            android:visibility="gone">
+            android:orientation="vertical">
+
             <LinearLayout
+                android:id="@+id/selected_bar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:gravity="center_vertical"
                 android:orientation="horizontal"
-                android:gravity="center"
-                android:background="@color/light_blue"
-                android:paddingHorizontal="10dp"
-                android:paddingVertical="15dp">
-                <ImageView
-                    android:layout_width="25dp"
-                    android:layout_height="25dp"
-                    android:src="@drawable/ic_close_black_24dp"
-                    android:id="@+id/close_write"/>
+                android:padding="15dp">
+
                 <TextView
+                    android:id="@+id/selected_date"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:id="@+id/schedule_date"
-                    android:textColor="@color/dark_grey"
-                    android:textSize="14sp"
                     android:layout_margin="3dp"
-                    android:text="날짜"
-                    />
-                <ImageView
-                    android:layout_width="25dp"
-                    android:layout_height="25dp"
-                    android:background="@drawable/ic_check_black_24dp"
-                    android:backgroundTint="@color/colorPrimary"
-                    android:id="@+id/schedule_commit_btn"/>
-            </LinearLayout>
-            <EditText
-                android:layout_width="match_parent"
-                android:layout_weight="1"
-                android:layout_height="0dp"
-                android:id="@+id/schedule_edit_text"
-                android:padding="10dp"
-                android:background="@color/white"
-                android:gravity="top"
-                android:hint="일정을 입력하세요"
-                android:textSize="13sp"
-                android:layout_marginBottom="5dp"
-                />
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:background="@color/white"
-                android:layout_marginBottom="5dp"
-                >
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textSize="12sp"
+                    android:layout_weight="1"
                     android:textColor="@color/dark_grey"
-                    android:text="색상"
-                    android:layout_marginHorizontal="20dp"
-                    android:layout_marginVertical="10dp"
-                    android:textStyle="bold"/>
-                <RadioGroup
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:gravity="center"
-                    android:id="@+id/color_group"
-                    android:layout_marginBottom="10dp"
-                    >
-                    <RadioButton
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="보라"
-                        android:textSize="12sp"
-                        android:id="@+id/color1"
-                        android:button="@drawable/radio_button_check"
-                        android:checked="true"
-                        android:paddingStart="5dp"/>
-                    <View
-                        android:layout_width="10dp"
-                        android:layout_height="10dp"
-                        android:background="@drawable/circle_layout"
-                        android:backgroundTint="#dbc7fb"
-                        android:layout_marginStart="5dp"
-                        android:layout_marginEnd="10dp"/>
-                    <RadioButton
-                        android:layout_width="wrap_content"
-                        android:paddingStart="5dp"
-                        android:layout_height="wrap_content"
-                        android:text="초록"
-                        android:textSize="12sp"
-                        android:id="@+id/color2"
-                        android:button="@drawable/radio_button_check"/>
-                    <View
-                        android:layout_width="10dp"
-                        android:layout_height="10dp"
-                        android:background="@drawable/circle_layout"
-                        android:backgroundTint="#c7ecd3"
-                        android:layout_marginStart="5dp"
-                        android:layout_marginEnd="10dp"/>
-                    <RadioButton
-                        android:layout_width="wrap_content"
-                        android:paddingStart="5dp"
-                        android:layout_height="wrap_content"
-                        android:text="파랑"
-                        android:textSize="12sp"
-                        android:id="@+id/color3"
-                        android:button="@drawable/radio_button_check"
-                        />
-                    <View
-                        android:layout_width="10dp"
-                        android:layout_height="10dp"
-                        android:background="@drawable/circle_layout"
-                        android:backgroundTint="#c3dafc"
-                        android:layout_marginStart="5dp"
-                        android:layout_marginEnd="10dp"/>
-                    <RadioButton
-                        android:layout_width="wrap_content"
-                        android:paddingStart="5dp"
-                        android:layout_height="wrap_content"
-                        android:text="핑크"
-                        android:textSize="12sp"
-                        android:id="@+id/color4"
-                        android:button="@drawable/radio_button_check" />
-                    <View
-                        android:layout_width="10dp"
-                        android:layout_height="10dp"
-                        android:background="@drawable/circle_layout"
-                        android:backgroundTint="#f7d1dc"
-                        android:layout_marginStart="5dp"
-                        android:layout_marginEnd="10dp"/>
-                    <RadioButton
-                        android:layout_width="wrap_content"
-                        android:paddingStart="5dp"
-                        android:layout_height="wrap_content"
-                        android:text="노랑"
-                        android:textSize="12sp"
-                        android:id="@+id/color5"
-                        android:button="@drawable/radio_button_check" />
-                    <View
-                        android:layout_width="10dp"
-                        android:layout_height="10dp"
-                        android:background="@drawable/circle_layout"
-                        android:backgroundTint="#f8ec9b"
-                        android:layout_marginStart="5dp"
-                        android:layout_marginEnd="10dp"/>
-                </RadioGroup>
+                    android:textSize="14sp" />
+                <ImageView
+                    android:id="@+id/add_date_schedule"
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:background="@drawable/ripple_effect_circle"
+                    android:src="@drawable/ic_add_black_24dp" />
             </LinearLayout>
 
+            <TextView
+                android:id="@+id/schedule_content"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="3dp"
+                android:layout_marginTop="5dp"
+                android:scrollbars="vertical"
+                android:textColor="@color/table_text_color"
+                android:textSize="12sp"
+                android:visibility="gone" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/schedule_recycler_view"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginStart="3dp"
+                android:layout_marginTop="5dp"
+                android:paddingHorizontal="15dp"
+                android:paddingBottom="15dp"
+                android:scrollbars="vertical"
+                android:textColor="@color/table_text_color"
+                android:textSize="12sp" />
+
+            <LinearLayout
+                android:id="@+id/write_schedule"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/light_blue"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    android:paddingHorizontal="10dp"
+                    android:paddingVertical="15dp">
+
+                    <ImageView
+                        android:id="@+id/close_write"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:src="@drawable/ic_close_black_24dp" />
+
+                    <TextView
+                        android:id="@+id/schedule_date"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="3dp"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="날짜"
+                        android:textColor="@color/dark_grey"
+                        android:textSize="14sp" />
+
+                    <ImageView
+                        android:id="@+id/schedule_commit_btn"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:background="@drawable/ic_check_black_24dp"
+                        android:backgroundTint="@color/colorPrimary" />
+                </LinearLayout>
+
+                <EditText
+                    android:id="@+id/schedule_edit_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_marginBottom="5dp"
+                    android:layout_weight="1"
+                    android:background="@color/white"
+                    android:gravity="top"
+                    android:hint="일정을 입력하세요"
+                    android:padding="10dp"
+                    android:textSize="13sp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="5dp"
+                    android:background="@color/white"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="20dp"
+                        android:layout_marginVertical="10dp"
+                        android:text="색상"
+                        android:textColor="@color/dark_grey"
+                        android:textSize="12sp"
+                        android:textStyle="bold" />
+
+                    <RadioGroup
+                        android:id="@+id/color_group"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:gravity="center"
+                        android:orientation="horizontal">
+
+                        <RadioButton
+                            android:id="@+id/color1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:button="@drawable/radio_button_check"
+                            android:checked="true"
+                            android:paddingStart="5dp"
+                            android:text="보라"
+                            android:textSize="12sp" />
+
+                        <View
+                            android:layout_width="10dp"
+                            android:layout_height="10dp"
+                            android:layout_marginStart="5dp"
+                            android:layout_marginEnd="10dp"
+                            android:background="@drawable/circle_layout"
+                            android:backgroundTint="#dbc7fb" />
+
+                        <RadioButton
+                            android:id="@+id/color2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:button="@drawable/radio_button_check"
+                            android:paddingStart="5dp"
+                            android:text="초록"
+                            android:textSize="12sp" />
+
+                        <View
+                            android:layout_width="10dp"
+                            android:layout_height="10dp"
+                            android:layout_marginStart="5dp"
+                            android:layout_marginEnd="10dp"
+                            android:background="@drawable/circle_layout"
+                            android:backgroundTint="#c7ecd3" />
+
+                        <RadioButton
+                            android:id="@+id/color3"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:button="@drawable/radio_button_check"
+                            android:paddingStart="5dp"
+                            android:text="파랑"
+                            android:textSize="12sp" />
+
+                        <View
+                            android:layout_width="10dp"
+                            android:layout_height="10dp"
+                            android:layout_marginStart="5dp"
+                            android:layout_marginEnd="10dp"
+                            android:background="@drawable/circle_layout"
+                            android:backgroundTint="#c3dafc" />
+
+                        <RadioButton
+                            android:id="@+id/color4"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:button="@drawable/radio_button_check"
+                            android:paddingStart="5dp"
+                            android:text="핑크"
+                            android:textSize="12sp" />
+
+                        <View
+                            android:layout_width="10dp"
+                            android:layout_height="10dp"
+                            android:layout_marginStart="5dp"
+                            android:layout_marginEnd="10dp"
+                            android:background="@drawable/circle_layout"
+                            android:backgroundTint="#f7d1dc" />
+
+                        <RadioButton
+                            android:id="@+id/color5"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:button="@drawable/radio_button_check"
+                            android:paddingStart="5dp"
+                            android:text="노랑"
+                            android:textSize="12sp" />
+
+                        <View
+                            android:layout_width="10dp"
+                            android:layout_height="10dp"
+                            android:layout_marginStart="5dp"
+                            android:layout_marginEnd="10dp"
+                            android:background="@drawable/circle_layout"
+                            android:backgroundTint="#f8ec9b" />
+                    </RadioGroup>
+                </LinearLayout>
+
+            </LinearLayout>
         </LinearLayout>
     </LinearLayout>
-</LinearLayout>
 </LinearLayout>
