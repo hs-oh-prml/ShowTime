@@ -11,21 +11,16 @@ import android.util.Log
 import android.view.Gravity
 import android.view.Menu
 import android.view.MenuItem
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.FragmentTransaction
-import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.google.android.gms.ads.AdListener
-import com.google.android.gms.ads.AdRequest
-import com.google.android.gms.ads.InterstitialAd
-import com.google.android.gms.ads.MobileAds
+import com.google.android.gms.ads.*
+import com.google.android.gms.ads.interstitial.InterstitialAd
+import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback
 import com.gun0912.tedpermission.PermissionListener
 import com.gun0912.tedpermission.TedPermission
 import com.showtimetable.addschedule.AddScheduleActivity
-import com.showtimetable.data.Schedule
-import com.showtimetable.data.TimeCell
 import com.showtimetable.setting.NotificationReceiver
 import com.showtimetable.setting.SettingActivity
 import com.showtimetable.sharedpreference.PreferenceManager
@@ -48,22 +43,55 @@ class MainActivity : AppCompatActivity() {
     val FINISH_TIME = 2000
     var backPressedTime = 0L
     lateinit var backToast: CustomToast
-    lateinit var mInterstitialAd: InterstitialAd
 
+    var mInterstitialAd: InterstitialAd? = null
     fun initAD() {
         // Init AD
         val is_no_AD = pref.getNoADFlag()
+
         if (!is_no_AD) {
+            var adRequest = AdRequest.Builder().build()
+
             MobileAds.initialize(this) {}
-            mInterstitialAd = InterstitialAd(this)
-            mInterstitialAd.adUnitId = resources.getString(R.string.whole_ad_unit_id)
-            mInterstitialAd.loadAd(AdRequest.Builder().build())
-            mInterstitialAd.adListener = object : AdListener() {
-                override fun onAdLoaded() {
-                    super.onAdLoaded()
-                    mInterstitialAd.show()
+            InterstitialAd.load(
+                this,
+                resources.getString(R.string.whole_ad_unit_id),
+                adRequest,
+                object: InterstitialAdLoadCallback(){
+                    override fun onAdLoaded(p0: InterstitialAd) {
+                        super.onAdLoaded(p0)
+                        mInterstitialAd = p0
+                        Log.d("WHOLE AD", "Ad load")
+                        mInterstitialAd?.show(this@MainActivity)
+
+                    }
+
+                    override fun onAdFailedToLoad(p0: LoadAdError) {
+                        super.onAdFailedToLoad(p0)
+                        mInterstitialAd = null
+                        Log.d("WHOLE AD", p0.message)
+                    }
+                }
+            )
+            mInterstitialAd?.fullScreenContentCallback = object: FullScreenContentCallback(){
+                override fun onAdFailedToShowFullScreenContent(p0: AdError) {
+                    super.onAdFailedToShowFullScreenContent(p0)
+                    Log.d("FULL SCREEN CALLBACK", "Ad failed to show")
+                }
+
+                override fun onAdShowedFullScreenContent() {
+                    super.onAdShowedFullScreenContent()
+                    Log.d("FULL SCREEN CALLBACK", "Ad showed fullscreen content")
+                    mInterstitialAd = null
+                }
+
+                override fun onAdDismissedFullScreenContent() {
+                    super.onAdDismissedFullScreenContent()
+                    Log.d("FULL SCREEN CALLBACK", "Ad was dismissed")
+
                 }
             }
+
         } else {
             Log.d("TAG", "The interstitial wasn't loaded yet.")
         }
@@ -71,6 +99,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         setContentView(R.layout.activity_main)
 
         bottom_navigation.inflateMenu(R.menu.bottom_nav_menu)

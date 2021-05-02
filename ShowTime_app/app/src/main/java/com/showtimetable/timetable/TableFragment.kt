@@ -26,7 +26,9 @@ import androidx.core.content.ContextCompat
 import androidx.core.view.setMargins
 import com.showtimetable.CustomToast
 import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.AdSize
 import com.google.android.gms.ads.MobileAds
+import com.google.android.gms.ads.admanager.AdManagerAdView
 import com.showtimetable.R
 import com.showtimetable.data.MyData
 import com.showtimetable.data.Schedule
@@ -41,16 +43,32 @@ import java.util.*
 /**
  * A simple [Fragment] subclass.
  */
-class TableFragment(var c: Context, var semesterNum:Int) : Fragment() {
+class TableFragment(var c: Context, var semesterNum: Int) : Fragment() {
 
     lateinit var semester: MyData.Semester
     lateinit var color: Array<String>
-    lateinit var weekList:List<String>
-    lateinit var pref:PreferenceManager
-    var dwidth=0
-    var dheight=0
+    lateinit var weekList: List<String>
+    lateinit var pref: PreferenceManager
+    var dwidth = 0
+    var dheight = 0
     lateinit var today: Calendar
     var day_of_week = 0
+
+    private lateinit var adManager: AdManagerAdView
+    private val adSize: AdSize
+        get() {
+            val display = activity?.display
+            var outMetrics = DisplayMetrics()
+            display?.getRealMetrics(outMetrics)
+            val density = outMetrics.density
+            var adWidthPixels = adView.width.toFloat()
+            if (adWidthPixels == 0f) {
+                adWidthPixels = outMetrics.widthPixels.toFloat()
+            }
+            val adWidth = (adWidthPixels / density).toInt()
+            return AdSize.getCurrentOrientationAnchoredAdaptiveBannerAdSize(c, adWidth)
+        }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -64,16 +82,21 @@ class TableFragment(var c: Context, var semesterNum:Int) : Fragment() {
         super.onActivityCreated(savedInstanceState)
         today = Calendar.getInstance()
         day_of_week = today.get(Calendar.DAY_OF_WEEK)
-        pref =  PreferenceManager(c)
+        pref = PreferenceManager(c)
 //        setTodaySchedule()
         timeTable.setBackgroundResource(pref.getTableBorder())
 
         val is_no_AD = pref.getNoADFlag()
-//        Log.d("ADFLAG", is_no_AD.toString())
-        if(!is_no_AD){
+        if (!is_no_AD) {
             MobileAds.initialize(context) {}
+            adManager = AdManagerAdView(context)
+            adView.addView(adManager)
+
+            adManager.adSize = adSize
+            adManager.adUnitId = resources.getString(R.string.banner_ad_unit_id)
+
             val adRequest = AdRequest.Builder().build()
-            adView.loadAd(adRequest)
+            adManager.loadAd(adRequest)
         } else {
             adView.visibility = GONE
             ads_frame.visibility = GONE
@@ -86,24 +109,22 @@ class TableFragment(var c: Context, var semesterNum:Int) : Fragment() {
         color = this.resources.getStringArray(R.array.theme1)
 
 
-        when(semester.dayMode){
-            5->weekList = listOf("월", "화", "수", "목", "금")
-            6->weekList = listOf("월", "화", "수", "목", "금","토")
-            7->weekList = listOf("월", "화", "수", "목", "금","토","일")
-            else->weekList = listOf("월", "화", "수", "목", "금")
+        when (semester.dayMode) {
+            5 -> weekList = listOf("월", "화", "수", "목", "금")
+            6 -> weekList = listOf("월", "화", "수", "목", "금", "토")
+            7 -> weekList = listOf("월", "화", "수", "목", "금", "토", "일")
+            else -> weekList = listOf("월", "화", "수", "목", "금")
         }
         initView(weekList)
         refreshTable()
         table_frame.setOnLongClickListener {
-            val builder = AlertDialog.Builder(this.context!!)
+            val builder = AlertDialog.Builder(c)
             builder.setMessage("시간표를 저장하시겠습니까?").setTitle(semester_textView.text.toString())
-            builder.setPositiveButton("예"){
-                    _,_->
+            builder.setPositiveButton("예") { _, _ ->
                 screenCapture()
                 vibrate(150)
             }
-            builder.setNegativeButton("아니오"){
-                _,_->
+            builder.setNegativeButton("아니오") { _, _ ->
             }
 
             val dlg = builder.create()
@@ -113,39 +134,42 @@ class TableFragment(var c: Context, var semesterNum:Int) : Fragment() {
 
     }
 
-    fun refreshTable(){
-        for(i in 1..22){
-            for(j in 1..weekList.size){
+    fun refreshTable() {
+        for (i in 1..22) {
+            for (j in 1..weekList.size) {
                 var cell = getChild(i, j)
                 cell.setBackgroundResource(pref.getTableBackgroundColor())
             }
         }
-        for((index, i) in  semester.schedules.withIndex()){
+        for ((index, i) in semester.schedules.withIndex()) {
             addTable(i, index)
         }
 
     }
 
-    fun screenCapture(){
+    fun screenCapture() {
 
         // Make Bitmap By Captured View
-        var permissionCheck = ContextCompat.checkSelfPermission(context!!, Manifest.permission.WRITE_EXTERNAL_STORAGE)
-        if(permissionCheck != PackageManager.PERMISSION_GRANTED){
+        var permissionCheck =
+            ContextCompat.checkSelfPermission(c, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+        if (permissionCheck != PackageManager.PERMISSION_GRANTED) {
             return
         }
-        var bitmap = Bitmap.createBitmap(table_frame.width, table_frame.height, Bitmap.Config.ARGB_8888)
+        var bitmap =
+            Bitmap.createBitmap(table_frame.width, table_frame.height, Bitmap.Config.ARGB_8888)
         var canvas = Canvas(bitmap)
         table_frame.draw(canvas)
         var date = SimpleDateFormat("yyyyMMddHHmmss").format(Date())
         var filename = "show_time_table_${date}.jpg"
 
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q){
-            var values = ContentValues().apply{
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            var values = ContentValues().apply {
                 put(MediaStore.Images.Media.DISPLAY_NAME, filename)
                 put(MediaStore.Images.Media.MIME_TYPE, "image/jpg")
                 put(MediaStore.Images.Media.IS_PENDING, 1)
             }
-            var collection = MediaStore.Images.Media.getContentUri(MediaStore.VOLUME_EXTERNAL_PRIMARY)
+            var collection =
+                MediaStore.Images.Media.getContentUri(MediaStore.VOLUME_EXTERNAL_PRIMARY)
             var item = c.contentResolver.insert(collection, values)!!
             c.contentResolver.openAssetFileDescriptor(item, "w", null).use {
                 var out = FileOutputStream(it!!.fileDescriptor)
@@ -158,7 +182,8 @@ class TableFragment(var c: Context, var semesterNum:Int) : Fragment() {
             val msg = "시간표 이미지가 저장되었습니다."
             CustomToast(c, msg).show()
         } else {
-            val dir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM).toString() +
+            val dir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM)
+                .toString() +
                     File.separator +
                     "showtime"
             val file = File(dir)
@@ -177,28 +202,29 @@ class TableFragment(var c: Context, var semesterNum:Int) : Fragment() {
                 put(MediaStore.Images.Media.DATA, imgFile.absolutePath)
                 put(MediaStore.Images.Media.MIME_TYPE, "image/jpeg")
             }
-            context!!.contentResolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values)
+            c.contentResolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values)
             val msg = "시간표 이미지가 저장되었습니다."
             CustomToast(c, msg).show()
 
         }
     }
-    fun getChild(row:Int, col:Int): View {
+
+    fun getChild(row: Int, col: Int): View {
         var index = (timeTable.columnCount * row) + col
         return timeTable.getChildAt(index)
     }
 
-    fun addTable(schedule:Schedule, index:Int){
+    fun addTable(schedule: Schedule, index: Int) {
         var time = schedule.time
-        for(i in time){
+        for (i in time) {
             var flag = 0
-            for(j in i.start..i.end){
+            for (j in i.start..i.end) {
 
                 var cell = timeTable.getChildAt((timeTable.rowCount * i.week) + j)
                 var cell_name = cell.findViewById<TextView>(R.id.cell_name)
-                var cell_place =  cell.findViewById<TextView>(R.id.cell_place)
+                var cell_place = cell.findViewById<TextView>(R.id.cell_place)
 
-                if(flag == 0){
+                if (flag == 0) {
 
                     var name = schedule.name
 //                    for(i in 0 until schedule.name.length) {
@@ -208,7 +234,7 @@ class TableFragment(var c: Context, var semesterNum:Int) : Fragment() {
 //                    }
                     cell_name.text = name
                     var place = ""
-                    if(schedule.place != null){
+                    if (schedule.place != null) {
                         place = schedule.place
 //                        for(i in 0 until schedule.place.length) {
 //                            place += schedule.place[i]
@@ -220,11 +246,11 @@ class TableFragment(var c: Context, var semesterNum:Int) : Fragment() {
                     cell_place.width = (dwidth / 21) * 4 - 10
                     cell_name.setPadding(3, 3, 3, 0)
                     cell_place.setPadding(3, 0, 3, 0)
-                    cell_name.setTextColor(ContextCompat.getColor(context!!, pref.getTableFontColor()))
-                    cell_place.setTextColor(ContextCompat.getColor(context!!, pref.getTableFontColor()))
+                    cell_name.setTextColor(ContextCompat.getColor(c, pref.getTableFontColor()))
+                    cell_place.setTextColor(ContextCompat.getColor(c, pref.getTableFontColor()))
 
                     val shape = GradientDrawable()
-                    println("color : "+color[(index % color.size)]+", index : "+(index % color.size))
+                    println("color : " + color[(index % color.size)] + ", index : " + (index % color.size))
                     shape.setColor(Color.parseColor(color[index % color.size]))
                     shape.shape = GradientDrawable.RECTANGLE
                     shape.cornerRadius = 15.0f
@@ -238,7 +264,7 @@ class TableFragment(var c: Context, var semesterNum:Int) : Fragment() {
                     cell.layoutParams = param
 
                     cell.setOnClickListener {
-                        var dialog = CellDialog(context!!, pref.table, index)
+                        var dialog = CellDialog(c, pref.table, index)
                         var fm = parentFragmentManager
                         dialog.show(fm, "")
 
@@ -252,13 +278,14 @@ class TableFragment(var c: Context, var semesterNum:Int) : Fragment() {
         }
     }
 
-    fun initView(weekList: List<String>){
+    fun initView(weekList: List<String>) {
 
         //inae
 
         var table_params = LinearLayout.LayoutParams(
             WRAP_CONTENT,
-            MATCH_PARENT)
+            MATCH_PARENT
+        )
         table_params.setMargins(30)
         table_frame.layoutParams = table_params
 
@@ -275,8 +302,8 @@ class TableFragment(var c: Context, var semesterNum:Int) : Fragment() {
         dwidth = disp.widthPixels - 60
         dheight = disp.heightPixels
 
-        for(j in 0 until timeTable.columnCount){
-            for(i in 0 until timeTable.rowCount){
+        for (j in 0 until timeTable.columnCount) {
+            for (i in 0 until timeTable.rowCount) {
 
                 var params = GridLayout.LayoutParams()
                 //params.setMargins(1)
@@ -286,13 +313,13 @@ class TableFragment(var c: Context, var semesterNum:Int) : Fragment() {
                 params.columnSpec = colSpan
                 params.rowSpec = rowSpan
 
-                if(i == 0 && j == 0){
+                if (i == 0 && j == 0) {
 
                     child = TextView(context)
-                    child.setTextColor(ContextCompat.getColor(context!!, pref.getTableFontColor()))
+                    child.setTextColor(ContextCompat.getColor(c, pref.getTableFontColor()))
                     child.textSize = 10f
 
-                } else if(i == 0 && j != 0){ // 월화수목금
+                } else if (i == 0 && j != 0) { // 월화수목금
 
 
                     var colSpan = GridLayout.spec(j, GridLayout.FILL)
@@ -307,24 +334,24 @@ class TableFragment(var c: Context, var semesterNum:Int) : Fragment() {
                     temp_cal.add(Calendar.DAY_OF_YEAR, diff)
                     var temp_date = temp_cal.get(Calendar.DAY_OF_MONTH)
                     var str = "${temp_date}  ${weekList[j - 1]}"
-                    if(diff == 0){
-                        child.setTextColor(ContextCompat.getColor(context!!, pref.getDayColor()))
-                        (child as TextView).setTypeface(null,Typeface.BOLD)
+                    if (diff == 0) {
+                        child.setTextColor(ContextCompat.getColor(c, pref.getDayColor()))
+                        (child as TextView).setTypeface(null, Typeface.BOLD)
                     }
-                    child.setTextColor(ContextCompat.getColor(context!!, pref.getDayColor()))
+                    child.setTextColor(ContextCompat.getColor(c, pref.getDayColor()))
                     child.text = str
 
-                } else if(i != 0 && j == 0){ //시간 9~7
+                } else if (i != 0 && j == 0) { //시간 9~7
 
                     child = TextView(context)
                     child.gravity = Gravity.TOP or Gravity.RIGHT
                     child.textSize = 9f
-                    child.setTextColor(ContextCompat.getColor(context!!, pref.getDayColor()))
-                    if(i % 2 == 1){
-                        if((9 + i / 2) > 12){
-                            child .text = ((9 + i / 2) % 12).toString()
+                    child.setTextColor(ContextCompat.getColor(c, pref.getDayColor()))
+                    if (i % 2 == 1) {
+                        if ((9 + i / 2) > 12) {
+                            child.text = ((9 + i / 2) % 12).toString()
                         } else {
-                            child .text = (9 + i / 2).toString()
+                            child.text = (9 + i / 2).toString()
                         }
                     }
                     params.width = dwidth / 21 //크기 21중 1만큼 차지
@@ -336,17 +363,17 @@ class TableFragment(var c: Context, var semesterNum:Int) : Fragment() {
                     params.width = (dwidth / 21) * 4
                     params.height = 50
                 }
-                if(i != 0){
-                    var rowSpan = GridLayout.spec(i, GridLayout.FILL,1f)
+                if (i != 0) {
+                    var rowSpan = GridLayout.spec(i, GridLayout.FILL, 1f)
                     params.rowSpec = rowSpan
                 }
-                if(i % 2 == 1){
-                    params.setMargins(1,1,1,0)
+                if (i % 2 == 1) {
+                    params.setMargins(1, 1, 1, 0)
                 } else {
-                    params.setMargins(1,0,1,1)
+                    params.setMargins(1, 0, 1, 1)
                 }
-                if(i == 0 && j != 0)
-                    child.setPadding(0,5,0,5)
+                if (i == 0 && j != 0)
+                    child.setPadding(0, 5, 0, 5)
                 child.setBackgroundResource(pref.getTableBackgroundColor())
                 child.layoutParams = params
                 timeTable.addView(child)
@@ -357,37 +384,40 @@ class TableFragment(var c: Context, var semesterNum:Int) : Fragment() {
 
     override fun onResume() {
         super.onResume()
-        pref =  PreferenceManager(c)
+        pref = PreferenceManager(c)
         var theme = pref.getTheme()
         color = this.resources.getStringArray(theme)
         refreshTable()
     }
 
-    fun vibrate(length:Long){
+    fun vibrate(length: Long) {
         val vibrate = activity?.getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
 
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
-            vibrate.vibrate(VibrationEffect.createOneShot(length, VibrationEffect.DEFAULT_AMPLITUDE))
-        }else{
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            vibrate.vibrate(
+                VibrationEffect.createOneShot(
+                    length,
+                    VibrationEffect.DEFAULT_AMPLITUDE
+                )
+            )
+        } else {
             vibrate.vibrate(length) // deprecated in api 26
         }
     }
 
-    fun setSemesterText(){
-        semester_textView.text = when(pref.table){
-            0->"1학년  1학기"
-            1->"1학년  2학기"
-            2->"2학년  1학기"
-            3->"2학년  2학기"
-            4->"3학년  1학기"
-            5->"3학년  2학기"
-            6->"4학년  1학기"
-            7->"4학년  2학기"
-            else->null
+    fun setSemesterText() {
+        semester_textView.text = when (pref.table) {
+            0 -> "1학년  1학기"
+            1 -> "1학년  2학기"
+            2 -> "2학년  1학기"
+            3 -> "2학년  2학기"
+            4 -> "3학년  1학기"
+            5 -> "3학년  2학기"
+            6 -> "4학년  1학기"
+            7 -> "4학년  2학기"
+            else -> null
         }
     }
-
-
 
 
 }
