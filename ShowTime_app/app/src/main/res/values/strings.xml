@@ -5,4 +5,10 @@
     <string name="title_notifications">Score</string>
     <string name="appwidget_text">EXAMPLE</string>
     <string name="add_widget">Add widget</string>
+
+    <!--    word list-->
+    <string name="word_schedule">일정</string>
+
+    <!--    sentense list-->
+    <string name="sentense_write_schedule">일정을 입력하세요.</string>
 </resources>
