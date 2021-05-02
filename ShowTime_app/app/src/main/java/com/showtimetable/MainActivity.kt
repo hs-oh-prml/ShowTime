@@ -44,21 +44,21 @@ class MainActivity : AppCompatActivity() {
 
     lateinit var pref: PreferenceManager
     lateinit var listener: SemesterListAdapter.SemesterListener
-    lateinit var tran:FragmentTransaction
+    lateinit var tran: FragmentTransaction
     val FINISH_TIME = 2000
     var backPressedTime = 0L
-    lateinit var backToast:CustomToast
+    lateinit var backToast: CustomToast
     lateinit var mInterstitialAd: InterstitialAd
 
-    fun initAD(){
+    fun initAD() {
         // Init AD
         val is_no_AD = pref.getNoADFlag()
-        if(!is_no_AD){
+        if (!is_no_AD) {
             MobileAds.initialize(this) {}
             mInterstitialAd = InterstitialAd(this)
             mInterstitialAd.adUnitId = resources.getString(R.string.whole_ad_unit_id)
             mInterstitialAd.loadAd(AdRequest.Builder().build())
-            mInterstitialAd.adListener = object: AdListener(){
+            mInterstitialAd.adListener = object : AdListener() {
                 override fun onAdLoaded() {
                     super.onAdLoaded()
                     mInterstitialAd.show()
@@ -79,21 +79,21 @@ class MainActivity : AppCompatActivity() {
         tran.replace(R.id.nav_host_fragment, HomeFragment()).commitAllowingStateLoss()
         bottom_navigation.setOnNavigationItemSelectedListener {
             val tran = supportFragmentManager.beginTransaction()
-            when(it.itemId){
-                R.id.navigation_home->{
+            when (it.itemId) {
+                R.id.navigation_home -> {
                     tran.replace(R.id.nav_host_fragment, DashboardFragment()).commit()
                     true
                 }
-                R.id.navigation_dashboard->{
+                R.id.navigation_dashboard -> {
 
                     tran.replace(R.id.nav_host_fragment, HomeFragment()).commit()
                     true
                 }
-                R.id.navigation_notifications->{
+                R.id.navigation_notifications -> {
                     tran.replace(R.id.nav_host_fragment, NotificationsFragment()).commit()
                     true
                 }
-                else->{
+                else -> {
                     true
                 }
             }
@@ -104,25 +104,18 @@ class MainActivity : AppCompatActivity() {
         init()
         initAD()
 
-        if(pref.getAlarmFlag() == "true"){
+        if (pref.getAlarmFlag() == "true") {
             notificationInit()
         }
 
-        if(pref.getIsFirstFlag()){
+        if (pref.getIsFirstFlag()) {
             pref.setIsFirstFlag()
             var intent = Intent(this, TutorialActivity::class.java)
             startActivity(intent)
-            //inae
-//            var timeList = ArrayList<TimeCell>()
-//            timeList.add(TimeCell(1,3,0,""))
-//            var name = "과목을추가하세요"
-//            pref.myData.semester[0].schedules.add(Schedule(false, name, "Show Time", timeList, 0, "A+"))
-//            pref.savePref()
-
         }
     }
 
-    fun initRecyclerView(){
+    fun initRecyclerView() {
         pref = PreferenceManager(this)
 
         var layoutManager = LinearLayoutManager(this, RecyclerView.VERTICAL, false)
@@ -141,7 +134,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onResume() {
         initRecyclerView()
-        if(pref.getAlarmFlag() == "true"){
+        if (pref.getAlarmFlag() == "true") {
             notificationInit()
         }
         var f = supportFragmentManager.findFragmentById(R.id.nav_host_fragment)
@@ -150,19 +143,18 @@ class MainActivity : AppCompatActivity() {
         super.onResume()
     }
 
-    fun notificationInit(){
-
+    fun notificationInit() {
         var alarmInfo = pref.getAlarmTime()
         var list = alarmInfo!!.split(" ")
 
         var hasSchedule = Calendar.getInstance()
         hasSchedule.add(Calendar.DATE, -(list[0].toInt()))
 
-        var y= hasSchedule.get(Calendar.YEAR)
-        var m= hasSchedule.get(Calendar.MONTH) + 1
+        var y = hasSchedule.get(Calendar.YEAR)
+        var m = hasSchedule.get(Calendar.MONTH) + 1
         var d = hasSchedule.get(Calendar.DATE)
-        var c_data =  pref.getDaySchedule(y, m, d)
-        if(c_data == null){
+        var c_data = pref.getDaySchedule(y, m, d)
+        if (c_data == null) {
             return
         }
 
@@ -173,20 +165,19 @@ class MainActivity : AppCompatActivity() {
         calendar.set(Calendar.MINUTE, 0)
         calendar.set(Calendar.SECOND, 0)
 
-//        calendar.set(Calendar.MINUTE, 15)
         var intent = Intent(this, NotificationReceiver::class.java)
         var pi = PendingIntent.getBroadcast(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT)
         manager.setRepeating(
             AlarmManager.RTC_WAKEUP,
             calendar.getTimeInMillis(),
-             AlarmManager.INTERVAL_DAY,
-            pi);
+            AlarmManager.INTERVAL_DAY,
+            pi
+        );
     }
 
-    fun init(){
-        listener = object: SemesterListAdapter.SemesterListener{
+    fun init() {
+        listener = object : SemesterListAdapter.SemesterListener {
             override fun refresh() {
-//                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
                 initRecyclerView()
                 var f = supportFragmentManager.findFragmentById(R.id.nav_host_fragment)
                 tran = supportFragmentManager.beginTransaction()
@@ -199,27 +190,22 @@ class MainActivity : AppCompatActivity() {
 
         setting_btn.setOnClickListener {
             var intent = Intent(this, SettingActivity::class.java)
-                startActivity(intent)
-                overridePendingTransition(R.anim.fade_in,R.anim.fade_out)
+            startActivity(intent)
+            overridePendingTransition(R.anim.fade_in, R.anim.fade_out)
         }
-
 
 
     }
 
-    fun permissionCheck(){
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
+    fun permissionCheck() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             Log.d("BUILD_VERSION_SDK_INT", Build.VERSION.SDK_INT.toString())
             // Permission Check
-            var permissionLitsener = object: PermissionListener {
+            var permissionLitsener = object : PermissionListener {
                 override fun onPermissionGranted() {
-//                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-                    //CustomToast(applicationContext, "권한 허가").show()
                 }
 
                 override fun onPermissionDenied(deniedPermissions: MutableList<String>?) {
-//                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-                    //CustomToast(applicationContext, "권한 거부").show()
                 }
             }
             TedPermission.with(this)
@@ -254,30 +240,28 @@ class MainActivity : AppCompatActivity() {
                 drawer_layout.openDrawer(Gravity.RIGHT)
                 true
             }
-            R.id.action_add ->{
-                var intent = Intent(this, AddScheduleActivity::class.java)
+            R.id.action_add -> {
+                val intent = Intent(this, AddScheduleActivity::class.java)
                 intent.putExtra("tableNum", pref.table)
                 startActivity(intent)
-                overridePendingTransition(R.anim.fade_in,R.anim.fade_out)
+                overridePendingTransition(R.anim.fade_in, R.anim.fade_out)
                 true
             }
-
             else -> super.onOptionsItemSelected(item)
         }
     }
 
     override fun onBackPressed() { //뒤로가기 처리
-        if(drawer_layout.isDrawerOpen(Gravity.RIGHT)){
+        if (drawer_layout.isDrawerOpen(Gravity.RIGHT)) {
             drawer_layout.closeDrawers()
-        }
-        else{
-            if(System.currentTimeMillis() > backPressedTime+2000){
+        } else {
+            if (System.currentTimeMillis() > backPressedTime + 2000) {
                 backPressedTime = System.currentTimeMillis()
                 val str = "\'뒤로가기\'를 한번 더 누르면 종료 됩니다."
                 backToast = CustomToast(this, str)
                 backToast.show()
                 return;
-            }else {
+            } else {
                 backToast.cancel()
                 finish()
             }
