@@ -9,10 +9,6 @@ import android.widget.NumberPicker
 import androidx.appcompat.app.AppCompatActivity
 import com.anjlab.android.iab.v3.BillingProcessor
 import com.anjlab.android.iab.v3.TransactionDetails
-import com.google.android.gms.ads.AdListener
-import com.google.android.gms.ads.AdRequest
-import com.google.android.gms.ads.InterstitialAd
-import com.google.android.gms.ads.MobileAds
 import com.showtimetable.CustomToast
 import com.showtimetable.R
 import com.showtimetable.sharedpreference.PreferenceManager
