@@ -33,4 +33,11 @@
     <color name="table_mint">#deeeeb</color>
     <color name="day_pink">#885555</color>
     <color name="day_mint">#55887c</color>
+
+    <color name="radio_purple">#dbc7fb</color>
+    <color name="radio_green">#c7ecd3</color>
+    <color name="radio_blue">#c3dafc</color>
+    <color name="radio_pink">#f7d1dc</color>
+    <color name="radio_yellow">#f8ec9b</color>
+
 </resources>

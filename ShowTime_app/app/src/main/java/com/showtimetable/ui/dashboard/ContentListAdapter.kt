@@ -53,24 +53,6 @@ class ContentListAdapter(
         holder.itemView.setOnClickListener {
             listener.onClick(position)
         }
-//        holder.delete.setOnClickListener{
-//            val builder = AlertDialog.Builder(context)
-//            builder.setMessage("일정을 삭제하시겠습니까?").setTitle("일정 삭제")
-//            builder.setPositiveButton("예"){
-//                    _,_->
-//                var pref = PreferenceManager(context)
-//                pref.deleteDaySchedule(y, m, d, position)
-//                val str = "${m}월 ${d}일 일정이 삭제되었습니다."
-//                CustomToast(context, str).show()
-//                listener.refresh()
-//            }
-//            builder.setNegativeButton("아니오"){
-//                    _,_->
-//            }
-//
-//            val dlg = builder.create()
-//            dlg.show()
-//        }
         holder.content.setOnClickListener{
             val builder = AlertDialog.Builder(context)
             builder.setMessage(holder.content.text.toString()).setTitle("일정")
